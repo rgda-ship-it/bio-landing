@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bio — ¿Quién estuvo contigo?</title>
-<meta name="description" content="Cuenta tu vida etapa a etapa y reencuéntrate con quienes compartieron tu aula, tu facultad o tu barrio.">
-<meta property="og:title" content="Bio — ¿Quién estuvo contigo?">
-<meta property="og:description" content="Tu vida, etapa a etapa. Y las personas que estuvieron ahí.">
+<title>Bio — Marca tus momentos. Revive tu historia.</title>
+<meta name="description" content="Sin escribir párrafos: marca tus momentos, cuenta cómo te hicieron sentir y revive tu historia animada o en un libro.">
+<meta property="og:title" content="Bio — Marca tus momentos. Revive tu historia.">
+<meta property="og:description" content="Elige un momento, dónde y cuándo fue, y cómo te hizo sentir. Bio lo convierte en tu historia animada o en un libro.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rgda-ship-it.github.io/bio-landing/">
 <meta property="og:image" content="https://rgda-ship-it.github.io/bio-landing/og-es.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Bio — ¿Quién estuvo contigo?">
+<meta property="og:image:alt" content="Bio — Marca tus momentos. Revive tu historia.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,6 +97,11 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
 /* enfoque-v2 */ .chk{display:flex;gap:10px;align-items:flex-start;color:var(--ink);font-size:14px;cursor:pointer}
 .chk input{width:20px;height:20px;flex:none;margin:1px 0 0;padding:0;accent-color:var(--accent)}
 .stats div[hidden]{display:none}
+/* enfoque-v3 */ .opt-place{border:1px dashed var(--line);border-radius:14px;padding:12px 14px 14px;margin:0;display:grid;gap:12px;min-width:0}
+.opt-place legend{font:500 13px Inter;color:var(--ink-2);padding:0 4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.conseq{margin:28px 0 0;font-size:17px;color:var(--ink-2);max-width:60ch}
+.conseq b{font:600 20px Fraunces,serif;color:var(--ok)}
 @media (max-width:820px){
   .hero,.join{grid-template-columns:1fr;gap:32px}
   .steps,.privacy,.compare{grid-template-columns:1fr}
@@ -152,6 +157,7 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
     <div class="step"><span class="n">02</span><b data-i="s2t"></b><p data-i="s2"></p></div>
     <div class="step"><span class="n">03</span><b data-i="s3t"></b><p data-i="s3"></p></div>
   </div>
+  <p class="conseq"><b data-i="c_t"></b> <span data-i="c"></span></p>
   <div class="compare">
     <div class="cmp old"><small data-i="old_k"></small><p data-i="old"></p></div>
     <div class="cmp new"><small data-i="new_k"></small><p data-i="new"></p></div>
@@ -176,29 +182,32 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
     <form id="f" novalidate>
       <label><span data-i="f_name"></span><input name="name" required maxlength="80" autocomplete="given-name"></label>
       <label><span data-i="f_email"></span><input name="email" type="email" required autocomplete="email"></label>
-      <label><span data-i="f_kind"></span>
-        <select name="kind">
-          <option value="" data-i="f_choose"></option>
-          <option value="colegio" data-i="k_colegio"></option><option value="universidad" data-i="k_universidad"></option>
-          <option value="trabajo" data-i="k_trabajo"></option><option value="barrio" data-i="k_barrio"></option>
-          <option value="vacaciones" data-i="k_vacaciones"></option><option value="campamento" data-i="k_campamento"></option>
-          <option value="deporte" data-i="k_deporte"></option><option value="intercambio" data-i="k_intercambio"></option>
-          <option value="otro" data-i="k_otro"></option>
-        </select></label>
-      <label><span data-i="f_place"></span><input name="school" maxlength="120"></label>
-      <div class="row">
-        <label><span data-i="f_country"></span>
-          <select name="country" required>
-            <option value="VE">Venezuela</option><option value="ES">España</option>
-            <option value="US">United States</option><option value="GB">United Kingdom</option>
-            <option value="FR">France</option><option value="CO">Colombia</option>
-            <option value="AR">Argentina</option><option value="MX">México</option>
-            <option value="CL">Chile</option><option value="PE">Perú</option>
-            <option value="XX" data-i="f_other"></option>
+      <label class="chk"><input type="checkbox" name="bio" value="1" checked><span data-i="f_bio"></span></label>
+      <fieldset class="opt-place">
+        <legend data-i="f_kind"></legend>
+        <label><span class="sr" data-i="f_choose"></span>
+          <select name="kind">
+            <option value="" data-i="f_choose"></option>
+            <option value="colegio" data-i="k_colegio"></option><option value="universidad" data-i="k_universidad"></option>
+            <option value="trabajo" data-i="k_trabajo"></option><option value="barrio" data-i="k_barrio"></option>
+            <option value="vacaciones" data-i="k_vacaciones"></option><option value="campamento" data-i="k_campamento"></option>
+            <option value="deporte" data-i="k_deporte"></option><option value="intercambio" data-i="k_intercambio"></option>
+            <option value="otro" data-i="k_otro"></option>
           </select></label>
-        <label><span data-i="f_year"></span><input name="grad_year" type="number" min="1950" max="2035" inputmode="numeric"></label>
-      </div>
-      <label class="chk"><input type="checkbox" name="bio" value="1"><span data-i="f_bio"></span></label>
+        <label><span data-i="f_place"></span><input name="school" maxlength="120"></label>
+        <div class="row">
+          <label><span data-i="f_country"></span>
+            <select name="country" required>
+              <option value="VE">Venezuela</option><option value="ES">España</option>
+              <option value="US">United States</option><option value="GB">United Kingdom</option>
+              <option value="FR">France</option><option value="CO">Colombia</option>
+              <option value="AR">Argentina</option><option value="MX">México</option>
+              <option value="CL">Chile</option><option value="PE">Perú</option>
+              <option value="XX" data-i="f_other"></option>
+            </select></label>
+          <label><span data-i="f_year"></span><input name="grad_year" type="number" min="1950" max="2035" inputmode="numeric"></label>
+        </div>
+      </fieldset>
       <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" type="submit" data-i="f_submit"></button>
@@ -231,44 +240,47 @@ const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";      // p.ej. "
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg"; // clave pública "anon"
 
 const T = {
- es:{h1:"¿Quién estuvo contigo?",lede:"Reencuentra a quienes compartieron contigo un aula, una calle antes de mudarte, un verano o un equipo, y construye tu biografía con tus logros y tus recuerdos, etapa a etapa.",cta:"Quiero acceso anticipado",cta_note:"Gratis. Abrimos grupo a grupo: promociones, barrios, campamentos, equipos…",
-  m1:"1988 · Caracas",m1s:"Nací",m2:"1994 · Colegio San José",m2s:"1º a 6º grado, sección B",m2m:"12 compañeros encontrados",m3:"2006 · UCV, Ingeniería",m3s:"5 años",m4:"2014 · Madrid",m4s:"Nueva etapa",m5:"Hoy",
-  how_t:"Tu biografía, con las personas que estuvieron ahí",s1t:"Cuenta tus etapas",s1:"Colegios y universidad, pero también trabajos de verano, barrios donde viviste, vacaciones, campamentos, intercambios, equipos o voluntariados. Te guiamos hito a hito, en minutos.",s2t:"Reencuentra a tu gente",s2:"Bio cruza lugar y fechas para mostrarte quién coincidió contigo de verdad: en tu aula, en tu calle antes de mudarte o en aquel campamento de 2009.",s3t:"Construye tu biografía",s3:"Destaca tus logros, guarda los recuerdos que compartiste con los tuyos y mírala como un libro o un vídeo. Aunque sigas en contacto con todos.",
-  old_k:"Otras redes",old:"«Quizá conozcas a…»",new_k:"Bio",new:"«Coincidisteis en el campamento de Gredos, julio de 2008»",
-  priv_t:"Tu pasado, bajo tu control",p1t:"Doble confirmación",p1:"Nadie puede vincularte a su historia sin tu permiso.",p2t:"Visibilidad por etapa",p2:"Cada hito puede ser público, para seguidores, para amigos o solo para ti.",p3t:"Tú decides el detalle",p3:"Muestra la ciudad, la institución o el aula: tú eliges hasta dónde.",
-  join_t:"Reserva tu lugar y trae a tu gente",join_l:"Abrimos Bio grupo a grupo: una promoción, un barrio, un campamento, un equipo. Cuantas más personas de tu grupo se apunten, antes se abre el tuyo.",
-  f_name:"Nombre",f_email:"Email",f_kind:"¿Dónde perdiste el contacto con alguien?",f_choose:"Elige una opción",
+ es:{h1:"Marca tus momentos. Revive tu historia.",lede:"Sin escribir párrafos: elige un momento, dónde y cuándo fue, y cómo te hizo sentir. Bio lo convierte en tu historia animada o en un libro. Y cuando tu historia se cruza con la de otros, descubres quién te acompañó.",cta:"Quiero empezar mi historia",cta_note:"Gratis. Te avisamos en cuanto abramos.",
+  m1:"2009 · Caracas",m1s:"Primer día de cole · nervios",m2:"2015 · Campamento Gredos",m2s:"El mejor verano · libertad",m2m:"3 personas estuvieron ahí",m3:"2018 · Primer trabajo",m3s:"Orgullo",m4:"2021 · Madrid",m4s:"Nueva etapa · ilusión",m5:"Hoy",
+  how_t:"Tu historia, momento a momento",s1t:"Marca tus momentos",s1:"Cada hito es un lugar, una fecha y lo que pasó: tu primer día de cole, aquel verano, la mudanza, tu primer trabajo. Sin escribir párrafos.",s2t:"Dile cómo te hizo sentir",s2:"Añade a cada hito la emoción que te dejó. Y para lo más personal, tu diario: escribe con todo el detalle que quieras.",s3t:"Revívela en vídeo o en libro",s3:"Bio convierte tus hitos en una historia animada o en un libro para guardar, compartir o regalar.",
+  c_t:"Y descubre quién te acompañó.",c:"Cuando tu historia se cruza con la de otros en el mismo lugar y momento, Bio te muestra quién estuvo ahí. Siempre con tu permiso.",
+  old_k:"Otras redes",old:"Lo que haces hoy, para los demás.",new_k:"Bio",new:"Tu historia entera, para ti y para quien tú elijas.",
+  priv_t:"Tu historia, bajo tu control",p1t:"Doble confirmación",p1:"Nadie puede vincularte a su historia sin tu permiso.",p2t:"Visibilidad por hito",p2:"Cada momento puede ser público, para seguidores, para amigos o solo para ti. Tu diario es solo tuyo.",p3t:"Tú decides el detalle",p3:"Muestra la ciudad, el lugar o el detalle exacto: tú eliges hasta dónde.",
+  join_t:"Empieza tu historia antes que nadie",join_l:"Apúntate y te avisamos en cuanto abramos. Si quieres, dinos también dónde te gustaría reencontrarte con alguien: abriremos antes los lugares con más gente apuntada.",
+  f_name:"Nombre",f_email:"Email",f_kind:"¿Hay algún lugar donde te gustaría reencontrarte con alguien? (opcional)",f_choose:"Tipo de lugar",
   k_colegio:"Colegio o instituto",k_universidad:"Universidad",k_trabajo:"Trabajo (también temporal o de verano)",k_barrio:"Barrio o casa anterior",k_vacaciones:"Lugar de vacaciones",k_campamento:"Campamento",k_deporte:"Deporte o club",k_intercambio:"Intercambio",k_otro:"Otro (voluntariado…)",
-  f_place:"Nombre del lugar",f_country:"País del lugar",f_year:"Año aproximado",f_bio:"Me interesa más construir mi biografía (no hace falta indicar un lugar)",f_other:"Otro",f_submit:"Unirme a la lista",f_legal:"Solo usaremos tu email para avisarte del lanzamiento. Puedes darte de baja cuando quieras.",
-  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de tu grupo ya están",d_refs:"invitados",d_share:"Comparte tu enlace con tu grupo. Cada persona que se una acerca la apertura del tuyo.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",d_survey:"¿Nos ayudas con 5 minutos? Responde la encuesta",
-  wa_msg:"Me apunté a Bio, una red para reencontrarnos con quienes compartimos etapas y construir nuestra biografía. Apúntate:",
-  e_req:"Completa todos los campos.",e_place:"Completa el lugar (tipo, nombre y año) o déjalo en blanco.",e_mail:"Revisa tu email.",e_year:"Revisa el año.",e_net:"No pudimos registrarte. Inténtalo de nuevo.",
+  f_place:"Nombre del lugar",f_country:"País del lugar",f_year:"Año aproximado",f_bio:"Quiero construir mi historia",f_other:"Otro",f_submit:"Unirme a la lista",f_legal:"Solo usaremos tu email para avisarte del lanzamiento. Puedes darte de baja cuando quieras.",
+  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de ese lugar ya están",d_refs:"invitados",d_share:"Comparte Bio con quienes forman parte de tu historia.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",d_survey:"¿Nos ayudas con 5 minutos? Responde la encuesta",
+  wa_msg:"Estoy empezando mi historia en Bio: marcas tus momentos y la revives animada o en un libro. Apúntate:",
+  e_req:"Completa nombre y email, y marca «Quiero construir mi historia» o indica un lugar.",e_place:"Completa el lugar (tipo, nombre y año) o déjalo en blanco.",e_mail:"Revisa tu email.",e_year:"Revisa el año.",e_net:"No pudimos registrarte. Inténtalo de nuevo.",
   foot:"© 2026 Bio · Proyecto en fase de validación"},
- en:{h1:"Who was there with you?",lede:"Reconnect with the people who shared a classroom, a street before you moved, a summer or a team with you, and build your life story with your achievements and memories, chapter by chapter.",cta:"Get early access",cta_note:"Free. We open group by group: classes, neighborhoods, camps, teams…",
-  m1:"1988 · Caracas",m1s:"Born",m2:"1994 · San José School",m2s:"Grades 1–6, class B",m2m:"12 classmates found",m3:"2006 · UCV, Engineering",m3s:"5 years",m4:"2014 · Madrid",m4s:"New chapter",m5:"Today",
-  how_t:"Your life story, with the people who were there",s1t:"Tell your chapters",s1:"Schools and university, but also summer jobs, places you lived, holidays, camps, exchanges, teams or volunteering. We guide you milestone by milestone, in minutes.",s2t:"Find your people",s2:"Bio matches place and dates to show who was really there with you: in your classroom, on your street before you moved, or at that 2009 summer camp.",s3t:"Build your life story",s3:"Highlight your achievements, keep the memories you shared with your people and see it as a book or a video. Even if you're still in touch with everyone.",
-  old_k:"Other networks",old:"“People you may know…”",new_k:"Bio",new:"“You were both at Camp Pinewood, July 2008”",
-  priv_t:"Your past, under your control",p1t:"Double confirmation",p1:"Nobody can link you to their story without your permission.",p2t:"Visibility per chapter",p2:"Each milestone can be public, for followers, for friends or just for you.",p3t:"You choose the detail",p3:"Show the city, the institution or the classroom: you decide how much.",
-  join_t:"Save your spot and bring your people",join_l:"We're opening Bio group by group: a class, a neighborhood, a camp, a team. The more people from your group who join, the sooner yours opens.",
-  f_name:"First name",f_email:"Email",f_kind:"Where did you lose touch with someone?",f_choose:"Choose an option",
+ en:{h1:"Mark your moments. Relive your story.",lede:"No paragraphs to write: pick a moment, where and when it happened, and how it made you feel. Bio turns it into your animated story or a book. And when your story crosses paths with someone else's, you discover who was there with you.",cta:"Start my story",cta_note:"Free. We'll let you know as soon as we open.",
+  m1:"2009 · Caracas",m1s:"First day of school · nervous",m2:"2015 · Summer camp",m2s:"Best summer ever · free",m2m:"3 people were there",m3:"2018 · First job",m3s:"Proud",m4:"2021 · Madrid",m4s:"New chapter · excited",m5:"Today",
+  how_t:"Your story, moment by moment",s1t:"Mark your moments",s1:"Each milestone is a place, a date and what happened: your first day of school, that summer, the move, your first job. No paragraphs to write.",s2t:"Say how it made you feel",s2:"Add the feeling each milestone left you with. And for the more personal things, your journal: write in as much detail as you like.",s3t:"Relive it as a video or a book",s3:"Bio turns your milestones into an animated story or a book to keep, share or give.",
+  c_t:"And discover who was there with you.",c:"When your story crosses paths with others' in the same place and time, Bio shows you who was there. Always with your permission.",
+  old_k:"Other networks",old:"What you're doing today, for everyone else.",new_k:"Bio",new:"Your whole story, for you and whoever you choose.",
+  priv_t:"Your story, under your control",p1t:"Double confirmation",p1:"Nobody can link you to their story without your permission.",p2t:"Visibility per moment",p2:"Each moment can be public, for followers, for friends or just for you. Your journal is yours alone.",p3t:"You choose the detail",p3:"Show the city, the place or the exact detail: you decide how much.",
+  join_t:"Start your story before anyone else",join_l:"Sign up and we'll let you know as soon as we open. If you like, tell us where you'd like to reconnect with someone: places with more sign-ups open first.",
+  f_name:"First name",f_email:"Email",f_kind:"Is there a place where you'd like to reconnect with someone? (optional)",f_choose:"Type of place",
   k_colegio:"School",k_universidad:"University",k_trabajo:"Job (incl. summer or temporary)",k_barrio:"Neighborhood or previous home",k_vacaciones:"Holiday spot",k_campamento:"Camp",k_deporte:"Sports team or club",k_intercambio:"Exchange",k_otro:"Other (volunteering…)",
-  f_place:"Name of the place",f_country:"Country of the place",f_year:"Approximate year",f_bio:"I'm more interested in building my life story (no place needed)",f_other:"Other",f_submit:"Join the waitlist",f_legal:"We'll only use your email to tell you about the launch. Unsubscribe anytime.",
-  d_t:"You're in!",d_pos:"your spot",d_coh:"from your group already joined",d_refs:"invited",d_share:"Share your link with your group. Everyone who joins brings your group's opening closer.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",d_survey:"Can you spare 5 minutes? Take our survey",
-  wa_msg:"I joined Bio, a network to reconnect with the people we shared chapters of our lives with and build our life story. Join here:",
-  e_req:"Please fill in every field.",e_place:"Complete the place (type, name and year) or leave it blank.",e_mail:"Check your email.",e_year:"Check the year.",e_net:"We couldn't sign you up. Please try again.",
+  f_place:"Name of the place",f_country:"Country of the place",f_year:"Approximate year",f_bio:"I want to build my story",f_other:"Other",f_submit:"Join the waitlist",f_legal:"We'll only use your email to tell you about the launch. Unsubscribe anytime.",
+  d_t:"You're in!",d_pos:"your spot",d_coh:"from that place already joined",d_refs:"invited",d_share:"Share Bio with the people who are part of your story.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",d_survey:"Can you spare 5 minutes? Take our survey",
+  wa_msg:"I'm starting my story on Bio: you mark your moments and relive them animated or as a book. Join here:",
+  e_req:"Fill in your name and email, and tick “I want to build my story” or add a place.",e_place:"Complete the place (type, name and year) or leave it blank.",e_mail:"Check your email.",e_year:"Check the year.",e_net:"We couldn't sign you up. Please try again.",
   foot:"© 2026 Bio · Project in validation phase"},
- fr:{h1:"Qui était là avec vous ?",lede:"Retrouvez celles et ceux qui ont partagé avec vous une classe, une rue avant votre déménagement, un été ou une équipe, et construisez votre biographie avec vos réussites et vos souvenirs, étape par étape.",cta:"Accès anticipé",cta_note:"Gratuit. Nous ouvrons groupe par groupe : promos, quartiers, colonies, équipes…",
-  m1:"1988 · Caracas",m1s:"Naissance",m2:"1994 · École San José",m2s:"Du CP à la 6e, classe B",m2m:"12 camarades retrouvés",m3:"2006 · UCV, Ingénierie",m3s:"5 ans",m4:"2014 · Madrid",m4s:"Nouvelle étape",m5:"Aujourd’hui",
-  how_t:"Votre biographie, avec ceux qui étaient là",s1t:"Racontez vos étapes",s1:"École et université, mais aussi jobs d’été, quartiers où vous avez vécu, vacances, colonies, échanges, équipes ou bénévolat. Nous vous guidons étape par étape, en quelques minutes.",s2t:"Retrouvez les vôtres",s2:"Bio croise lieux et dates pour vous montrer qui était vraiment là : dans votre classe, dans votre rue avant le déménagement ou dans cette colonie de 2009.",s3t:"Construisez votre biographie",s3:"Mettez en avant vos réussites, gardez les souvenirs partagés avec les vôtres et regardez-la en livre ou en vidéo. Même si vous êtes toujours en contact avec tout le monde.",
-  old_k:"Autres réseaux",old:"« Vous connaissez peut-être… »",new_k:"Bio",new:"« Vous étiez tous les deux à la colonie des Glénans, juillet 2008 »",
-  priv_t:"Votre passé, sous votre contrôle",p1t:"Double confirmation",p1:"Personne ne peut vous lier à son histoire sans votre accord.",p2t:"Visibilité par étape",p2:"Chaque étape peut être publique, pour vos abonnés, vos amis ou vous seul.",p3t:"Vous choisissez le détail",p3:"Ville, établissement ou classe : c’est vous qui décidez.",
-  join_t:"Réservez votre place et invitez les vôtres",join_l:"Nous ouvrons Bio groupe par groupe : une promo, un quartier, une colonie, une équipe. Plus les membres de votre groupe s’inscrivent, plus le vôtre ouvre tôt.",
-  f_name:"Prénom",f_email:"E-mail",f_kind:"Où avez-vous perdu le contact avec quelqu’un ?",f_choose:"Choisissez une option",
+ fr:{h1:"Marquez vos moments. Revivez votre histoire.",lede:"Pas besoin d’écrire des paragraphes : choisissez un moment, où et quand c’était, et ce que vous avez ressenti. Bio en fait votre histoire animée ou un livre. Et quand votre histoire croise celle des autres, vous découvrez qui était à vos côtés.",cta:"Commencer mon histoire",cta_note:"Gratuit. Nous vous prévenons dès l’ouverture.",
+  m1:"2009 · Caracas",m1s:"Rentrée des classes · le trac",m2:"2015 · Colonie de vacances",m2s:"Le plus bel été · liberté",m2m:"3 personnes étaient là",m3:"2018 · Premier emploi",m3s:"Fierté",m4:"2021 · Madrid",m4s:"Nouvelle étape · envie",m5:"Aujourd’hui",
+  how_t:"Votre histoire, moment après moment",s1t:"Marquez vos moments",s1:"Chaque étape, c’est un lieu, une date et ce qui s’est passé : votre rentrée, cet été-là, le déménagement, votre premier emploi. Sans écrire de paragraphes.",s2t:"Dites ce que vous avez ressenti",s2:"Ajoutez à chaque étape l’émotion qu’elle vous a laissée. Et pour le plus personnel, votre journal : écrivez avec autant de détails que vous voulez.",s3t:"Revivez-la en vidéo ou en livre",s3:"Bio transforme vos étapes en histoire animée ou en livre à garder, partager ou offrir.",
+  c_t:"Et découvrez qui était à vos côtés.",c:"Quand votre histoire croise celle d’autres personnes au même endroit et au même moment, Bio vous montre qui était là. Toujours avec votre accord.",
+  old_k:"Autres réseaux",old:"Ce que vous faites aujourd’hui, pour les autres.",new_k:"Bio",new:"Toute votre histoire, pour vous et pour qui vous voulez.",
+  priv_t:"Votre histoire, sous votre contrôle",p1t:"Double confirmation",p1:"Personne ne peut vous lier à son histoire sans votre accord.",p2t:"Visibilité par moment",p2:"Chaque moment peut être public, pour vos abonnés, vos amis ou vous seul. Votre journal n’appartient qu’à vous.",p3t:"Vous choisissez le détail",p3:"Ville, lieu ou détail précis : c’est vous qui décidez.",
+  join_t:"Commencez votre histoire avant tout le monde",join_l:"Inscrivez-vous et nous vous prévenons dès l’ouverture. Si vous voulez, dites-nous aussi où vous aimeriez retrouver quelqu’un : les lieux avec le plus d’inscrits ouvriront en premier.",
+  f_name:"Prénom",f_email:"E-mail",f_kind:"Y a-t-il un lieu où vous aimeriez retrouver quelqu’un ? (facultatif)",f_choose:"Type de lieu",
   k_colegio:"École, collège ou lycée",k_universidad:"Université",k_trabajo:"Travail (y compris saisonnier ou d’été)",k_barrio:"Quartier ou ancien logement",k_vacaciones:"Lieu de vacances",k_campamento:"Colonie ou camp",k_deporte:"Sport ou club",k_intercambio:"Échange",k_otro:"Autre (bénévolat…)",
-  f_place:"Nom du lieu",f_country:"Pays du lieu",f_year:"Année approximative",f_bio:"Je m’intéresse surtout à construire ma biographie (pas besoin d’indiquer un lieu)",f_other:"Autre",f_submit:"Rejoindre la liste",f_legal:"Nous utiliserons votre e-mail uniquement pour vous prévenir du lancement. Désinscription à tout moment.",
-  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de votre groupe déjà inscrits",d_refs:"invités",d_share:"Partagez votre lien avec votre groupe. Chaque inscription rapproche l’ouverture du vôtre.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",d_survey:"Vous nous accordez 5 minutes ? Répondez au questionnaire",
-  wa_msg:"Je me suis inscrit sur Bio, un réseau pour retrouver ceux avec qui on a partagé des étapes de vie et construire notre biographie. Inscris-toi :",
-  e_req:"Merci de remplir tous les champs.",e_place:"Complétez le lieu (type, nom et année) ou laissez-le vide.",e_mail:"Vérifiez votre e-mail.",e_year:"Vérifiez l’année.",e_net:"Inscription impossible. Réessayez.",
+  f_place:"Nom du lieu",f_country:"Pays du lieu",f_year:"Année approximative",f_bio:"Je veux construire mon histoire",f_other:"Autre",f_submit:"Rejoindre la liste",f_legal:"Nous utiliserons votre e-mail uniquement pour vous prévenir du lancement. Désinscription à tout moment.",
+  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de ce lieu déjà inscrits",d_refs:"invités",d_share:"Partagez Bio avec celles et ceux qui font partie de votre histoire.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",d_survey:"Vous nous accordez 5 minutes ? Répondez au questionnaire",
+  wa_msg:"Je commence mon histoire sur Bio : on marque ses moments et on les revit en animation ou en livre. Inscris-toi :",
+  e_req:"Indiquez votre prénom et votre e-mail, et cochez « Je veux construire mon histoire » ou indiquez un lieu.",e_place:"Complétez le lieu (type, nom et année) ou laissez-le vide.",e_mail:"Vérifiez votre e-mail.",e_year:"Vérifiez l’année.",e_net:"Inscription impossible. Réessayez.",
   foot:"© 2026 Bio · Projet en phase de validation"}
 };
 
