@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bio — Encuesta</title>
+<meta name="description" content="Ayúdanos a crear Bio respondiendo una encuesta anónima de 5 minutos.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e7; --paper-2:#efe7d6; --ink:#1f1a14; --ink-2:#5b5245; --line:#d9cdb5;
+  --accent:#c4552d; --accent-ink:#fff; --ok:#2f7d4f; --card:#fffdf8;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#16130f; --paper-2:#1e1a15; --ink:#f1e9da; --ink-2:#b4a892; --line:#3a332a;
+    --accent:#e0754b; --accent-ink:#1b120c; --ok:#6cc08f; --card:#211c16;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#16130f; --paper-2:#1e1a15; --ink:#f1e9da; --ink-2:#b4a892; --line:#3a332a;
+  --accent:#e0754b; --accent-ink:#1b120c; --ok:#6cc08f; --card:#211c16;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.logo{font:600 26px/1 Fraunces,serif;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.logo span{color:var(--accent)}
+.langs{display:flex;gap:4px}
+.langs button{background:none;border:1px solid transparent;color:var(--ink-2);font:500 13px Inter,system-ui;padding:8px 10px;border-radius:999px;cursor:pointer;min-height:36px}
+.langs button[aria-pressed="true"]{border-color:var(--line);color:var(--ink);background:var(--card)}
+.progress{height:6px;background:var(--paper-2);border-radius:999px;overflow:hidden;margin:4px 0 6px}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}
+.ptext{font-size:13px;color:var(--ink-2);min-height:1.4em;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;box-shadow:0 20px 50px -34px rgba(60,40,10,.35)}
+h1,h2{font-family:Fraunces,serif;font-weight:600;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(30px,7vw,42px);line-height:1.08;margin-bottom:14px}
+h2{font-size:clamp(22px,5vw,28px);line-height:1.2}
+h1:focus,h2:focus{outline:none}
+.kicker{font:600 12px Inter,system-ui;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin:0 0 8px}
+.hint{font-size:14px;color:var(--ink-2);margin:6px 0 0}
+.lede{color:var(--ink-2);margin:0 0 16px}
+fieldset{border:0;margin:0 0 6px;padding:0;min-width:0}
+fieldset+fieldset{margin-top:22px}
+legend{padding:0;margin-bottom:14px;width:100%}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:12px 14px;min-height:48px;cursor:pointer;font-size:16px}
+.opt:hover{border-color:var(--ink-2)}
+.opt input{width:20px;height:20px;margin:0;accent-color:var(--accent);flex:none}
+.opt:has(input:checked){border-color:var(--accent);background:var(--card);box-shadow:inset 0 0 0 1px var(--accent)}
+.opt:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale .opt{flex-direction:column;justify-content:center;gap:4px;padding:10px 4px;font-weight:600}
+.scale-l{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--ink-2);margin-top:8px}
+.scale-l span:last-child{text-align:right}
+label.f{font:500 14px Inter,system-ui;color:var(--ink-2);display:grid;gap:6px;margin-top:12px}
+input[type=email],input[type=text],select,textarea{font:16px Inter,system-ui;padding:12px 13px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
+textarea{min-height:130px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.count{font-size:12px;color:var(--ink-2);text-align:right}
+.priv{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--ink-2);margin:0 0 16px}
+.priv strong{color:var(--ink)}
+.priv ul{margin:8px 0 6px;padding-left:18px}
+.priv li{margin:3px 0}
+a{color:var(--accent)}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:15px;cursor:pointer;padding:6px 0}
+.check input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--accent);flex:none}
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:14px 22px;min-height:48px;font:600 16px Inter,system-ui;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.05)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.btn[disabled]{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.nav .btn:last-child{margin-left:auto}
+.err{color:var(--accent);font-size:14px;min-height:1.2em;margin:12px 0 0;font-weight:500}
+.demo{font-size:13px;color:var(--ink-2);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin:0 0 12px}
+.stack{display:grid;gap:10px;margin-top:18px}
+.note{font-size:13px;color:var(--ink-2);margin-top:12px}
+.hp{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+footer{padding:28px 0 40px;color:var(--ink-2);font-size:13px}
+@media (min-width:560px){.card{padding:30px 32px}}
+@media (prefers-reduced-motion:reduce){.progress i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="index.html" id="home">bio<span>.</span></a>
+    <div class="langs" role="group" aria-label="Idioma / Language / Langue">
+      <button type="button" data-l="es">ES</button><button type="button" data-l="en">EN</button><button type="button" data-l="fr">FR</button>
+    </div>
+  </header>
+  <main>
+    <div id="bar" hidden>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pbar"><i id="pfill"></i></div>
+      <p class="ptext" id="ptext" aria-live="polite"></p>
+    </div>
+    <p class="demo" id="demo" hidden></p>
+    <form class="card" id="screen" novalidate></form>
+  </main>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+/* ===== Mismas constantes que index.html (Settings → API de Supabase) =====
+   Si se dejan vacías, la encuesta funciona en modo demo (no guarda nada). */
+const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
+const SURVEY_VERSION = "1.0";
+const STORE_KEY = "bio_encuesta_v1";
+
+/* ---------- Estructura (común a los tres idiomas; códigos = lista blanca de submit_survey) ---------- */
+const COUNTRY_LISTS = { es:["VE","ES","US","CO","AR","MX","FR","GB","XX"], en:["VE","ES","US","CO","AR","MX","FR","GB","XX"], fr:["FR","BE","CH","CA","VE","ES","US","MA","XX"] };
+const Q = {
+  q1:{b:"A",type:"one",req:1,o:["lt18","18_24","25_34","35_44","45_54","55p"]},
+  q2:{b:"A",type:"select",req:1,o:"countries"},
+  q3:{b:"A",type:"select",req:1,o:"countries"},
+  q4:{b:"B",type:"one",req:1,o:["yes","no"]},
+  q5:{b:"B",type:"multi",req:1,o:["facebook","instagram","linkedin","google","whatsapp","acquaintances","other"],shuffle:1,fixed:["other"],show:a=>a.q4==="yes"},
+  q6:{b:"B",type:"one",req:1,o:["yes","partly","no"],show:a=>a.q4==="yes"},
+  q7:{b:"B",type:"long",max:1500,show:a=>a.q4==="yes"},
+  q8:{b:"B",type:"one",req:1,o:["active","inactive","no"]},
+  q9:{b:"B",type:"one",req:1,o:["none","1_5","6_20","gt20"]},
+  q10:{b:"B",type:"scale",req:1},
+  q11:{b:"B",type:"one",req:1,o:["A","B","indiff"]},
+  q12:{b:"C",type:"one",req:1,o:["yes","maybe","no"]},
+  q13:{b:"C",type:"scale",req:1},
+  q14:{b:"C",type:"multi",req:1,o:["instagram","tiktok","whatsapp","facebook","other","none"],shuffle:1,fixed:["other","none"],excl:"none"},
+  q15:{b:"C",type:"one",req:1,o:["video","book","map","several","none"]},
+  q16:{b:"C",type:"scale",req:1},
+  q17:{b:"D",type:"scale",req:1},
+  q18:{b:"D",type:"one",req:1,o:["A","B","indiff"]},
+  q19:{b:"D",type:"one",req:1,o:["anyone","followers","contacts","me"]},
+  q20:{b:"D",type:"long",max:1500},
+  q21:{b:"E",type:"one",req:1,o:["yes_sure","probably","no"]},
+  q22:{b:"E",type:"short",max:200,show:a=>!!a.q21&&a.q21!=="no"},
+  q23:{b:"E",type:"one",req:1,o:["yes","maybe","no"]},
+  q24:{b:"E",type:"one",req:1,o:["lt20","20_39","40_59","60p"],show:a=>!!a.q23&&a.q23!=="no"},
+  q25:{b:"E",type:"one",req:1,o:["yes","maybe","no"]}
+};
+/* Pantallas: una pregunta o un bloque corto (P2+P3) */
+const SCREENS = ["intro",["q1"],["q2","q3"],["q4"],["q5"],["q6"],["q7"],["q8"],["q9"],["q10"],["q11"],
+  ["q12"],["q13"],["q14"],["q15"],["q16"],["q17"],["q18"],["q19"],["q20"],["q21"],["q22"],["q23"],["q24"],["q25"],
+  "close","thanks","minor"];
+
+/* ---------- Textos ---------- */
+const T = {
+ es:{
+  title:"Encuesta", foot:"© 2026 Bio · Proyecto en fase de validación",
+  demo:"Modo demo: las respuestas no se guardan.",
+  i_t:"Ayúdanos a crear Bio · 5 minutos",
+  i_l:"Estamos explorando una idea: una app donde cuentas tu vida por etapas (colegio, universidad, trabajos, ciudades) y que te ayuda a reencontrar a quienes coincidieron contigo en el mismo lugar y momento. Antes de construir nada, queremos saber si de verdad lo necesitas. No hay respuestas correctas: nos ayuda más una opinión sincera que una amable.",
+  i_p:"<strong>Privacidad, en corto.</strong> La encuesta es anónima: no pedimos tu nombre. Al final puedes dejar tu email si quieres acceso anticipado; es opcional y se guarda aparte.<ul><li><strong>Responsable:</strong> el impulsor del proyecto Bio, persona física con residencia en España (datos de contacto en la política).</li><li><strong>Para qué:</strong> investigación de mercado: estudiar el interés en Bio y decidir si se desarrolla. No vendemos ni cedemos tus datos; no los usamos para publicidad.</li><li><strong>Base legal:</strong> tu consentimiento (art. 6.1.a RGPD), que puedes retirar cuando quieras.</li><li><strong>Dónde:</strong> en nuestra base de datos de Supabase (UE, Fráncfort). Sin cookies ni herramientas de terceros.</li><li><strong>Cuánto tiempo:</strong> hasta 12 meses después de terminar la fase de validación; si el proyecto no sigue, se borra todo.</li><li><strong>Tus derechos:</strong> acceso, rectificación, supresión, oposición, limitación y portabilidad. Puedes reclamar ante la AEPD (aepd.es).</li></ul>",
+  i_link:"Política de privacidad completa",
+  i_c:"Tengo 18 años o más, he leído la información de privacidad y acepto participar.",
+  start:"Empezar", next:"Siguiente", back:"Atrás", send:"Enviar respuestas", sending:"Enviando…",
+  prog:"Pregunta {n} de {t}", opt:"(opcional)", multi:"Marca todas las que apliquen.", choose:"Elige una opción",
+  s_lo:"1 = Nada de acuerdo", s_hi:"5 = Totalmente de acuerdo", chars:"{n}/{m}",
+  blocks:{A:"Bloque A · Sobre ti",B:"Bloque B · Reencuentros",C:"Bloque C · Tu historia",D:"Bloque D · Privacidad y confianza",E:"Bloque E · Invitar y pagar"},
+  e_consent:"Para participar, marca la casilla de consentimiento.", e_req:"Elige una respuesta para continuar.",
+  e_mail:"Revisa tu email.", e_mailc:"Para guardar tu email, marca su casilla (o deja el campo vacío).", e_net:"No pudimos enviar tus respuestas. Inténtalo de nuevo.",
+  c_t:"Último paso", c_l:"Opcional: si quieres que te avisemos del lanzamiento, deja tu email. Se guarda aparte de tus respuestas.",
+  c_email:"Email (opcional)", c_c:"Acepto que el responsable de Bio use mi email solo para avisarme del lanzamiento de Bio. Puedo darme de baja en cualquier momento.",
+  g_t:"¡Gracias! Tus respuestas ya nos ayudan.", g_l:"Si quieres acceso anticipado y ser miembro fundador de Bio, apúntate a la lista de espera.",
+  g_btn:"Unirme a la lista de espera", g_share:"¿Conoces a 2 personas de tu promoción a las que les interese? Compárteles esta encuesta: cada respuesta cuenta.",
+  g_wa:"Compartir por WhatsApp", wa_msg:"Estoy ayudando a crear Bio, una app para reencontrarnos con quienes estudiaron con nosotros. ¿Respondes esta encuesta de 5 minutos?",
+  m_t:"Gracias por tu interés", m_l:"Esta encuesta es solo para personas de 18 años o más, así que no hemos guardado ninguna respuesta.", m_btn:"Volver a Bio",
+  countries:{VE:"Venezuela",ES:"España",US:"Estados Unidos",CO:"Colombia",AR:"Argentina",MX:"México",FR:"Francia",GB:"Reino Unido",BE:"Bélgica",CH:"Suiza",CA:"Canadá",MA:"Marruecos",XX:"Otro país"},
+  q:{
+   q1:["¿Qué edad tienes?",{lt18:"Menos de 18","18_24":"18–24","25_34":"25–34","35_44":"35–44","45_54":"45–54","55p":"55 o más"}],
+   q2:["¿En qué país terminaste la secundaria o el bachillerato?"],
+   q3:["¿En qué país vives hoy?"],
+   q4:["En los últimos 12 meses, ¿has intentado encontrar a alguien de tu colegio, universidad o algún trabajo anterior?",{yes:"Sí",no:"No"}],
+   q5:["¿Cómo lo intentaste?",{facebook:"Facebook",instagram:"Instagram",linkedin:"LinkedIn",google:"Google",whatsapp:"Grupo de WhatsApp",acquaintances:"Preguntando a conocidos",other:"Otro"}],
+   q6:["¿Lo conseguiste?",{yes:"Sí",partly:"Solo en parte",no:"No"}],
+   q7:["Cuéntanos esa última vez: ¿a quién buscabas, cómo lo hiciste y qué pasó?"],
+   q8:["¿Estás en algún grupo de tu promoción del colegio o de la universidad (WhatsApp, Facebook u otro)?",{active:"Sí, y es activo",inactive:"Sí, pero casi no se usa",no:"No"}],
+   q9:["¿Con cuántas personas de tu promoción del colegio sigues en contacto?",{none:"Ninguna","1_5":"1–5","6_20":"6–20",gt20:"Más de 20"}],
+   q10:["«Me gustaría saber qué fue de mis compañeros de clase.»"],
+   q11:["Imagina que una app te muestra una de estas sugerencias. ¿Cuál te resultaría más útil?",{A:"A · «María Pérez también estudió en el Colegio San José.»",B:"B · «María Pérez estuvo en tu misma clase, 5.º B, en 2003–2004.»",indiff:"Me da igual"}],
+   q12:["¿Dedicarías unos 5 minutos a registrar tus etapas (colegios, universidades, trabajos y ciudades)?",{yes:"Sí",maybe:"Tal vez",no:"No"}],
+   q13:["«Me gustaría ver una animación corta de mi vida: los lugares y las etapas por los que he pasado.»"],
+   q14:["Si tuvieras esa animación, ¿dónde la compartirías?",{instagram:"Historias de Instagram",tiktok:"TikTok",whatsapp:"Estado o grupo de WhatsApp",facebook:"Facebook",other:"Otro",none:"No la compartiría"}],
+   q15:["¿Cómo te gustaría ver tu historia?",{video:"Como un vídeo animado",book:"Como un libro por capítulos",map:"Como un mapa o línea de tiempo interactiva",several:"Varias de estas",none:"Ninguna"}],
+   q16:["«Me gustaría llevar un diario en la misma app donde está mi historia de vida.»"],
+   q17:["«Me preocupa que otras personas sepan dónde estudié o viví y en qué años.»"],
+   q18:["Si alguien indica en la app que coincidió contigo (un compañero, un colega o una expareja), ¿qué prefieres?",{A:"A · Que solo aparezca el vínculo cuando yo lo confirme",B:"B · Que aparezca automáticamente, sin pedirme confirmación",indiff:"Me da igual"}],
+   q19:["¿Quién debería ver tus etapas por defecto?",{anyone:"Cualquiera",followers:"Solo quienes me siguen",contacts:"Solo mis contactos confirmados",me:"Solo yo"}],
+   q20:["¿Qué te preocuparía de compartir dónde y cuándo estuviste en cada etapa de tu vida?"],
+   q21:["Si Bio existiera, ¿se lo enviarías a tu grupo de promoción?",{yes_sure:"Sí, seguro",probably:"Probablemente",no:"No"}],
+   q22:["¿A qué grupo se lo enviarías?","Por ejemplo: «Promo 2005 del Liceo X»"],
+   q23:["¿Pagarías por tener tu historia impresa como un libro?",{yes:"Sí",maybe:"Tal vez",no:"No"}],
+   q24:["¿Cuánto pagarías como máximo por ese libro impreso (tapa dura, unas 100 páginas, con fotos)?",{lt20:"Menos de 20 €","20_39":"20–39 €","40_59":"40–59 €","60p":"60 € o más"},"Si no usas euros, piensa en el equivalente en dólares."],
+   q25:["El reencuentro en Bio sería siempre gratis. ¿Pagarías por extras opcionales de la animación (avatares, estilos visuales, música)?",{yes:"Sí",maybe:"Tal vez",no:"No"}]
+  }},
+ en:{
+  title:"Survey", foot:"© 2026 Bio · Project in validation phase",
+  demo:"Demo mode: answers are not saved.",
+  i_t:"Help us build Bio · 5 minutes",
+  i_l:"We're exploring an idea: an app where you tell your life story in stages (school, university, jobs, cities) and that helps you reconnect with people who were in the same place at the same time. Before building anything, we want to know if you actually need it. There are no right answers: an honest opinion helps us more than a kind one.",
+  i_p:"<strong>Privacy, in short.</strong> This survey is anonymous: we don't ask for your name. At the end you can leave your email for early access; it's optional and stored separately.<ul><li><strong>Controller:</strong> the founder of the Bio project, a private individual resident in Spain (contact details in the policy).</li><li><strong>Purpose:</strong> market research: to study interest in Bio and decide whether to build it. We don't sell or share your data, and we don't use it for advertising.</li><li><strong>Legal basis:</strong> your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time.</li><li><strong>Where:</strong> in our Supabase database (EU, Frankfurt). No cookies or third-party tools.</li><li><strong>Retention:</strong> up to 12 months after the validation phase ends; if the project doesn't go ahead, everything is deleted.</li><li><strong>Your rights:</strong> access, rectification, erasure, objection, restriction and portability. You can complain to your data protection authority (AEPD in Spain, ICO in the UK).</li></ul>",
+  i_link:"Full privacy policy",
+  i_c:"I am 18 or older, I have read the privacy information and I agree to take part.",
+  start:"Start", next:"Next", back:"Back", send:"Send answers", sending:"Sending…",
+  prog:"Question {n} of {t}", opt:"(optional)", multi:"Select all that apply.", choose:"Choose an option",
+  s_lo:"1 = Strongly disagree", s_hi:"5 = Strongly agree", chars:"{n}/{m}",
+  blocks:{A:"Block A · About you",B:"Block B · Reconnecting",C:"Block C · Your story",D:"Block D · Privacy and trust",E:"Block E · Inviting and paying"},
+  e_consent:"To take part, please tick the consent box.", e_req:"Choose an answer to continue.",
+  e_mail:"Check your email.", e_mailc:"To save your email, tick its box (or leave the field empty).", e_net:"We couldn't send your answers. Please try again.",
+  c_t:"Last step", c_l:"Optional: leave your email if you'd like us to tell you when Bio launches. It's stored separately from your answers.",
+  c_email:"Email (optional)", c_c:"I agree that the Bio controller may use my email only to tell me when Bio launches. I can unsubscribe at any time.",
+  g_t:"Thank you! Your answers already help us.", g_l:"Want early access and to become a founding member of Bio? Join the waitlist.",
+  g_btn:"Join the waitlist", g_share:"Know 2 people from your class who'd be interested? Share this survey with them: every answer counts.",
+  g_wa:"Share on WhatsApp", wa_msg:"I'm helping build Bio, an app to reconnect with the people we went to school with. Could you answer this 5-minute survey?",
+  m_t:"Thanks for your interest", m_l:"This survey is only for people aged 18 or over, so we haven't saved any answers.", m_btn:"Back to Bio",
+  countries:{VE:"Venezuela",ES:"Spain",US:"United States",CO:"Colombia",AR:"Argentina",MX:"Mexico",FR:"France",GB:"United Kingdom",BE:"Belgium",CH:"Switzerland",CA:"Canada",MA:"Morocco",XX:"Other"},
+  q:{
+   q1:["How old are you?",{lt18:"Under 18","18_24":"18–24","25_34":"25–34","35_44":"35–44","45_54":"45–54","55p":"55 or older"}],
+   q2:["In which country did you finish high school / secondary school?"],
+   q3:["In which country do you live today?"],
+   q4:["In the last 12 months, have you tried to find someone from your school, university or a previous job?",{yes:"Yes",no:"No"}],
+   q5:["How did you try?",{facebook:"Facebook",instagram:"Instagram",linkedin:"LinkedIn",google:"Google",whatsapp:"WhatsApp group",acquaintances:"Asking people I know",other:"Other"}],
+   q6:["Did you find them?",{yes:"Yes",partly:"Partly",no:"No"}],
+   q7:["Tell us about that last time: who were you looking for, how did you search and what happened?"],
+   q8:["Are you in a group for your school or university class (WhatsApp, Facebook or other)?",{active:"Yes, and it's active",inactive:"Yes, but it's barely used",no:"No"}],
+   q9:["How many people from your high school class are you still in touch with?",{none:"None","1_5":"1–5","6_20":"6–20",gt20:"More than 20"}],
+   q10:["“I'd like to know what became of my classmates.”"],
+   q11:["Imagine an app shows you one of these suggestions. Which would be more useful to you?",{A:"A · “Maria Perez also went to St. Joseph High School.”",B:"B · “Maria Perez was in your homeroom, class 10B, in 2003–2004.”",indiff:"No preference"}],
+   q12:["Would you spend about 5 minutes adding your life stages (schools, universities, jobs and cities)?",{yes:"Yes",maybe:"Maybe",no:"No"}],
+   q13:["“I'd like to see a short animation of my life: the places and stages I've been through.”"],
+   q14:["If you had that animation, where would you share it?",{instagram:"Instagram Stories",tiktok:"TikTok",whatsapp:"WhatsApp status or group",facebook:"Facebook",other:"Other",none:"I wouldn't share it"}],
+   q15:["How would you like to see your story?",{video:"As an animated video",book:"As a book with chapters",map:"As an interactive map or timeline",several:"Several of these",none:"None"}],
+   q16:["“I'd like to keep a journal in the same app where my life story is.”"],
+   q17:["“I'm concerned about other people knowing where I studied or lived, and in which years.”"],
+   q18:["If someone says in the app that they crossed paths with you (a classmate, a colleague or an ex-partner), what would you prefer?",{A:"A · The link only appears once I confirm it",B:"B · The link appears automatically, without asking me",indiff:"No preference"}],
+   q19:["Who should see your life stages by default?",{anyone:"Anyone",followers:"Only people who follow me",contacts:"Only my confirmed contacts",me:"Only me"}],
+   q20:["What would worry you about sharing where and when you were at each stage of your life?"],
+   q21:["If Bio existed, would you send it to your class group?",{yes_sure:"Yes, definitely",probably:"Probably",no:"No"}],
+   q22:["Which group would you send it to?","E.g. “Class of 2005, X High School”"],
+   q23:["Would you pay to have your story printed as a book?",{yes:"Yes",maybe:"Maybe",no:"No"}],
+   q24:["What's the most you would pay for that printed book (hardcover, about 100 pages, with photos)?",{lt20:"Under $20","20_39":"$20–39","40_59":"$40–59","60p":"$60 or more"}],
+   q25:["Reconnecting on Bio would always be free. Would you pay for optional animation extras (avatars, visual styles, music)?",{yes:"Yes",maybe:"Maybe",no:"No"}]
+  }},
+ fr:{
+  title:"Questionnaire", foot:"© 2026 Bio · Projet en phase de validation",
+  demo:"Mode démo : les réponses ne sont pas enregistrées.",
+  i_t:"Aidez-nous à créer Bio · 5 minutes",
+  i_l:"Nous explorons une idée : une appli où vous racontez votre vie par étapes (école, études, emplois, villes) et qui vous aide à retrouver les personnes qui étaient au même endroit, au même moment. Avant de construire quoi que ce soit, nous voulons savoir si vous en avez vraiment besoin. Il n'y a pas de bonne réponse : un avis sincère nous aide plus qu'un avis aimable.",
+  i_p:"<strong>Confidentialité, en bref.</strong> Ce questionnaire est anonyme : nous ne demandons pas votre nom. À la fin, vous pouvez laisser votre e-mail pour un accès anticipé ; c'est facultatif et conservé à part.<ul><li><strong>Responsable du traitement :</strong> le porteur du projet Bio, personne physique résidant en Espagne (coordonnées dans la politique).</li><li><strong>Finalité :</strong> étude de marché : étudier l'intérêt pour Bio et décider de le développer ou non. Nous ne vendons ni ne cédons vos données, et ne les utilisons pas pour de la publicité.</li><li><strong>Base légale :</strong> votre consentement (art. 6.1.a RGPD), que vous pouvez retirer à tout moment.</li><li><strong>Où :</strong> dans notre base de données Supabase (UE, Francfort). Ni cookies ni outils tiers.</li><li><strong>Durée de conservation :</strong> jusqu'à 12 mois après la fin de la phase de validation ; si le projet ne se poursuit pas, tout est supprimé.</li><li><strong>Vos droits :</strong> accès, rectification, effacement, opposition, limitation et portabilité. Vous pouvez saisir la CNIL (France) ou l'AEPD (Espagne).</li></ul>",
+  i_link:"Politique de confidentialité complète",
+  i_c:"J'ai 18 ans ou plus, j'ai lu les informations sur la confidentialité et j'accepte de participer.",
+  start:"Commencer", next:"Suivant", back:"Retour", send:"Envoyer mes réponses", sending:"Envoi…",
+  prog:"Question {n} sur {t}", opt:"(facultatif)", multi:"Cochez tout ce qui s'applique.", choose:"Choisissez une option",
+  s_lo:"1 = Pas du tout d'accord", s_hi:"5 = Tout à fait d'accord", chars:"{n}/{m}",
+  blocks:{A:"Bloc A · À propos de vous",B:"Bloc B · Retrouvailles",C:"Bloc C · Votre histoire",D:"Bloc D · Confidentialité et confiance",E:"Bloc E · Inviter et payer"},
+  e_consent:"Pour participer, cochez la case de consentement.", e_req:"Choisissez une réponse pour continuer.",
+  e_mail:"Vérifiez votre e-mail.", e_mailc:"Pour enregistrer votre e-mail, cochez sa case (ou laissez le champ vide).", e_net:"Impossible d'envoyer vos réponses. Réessayez.",
+  c_t:"Dernière étape", c_l:"Facultatif : laissez votre e-mail si vous souhaitez être prévenu·e du lancement. Il est conservé à part de vos réponses.",
+  c_email:"E-mail (facultatif)", c_c:"J'accepte que le responsable de Bio utilise mon e-mail uniquement pour me prévenir du lancement de Bio. Je peux me désinscrire à tout moment.",
+  g_t:"Merci ! Vos réponses nous aident déjà.", g_l:"Envie d'un accès anticipé et de devenir membre fondateur de Bio ? Inscrivez-vous sur la liste d'attente.",
+  g_btn:"Rejoindre la liste d'attente", g_share:"Vous connaissez 2 personnes de votre promo que cela intéresserait ? Partagez-leur ce questionnaire : chaque réponse compte.",
+  g_wa:"Partager sur WhatsApp", wa_msg:"J'aide à créer Bio, une appli pour retrouver ceux avec qui on a étudié. Tu peux répondre à ce questionnaire de 5 minutes ?",
+  m_t:"Merci de votre intérêt", m_l:"Ce questionnaire est réservé aux personnes de 18 ans ou plus : nous n'avons enregistré aucune réponse.", m_btn:"Retour à Bio",
+  countries:{VE:"Venezuela",ES:"Espagne",US:"États-Unis",CO:"Colombie",AR:"Argentine",MX:"Mexique",FR:"France",GB:"Royaume-Uni",BE:"Belgique",CH:"Suisse",CA:"Canada",MA:"Maroc",XX:"Autre pays"},
+  q:{
+   q1:["Quel âge avez-vous ?",{lt18:"Moins de 18 ans","18_24":"18–24","25_34":"25–34","35_44":"35–44","45_54":"45–54","55p":"55 ou plus"}],
+   q2:["Dans quel pays avez-vous terminé le lycée (ou l'enseignement secondaire) ?"],
+   q3:["Dans quel pays vivez-vous aujourd'hui ?"],
+   q4:["Au cours des 12 derniers mois, avez-vous essayé de retrouver quelqu'un de votre école, de vos études ou d'un ancien travail ?",{yes:"Oui",no:"Non"}],
+   q5:["Comment avez-vous essayé ?",{facebook:"Facebook",instagram:"Instagram",linkedin:"LinkedIn",google:"Google",whatsapp:"Groupe WhatsApp",acquaintances:"En demandant à des connaissances",other:"Autre"}],
+   q6:["Avez-vous réussi ?",{yes:"Oui",partly:"En partie",no:"Non"}],
+   q7:["Racontez-nous cette dernière fois : qui cherchiez-vous, comment, et que s'est-il passé ?"],
+   q8:["Faites-vous partie d'un groupe de votre promo du lycée ou de vos études (WhatsApp, Facebook ou autre) ?",{active:"Oui, et il est actif",inactive:"Oui, mais il est peu utilisé",no:"Non"}],
+   q9:["Avec combien de personnes de votre promo du lycée êtes-vous encore en contact ?",{none:"Aucune","1_5":"1–5","6_20":"6–20",gt20:"Plus de 20"}],
+   q10:["« J'aimerais savoir ce que sont devenus mes camarades de classe. »"],
+   q11:["Imaginez qu'une appli vous montre l'une de ces suggestions. Laquelle vous serait la plus utile ?",{A:"A · « Marie Dupont a aussi étudié au lycée Saint-Joseph. »",B:"B · « Marie Dupont était dans votre classe, en 1re B, en 2003–2004. »",indiff:"Peu importe"}],
+   q12:["Consacreriez-vous environ 5 minutes à enregistrer vos étapes (écoles, études, emplois et villes) ?",{yes:"Oui",maybe:"Peut-être",no:"Non"}],
+   q13:["« J'aimerais voir une courte animation de ma vie : les lieux et les étapes par lesquels je suis passé·e. »"],
+   q14:["Si vous aviez cette animation, où la partageriez-vous ?",{instagram:"Stories Instagram",tiktok:"TikTok",whatsapp:"Statut ou groupe WhatsApp",facebook:"Facebook",other:"Autre",none:"Je ne la partagerais pas"}],
+   q15:["Comment aimeriez-vous voir votre histoire ?",{video:"En vidéo animée",book:"En livre par chapitres",map:"En carte ou frise chronologique interactive",several:"Plusieurs de ces formats",none:"Aucun"}],
+   q16:["« J'aimerais tenir un journal intime dans la même appli que mon histoire de vie. »"],
+   q17:["« Cela me dérange que d'autres sachent où j'ai étudié ou vécu, et en quelles années. »"],
+   q18:["Si quelqu'un indique dans l'appli qu'il vous a croisé·e (un camarade, un collègue ou un·e ex), que préférez-vous ?",{A:"A · Que le lien n'apparaisse qu'une fois que je l'ai confirmé",B:"B · Que le lien apparaisse automatiquement, sans me demander",indiff:"Peu importe"}],
+   q19:["Qui devrait voir vos étapes par défaut ?",{anyone:"Tout le monde",followers:"Seulement les personnes qui me suivent",contacts:"Seulement mes contacts confirmés",me:"Seulement moi"}],
+   q20:["Qu'est-ce qui vous inquiéterait dans le fait de partager où et quand vous étiez à chaque étape de votre vie ?"],
+   q21:["Si Bio existait, l'enverriez-vous au groupe de votre promo ?",{yes_sure:"Oui, sans hésiter",probably:"Probablement",no:"Non"}],
+   q22:["À quel groupe l'enverriez-vous ?","Par ex. « Promo 2005 du lycée X »"],
+   q23:["Paieriez-vous pour avoir votre histoire imprimée sous forme de livre ?",{yes:"Oui",maybe:"Peut-être",no:"Non"}],
+   q24:["Combien paieriez-vous au maximum pour ce livre imprimé (couverture rigide, environ 100 pages, avec photos) ?",{lt20:"Moins de 20 €","20_39":"20–39 €","40_59":"40–59 €","60p":"60 € ou plus"}],
+   q25:["Retrouver quelqu'un sur Bio serait toujours gratuit. Paieriez-vous pour des extras facultatifs de l'animation (avatars, styles visuels, musique) ?",{yes:"Oui",maybe:"Peut-être",no:"Non"}]
+  }}
+};
+
+/* ---------- Estado (localStorage solo para no perder el progreso; nunca el email) ---------- */
+const qs = new URLSearchParams(location.search);
+const UTM = (qs.get("utm_source") || qs.get("src") || "").slice(0, 60);
+const DEMO = !SUPABASE_URL || !SUPABASE_ANON_KEY;
+function load(){ try { const s = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); return s && s.v === 1 ? s : null; } catch (e) { return null; } }
+function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify({ v:1, lang, step, consent, answers, order })); } catch (e) {} }
+function clearStore(){ try { localStorage.removeItem(STORE_KEY); } catch (e) {} }
+function bioLang(){ try { return localStorage.getItem("bio_lang"); } catch (e) { return null; } }
+
+const saved = load();
+let answers = (saved && saved.answers) || {};
+let consent = !!(saved && saved.consent);
+let step = (saved && consent && typeof saved.step === "number" && saved.step > 0 && saved.step < SCREENS.indexOf("thanks")) ? saved.step : 0;
+let lang = qs.get("lang") || (saved && saved.lang) || bioLang() || (navigator.language || "es").slice(0, 2);
+if (!T[lang]) lang = "es";
+let order = (saved && saved.order) || {};
+for (const id of ["q5", "q14"]) {               // aleatoriza opciones una vez; «Otro»/«No la compartiría» al final
+  const q = Q[id], movable = q.o.filter(x => !q.fixed.includes(x));
+  if (!Array.isArray(order[id]) || order[id].length !== q.o.length) {
+    for (let i = movable.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [movable[i], movable[j]] = [movable[j], movable[i]]; }
+    order[id] = movable.concat(q.fixed);
+  }
+}
+let emailDraft = "", emailOk = false;
+
+/* ---------- Medición agregada (sin cookies ni identificadores) ---------- */
+function track(ev){
+  if (DEMO) return;
+  try {
+    fetch(SUPABASE_URL + "/rest/v1/rpc/track_event", {
+      method: "POST", keepalive: true,
+      headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ p_event: ev, p_lang: lang, p_utm: UTM || null, p_via_ref: false })
+    }).catch(() => {});
+  } catch (_) {}
+}
+
+/* ---------- Utilidades ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+const isShown = id => !Q[id].show || Q[id].show(answers);
+const screenShown = i => { const s = SCREENS[i]; return Array.isArray(s) ? s.some(isShown) : true; };
+const qScreens = () => SCREENS.map((s, i) => i).filter(i => Array.isArray(SCREENS[i]) && screenShown(i));
+function optionCodes(id){
+  const q = Q[id];
+  if (q.o === "countries") { const l = COUNTRY_LISTS[lang].slice(); if (answers[id] && !l.includes(answers[id])) l.splice(l.length - 1, 0, answers[id]); return l; }
+  return order[id] || q.o;
+}
+function waitlistUrl(){
+  const p = new URLSearchParams({ utm_source: UTM || "encuesta", lang });
+  return "index.html?" + p.toString() + "#join";
+}
+function surveyUrl(){
+  const p = new URLSearchParams({ lang }); if (UTM) p.set("utm_source", UTM);
+  return location.origin + location.pathname + "?" + p.toString();
+}
+
+/* ---------- Render ---------- */
+function renderQuestion(id, solo){
+  const t = T[lang], q = Q[id], tx = t.q[id], name = "f_" + id;
+  const req = q.req ? "" : ` <span class="hint" style="display:inline">${esc(t.opt)}</span>`;
+  const tag = solo ? "h2" : "h2";
+  let hint = "";
+  if (q.type === "multi") hint = `<p class="hint">${esc(t.multi)}</p>`;
+  if (q.type === "short" && tx[1]) hint = `<p class="hint">${esc(tx[1])}</p>`;
+  if (id === "q24" && tx[2]) hint = `<p class="hint">${esc(tx[2])}</p>`;
+  const legendId = "lg_" + id;
+  let body = "";
+  if (q.type === "one" || q.type === "multi") {
+    const typ = q.type === "one" ? "radio" : "checkbox", cur = answers[id];
+    body = `<div class="opts">` + optionCodes(id).map(c => {
+      const on = q.type === "one" ? cur === c : Array.isArray(cur) && cur.includes(c);
+      return `<label class="opt"><input type="${typ}" name="${name}" value="${esc(c)}"${on ? " checked" : ""}><span>${esc(tx[1][c])}</span></label>`;
+    }).join("") + `</div>`;
+  } else if (q.type === "scale") {
+    body = `<div class="scale">` + [1,2,3,4,5].map(n =>
+      `<label class="opt"><input type="radio" name="${name}" value="${n}"${answers[id] === n ? " checked" : ""} aria-label="${n}${n===1 ? " — " + esc(t.s_lo) : n===5 ? " — " + esc(t.s_hi) : ""}"><span aria-hidden="true">${n}</span></label>`).join("") +
+      `</div><div class="scale-l" aria-hidden="true"><span>${esc(t.s_lo)}</span><span>${esc(t.s_hi)}</span></div>`;
+  } else if (q.type === "select") {
+    body = `<label class="f"><span class="sr">${esc(tx[0])}</span><select name="${name}" aria-labelledby="${legendId}"><option value="">${esc(t.choose)}</option>` +
+      optionCodes(id).map(c => `<option value="${c}"${answers[id] === c ? " selected" : ""}>${esc(t.countries[c])}</option>`).join("") + `</select></label>`;
+  } else {
+    const v = esc(answers[id] || ""), len = (answers[id] || "").length;
+    const field = q.type === "long"
+      ? `<textarea name="${name}" maxlength="${q.max}" aria-labelledby="${legendId}" aria-describedby="cnt_${id}">${v}</textarea>`
+      : `<input type="text" name="${name}" maxlength="${q.max}" value="${v}" aria-labelledby="${legendId}" aria-describedby="cnt_${id}">`;
+    body = `<label class="f">${field}</label><div class="count" id="cnt_${id}">${fmt(t.chars, { n: len, m: q.max })}</div>`;
+  }
+  return `<fieldset data-q="${id}"><legend><${tag} id="${legendId}" tabindex="-1">${esc(tx[0])}${req}</${tag}>${hint}</legend>${body}</fieldset>`;
+}
+
+function render(){
+  const t = T[lang], s = SCREENS[step], f = $("#screen");
+  document.documentElement.lang = lang;
+  document.title = "Bio — " + t.title;
+  $("#foot").textContent = t.foot;
+  $("#home").setAttribute("href", "index.html?lang=" + lang);
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  $("#demo").hidden = !DEMO; $("#demo").textContent = t.demo;
+
+  // Progreso
+  const list = qScreens(), pos = list.indexOf(step);
+  const inQ = Array.isArray(s);
+  $("#bar").hidden = !(inQ || s === "close");
+  const pct = s === "close" ? 100 : inQ ? Math.round(100 * pos / list.length) : 0;
+  $("#pfill").style.width = pct + "%";
+  $("#pbar").setAttribute("aria-valuenow", pct);
+  $("#pbar").setAttribute("aria-label", t.title);
+  $("#ptext").textContent = inQ ? fmt(t.prog, { n: pos + 1, t: list.length }) : "";
+
+  let h = "";
+  if (s === "intro") {
+    h = `<h1 tabindex="-1">${esc(t.i_t)}</h1><p class="lede">${esc(t.i_l)}</p>
+      <div class="priv">${t.i_p}<a href="privacy.html?lang=${lang}#encuesta-${lang}" target="_blank" rel="noopener">${esc(t.i_link)}</a></div>
+      <label class="check"><input type="checkbox" id="consent"${consent ? " checked" : ""}><span>${esc(t.i_c)}</span></label>
+      <p class="err" id="err" role="alert"></p>
+      <div class="nav"><button class="btn" type="submit">${esc(t.start)}</button></div>`;
+  } else if (inQ) {
+    const ids = s.filter(isShown);
+    h = `<p class="kicker">${esc(t.blocks[Q[ids[0]].b])}</p>` + ids.map(id => renderQuestion(id, ids.length === 1)).join("") +
+      `<p class="err" id="err" role="alert"></p>
+      <div class="nav"><button class="btn ghost" type="button" id="back">${esc(t.back)}</button><button class="btn" type="submit">${esc(t.next)}</button></div>`;
+  } else if (s === "close") {
+    h = `<h2 tabindex="-1">${esc(t.c_t)}</h2><p class="lede" style="margin-top:10px">${esc(t.c_l)}</p>
+      <label class="f"><span>${esc(t.c_email)}</span><input type="email" id="email" maxlength="254" autocomplete="email" inputmode="email" value="${esc(emailDraft)}"></label>
+      <label class="check" style="margin-top:12px"><input type="checkbox" id="emailc"${emailOk ? " checked" : ""}><span>${esc(t.c_c)}</span></label>
+      <div class="hp" aria-hidden="true"><label>Website <input name="website" id="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+      <p class="err" id="err" role="alert"></p>
+      <div class="nav"><button class="btn ghost" type="button" id="back">${esc(t.back)}</button><button class="btn" type="submit" id="send">${esc(t.send)}</button></div>`;
+  } else if (s === "thanks") {
+    h = `<h2 tabindex="-1">${esc(t.g_t)}</h2><p class="lede" style="margin-top:10px">${esc(t.g_l)}</p>
+      <div class="stack"><a class="btn" id="towait" href="${esc(waitlistUrl())}">${esc(t.g_btn)}</a></div>
+      <p class="note">${esc(t.g_share)}</p>
+      <div class="stack"><a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(t.wa_msg + " " + surveyUrl())}">${esc(t.g_wa)}</a></div>`;
+  } else if (s === "minor") {
+    h = `<h2 tabindex="-1">${esc(t.m_t)}</h2><p class="lede" style="margin-top:10px">${esc(t.m_l)}</p>
+      <div class="stack"><a class="btn ghost" href="index.html?lang=${lang}">${esc(t.m_btn)}</a></div>`;
+  }
+  f.innerHTML = h;
+  bind();
+}
+
+function focusTop(){ const el = $("#screen h1, #screen h2"); if (el) el.focus({ preventScroll: true }); window.scrollTo(0, 0); }
+
+/* ---------- Interacción ---------- */
+function bind(){
+  const f = $("#screen");
+  f.querySelectorAll("fieldset[data-q]").forEach(fs => {
+    const id = fs.dataset.q, q = Q[id];
+    fs.addEventListener("input", e => {
+      const el = e.target;
+      if (q.type === "one") answers[id] = el.value;
+      else if (q.type === "scale") answers[id] = +el.value;
+      else if (q.type === "select") { if (el.value) answers[id] = el.value; else delete answers[id]; }
+      else if (q.type === "multi") {
+        if (q.excl && el.checked) {             // «No la compartiría» excluye a las demás
+          fs.querySelectorAll("input").forEach(i => { if (el.value === q.excl ? i !== el : i.value === q.excl) i.checked = false; });
+        }
+        const v = [...fs.querySelectorAll("input:checked")].map(i => i.value);
+        if (v.length) answers[id] = v; else delete answers[id];
+      } else {
+        const v = el.value.slice(0, q.max);
+        if (v.trim()) answers[id] = v; else delete answers[id];
+        const c = $("#cnt_" + id); if (c) c.textContent = fmt(T[lang].chars, { n: el.value.length, m: q.max });
+      }
+      $("#err").textContent = "";
+      save();
+    });
+  });
+  const back = $("#back"); if (back) back.onclick = () => go(-1);
+  const em = $("#email"); if (em) em.oninput = () => { emailDraft = em.value; };
+  const ec = $("#emailc"); if (ec) ec.onchange = () => { emailOk = ec.checked; };
+  const cs = $("#consent"); if (cs) cs.onchange = () => { consent = cs.checked; $("#err").textContent = ""; save(); };
+}
+
+function prune(){                               // borra respuestas de preguntas ocultas por la lógica condicional
+  for (const id in answers) if (!Q[id] || !isShown(id)) delete answers[id];
+}
+
+function go(dir){
+  let i = step + dir;
+  while (i > 0 && i < SCREENS.length && Array.isArray(SCREENS[i]) && !screenShown(i)) i += dir;
+  if (i < 0) i = 0;
+  step = i; save(); render(); focusTop();
+}
+
+function payload(){
+  prune();
+  const a = {};
+  for (const id of Object.keys(Q)) if (answers[id] !== undefined && isShown(id)) a[id] = answers[id];
+  return a;
+}
+
+async function submitSurvey(body){
+  if (DEMO) { await new Promise(r => setTimeout(r, 400)); return { ok: true }; }
+  const r = await fetch(SUPABASE_URL + "/rest/v1/rpc/submit_survey", {
+    method: "POST",
+    headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+$("#screen").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const t = T[lang], s = SCREENS[step], err = $("#err");
+  if (s === "intro") {
+    if (!consent) { err.textContent = t.e_consent; $("#consent").focus(); return; }
+    return go(1);
+  }
+  if (Array.isArray(s)) {
+    const missing = s.filter(isShown).find(id => Q[id].req && (answers[id] === undefined || (Array.isArray(answers[id]) && !answers[id].length)));
+    if (missing) { err.textContent = t.e_req; const el = $(`fieldset[data-q="${missing}"] input, fieldset[data-q="${missing}"] select`); if (el) el.focus(); return; }
+    if (s[0] === "q1" && answers.q1 === "lt18") {   // filtro de edad: fin sin guardar nada
+      answers = {}; consent = false; clearStore(); step = SCREENS.indexOf("minor"); render(); focusTop(); return;
+    }
+    prune();
+    return go(1);
+  }
+  if (s === "close") {
+    const email = emailDraft.trim();
+    if (email && !emailOk) { err.textContent = t.e_mailc; $("#emailc").focus(); return; }
+    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = t.e_mail; $("#email").focus(); return; }
+    const btn = $("#send"); btn.disabled = true; btn.textContent = t.sending;
+    try {
+      await submitSurvey({
+        p_answers: payload(), p_consent: consent, p_lang: lang, p_utm: UTM || null,
+        p_email: email && emailOk ? email : null, p_email_consent: !!(email && emailOk),
+        p_version: SURVEY_VERSION, p_hp: $("#website").value || null
+      });
+      track("encuesta_enviada");
+      clearStore(); answers = {}; emailDraft = ""; emailOk = false;
+      step = SCREENS.indexOf("thanks"); render(); focusTop();
+    } catch (e) {
+      err.textContent = t.e_net; btn.disabled = false; btn.textContent = t.send;
+    }
+  }
+});
+
+document.querySelectorAll(".langs button").forEach(b => b.onclick = () => { lang = b.dataset.l; save(); render(); });
+render();
+track("visita_encuesta");
+</script>
+</body>
+</html>

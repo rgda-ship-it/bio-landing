@@ -204,6 +204,7 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
         <a class="btn" id="wa" target="_blank" rel="noopener" data-i="d_wa"></a>
         <button class="btn ghost" id="copy" type="button" data-i="d_copy"></button>
       </div>
+      <p class="note"><a id="survey" href="encuesta.html" style="color:inherit" data-i="d_survey"></a></p>
     </div>
   </div>
 </div></section>
@@ -224,7 +225,7 @@ const T = {
   priv_t:"Tu pasado, bajo tu control",p1t:"Doble confirmación",p1:"Nadie puede vincularte a su historia sin tu permiso.",p2t:"Visibilidad por etapa",p2:"Cada hito puede ser público, para seguidores, para amigos o solo para ti.",p3t:"Tú decides el detalle",p3:"Muestra la ciudad, la institución o el aula: tú eliges hasta dónde.",
   join_t:"Reserva tu lugar y trae a tu promoción",join_l:"Abrimos Bio promoción por promoción. Cuantos más compañeros tuyos se apunten, antes se abre la tuya.",
   f_name:"Nombre",f_email:"Email",f_country:"País donde estudiaste",f_year:"Año de graduación del colegio",f_school:"Nombre de tu colegio",f_other:"Otro",f_submit:"Unirme a la lista",f_legal:"Solo usaremos tu email para avisarte del lanzamiento. Puedes darte de baja cuando quieras.",
-  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de tu promoción ya están",d_refs:"invitados",d_share:"Comparte tu enlace con tu grupo de promoción. Cada compañero que se una acerca la apertura de tu promoción.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",
+  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de tu promoción ya están",d_refs:"invitados",d_share:"Comparte tu enlace con tu grupo de promoción. Cada compañero que se una acerca la apertura de tu promoción.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",d_survey:"¿Nos ayudas con 5 minutos? Responde la encuesta",
   wa_msg:"Me apunté a Bio, una red para reencontrarnos con quienes estudiaron con nosotros. Apúntate para abrir nuestra promoción:",
   e_req:"Completa todos los campos.",e_mail:"Revisa tu email.",e_year:"Revisa el año.",e_net:"No pudimos registrarte. Inténtalo de nuevo.",
   foot:"© 2026 Bio · Proyecto en fase de validación"},
@@ -235,7 +236,7 @@ const T = {
   priv_t:"Your past, under your control",p1t:"Double confirmation",p1:"Nobody can link you to their story without your permission.",p2t:"Visibility per chapter",p2:"Each milestone can be public, for followers, for friends or just for you.",p3t:"You choose the detail",p3:"Show the city, the institution or the classroom: you decide how much.",
   join_t:"Save your spot and bring your class",join_l:"We're opening Bio one graduating class at a time. The more classmates who join, the sooner yours opens.",
   f_name:"First name",f_email:"Email",f_country:"Country where you went to school",f_year:"High-school graduation year",f_school:"Your school's name",f_other:"Other",f_submit:"Join the waitlist",f_legal:"We'll only use your email to tell you about the launch. Unsubscribe anytime.",
-  d_t:"You're in!",d_pos:"your spot",d_coh:"from your class already joined",d_refs:"invited",d_share:"Share your link with your class group. Every classmate who joins brings your class opening closer.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",
+  d_t:"You're in!",d_pos:"your spot",d_coh:"from your class already joined",d_refs:"invited",d_share:"Share your link with your class group. Every classmate who joins brings your class opening closer.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",d_survey:"Can you spare 5 minutes? Take our survey",
   wa_msg:"I joined Bio, a network to reconnect with the people we went to school with. Join so our class opens:",
   e_req:"Please fill in every field.",e_mail:"Check your email.",e_year:"Check the year.",e_net:"We couldn't sign you up. Please try again.",
   foot:"© 2026 Bio · Project in validation phase"},
@@ -246,7 +247,7 @@ const T = {
   priv_t:"Votre passé, sous votre contrôle",p1t:"Double confirmation",p1:"Personne ne peut vous lier à son histoire sans votre accord.",p2t:"Visibilité par étape",p2:"Chaque étape peut être publique, pour vos abonnés, vos amis ou vous seul.",p3t:"Vous choisissez le détail",p3:"Ville, établissement ou classe : c’est vous qui décidez.",
   join_t:"Réservez votre place et invitez votre promo",join_l:"Nous ouvrons Bio promotion par promotion. Plus vos camarades s’inscrivent, plus la vôtre ouvre tôt.",
   f_name:"Prénom",f_email:"E-mail",f_country:"Pays de scolarité",f_year:"Année du bac / fin du lycée",f_school:"Nom de votre lycée",f_other:"Autre",f_submit:"Rejoindre la liste",f_legal:"Nous utiliserons votre e-mail uniquement pour vous prévenir du lancement. Désinscription à tout moment.",
-  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de votre promo déjà inscrits",d_refs:"invités",d_share:"Partagez votre lien avec le groupe de votre promo. Chaque camarade inscrit rapproche l’ouverture de votre promo.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",
+  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de votre promo déjà inscrits",d_refs:"invités",d_share:"Partagez votre lien avec le groupe de votre promo. Chaque camarade inscrit rapproche l’ouverture de votre promo.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",d_survey:"Vous nous accordez 5 minutes ? Répondez au questionnaire",
   wa_msg:"Je me suis inscrit sur Bio, un réseau pour retrouver ceux avec qui on a étudié. Inscris-toi pour ouvrir notre promo :",
   e_req:"Merci de remplir tous les champs.",e_mail:"Vérifiez votre e-mail.",e_year:"Vérifiez l’année.",e_net:"Inscription impossible. Réessayez.",
   foot:"© 2026 Bio · Projet en phase de validation"}
@@ -321,6 +322,7 @@ document.getElementById("f").addEventListener("submit", async ev => {
     document.getElementById("copy").onclick = async e => {
       try { await navigator.clipboard.writeText(link); e.target.textContent = t.copied; } catch(_) {}
     };
+    document.getElementById("survey").href = "encuesta.html?lang=" + lang + (qs.get("utm_source") ? "&utm_source=" + encodeURIComponent(qs.get("utm_source")) : "");
     f.style.display = "none"; document.getElementById("done").classList.add("show");
   } catch (e) { err.textContent = t.e_net; btn.disabled = false; }
 });
