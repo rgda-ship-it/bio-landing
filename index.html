@@ -94,6 +94,9 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
 .share{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .reflink{font:500 14px ui-monospace,Menlo,monospace;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;word-break:break-all}
 footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px solid var(--line)}
+/* enfoque-v2 */ .chk{display:flex;gap:10px;align-items:flex-start;color:var(--ink);font-size:14px;cursor:pointer}
+.chk input{width:20px;height:20px;flex:none;margin:1px 0 0;padding:0;accent-color:var(--accent)}
+.stats div[hidden]{display:none}
 @media (max-width:820px){
   .hero,.join{grid-template-columns:1fr;gap:32px}
   .steps,.privacy,.compare{grid-template-columns:1fr}
@@ -173,6 +176,16 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
     <form id="f" novalidate>
       <label><span data-i="f_name"></span><input name="name" required maxlength="80" autocomplete="given-name"></label>
       <label><span data-i="f_email"></span><input name="email" type="email" required autocomplete="email"></label>
+      <label><span data-i="f_kind"></span>
+        <select name="kind">
+          <option value="" data-i="f_choose"></option>
+          <option value="colegio" data-i="k_colegio"></option><option value="universidad" data-i="k_universidad"></option>
+          <option value="trabajo" data-i="k_trabajo"></option><option value="barrio" data-i="k_barrio"></option>
+          <option value="vacaciones" data-i="k_vacaciones"></option><option value="campamento" data-i="k_campamento"></option>
+          <option value="deporte" data-i="k_deporte"></option><option value="intercambio" data-i="k_intercambio"></option>
+          <option value="otro" data-i="k_otro"></option>
+        </select></label>
+      <label><span data-i="f_place"></span><input name="school" maxlength="120"></label>
       <div class="row">
         <label><span data-i="f_country"></span>
           <select name="country" required>
@@ -183,9 +196,9 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
             <option value="CL">Chile</option><option value="PE">Perú</option>
             <option value="XX" data-i="f_other"></option>
           </select></label>
-        <label><span data-i="f_year"></span><input name="grad_year" type="number" min="1950" max="2035" required inputmode="numeric"></label>
+        <label><span data-i="f_year"></span><input name="grad_year" type="number" min="1950" max="2035" inputmode="numeric"></label>
       </div>
-      <label><span data-i="f_school"></span><input name="school" required maxlength="120"></label>
+      <label class="chk"><input type="checkbox" name="bio" value="1"><span data-i="f_bio"></span></label>
       <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
       <p class="err" id="err" role="alert"></p>
       <button class="btn" type="submit" data-i="f_submit"></button>
@@ -195,7 +208,7 @@ footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px soli
       <h2 data-i="d_t"></h2>
       <div class="stats">
         <div><b id="pos">—</b><span data-i="d_pos"></span></div>
-        <div><b id="coh">—</b><span data-i="d_coh"></span></div>
+        <div id="cohbox"><b id="coh">—</b><span data-i="d_coh"></span></div>
         <div><b id="refs">0</b><span data-i="d_refs"></span></div>
       </div>
       <p data-i="d_share"></p>
@@ -218,38 +231,44 @@ const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";      // p.ej. "
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg"; // clave pública "anon"
 
 const T = {
- es:{h1:"¿Quién estuvo contigo?",lede:"Cuenta tu vida etapa a etapa y reencuéntrate con quienes compartieron tu aula, tu facultad o tu barrio, en el mismo lugar y en los mismos años.",cta:"Quiero acceso anticipado",cta_note:"Gratis. Empezamos por promociones completas.",
+ es:{h1:"¿Quién estuvo contigo?",lede:"Reencuentra a quienes compartieron contigo un aula, una calle antes de mudarte, un verano o un equipo, y construye tu biografía con tus logros y tus recuerdos, etapa a etapa.",cta:"Quiero acceso anticipado",cta_note:"Gratis. Abrimos grupo a grupo: promociones, barrios, campamentos, equipos…",
   m1:"1988 · Caracas",m1s:"Nací",m2:"1994 · Colegio San José",m2s:"1º a 6º grado, sección B",m2m:"12 compañeros encontrados",m3:"2006 · UCV, Ingeniería",m3s:"5 años",m4:"2014 · Madrid",m4s:"Nueva etapa",m5:"Hoy",
-  how_t:"Tu biografía, con las personas que estuvieron ahí",s1t:"Cuenta tus etapas",s1:"Dónde naciste, tus colegios, tu universidad, tus trabajos. Te guiamos hito a hito, en minutos.",s2t:"Encuentra a tu gente",s2:"Bio cruza lugar y fechas para mostrarte quién coincidió contigo de verdad. No solo en el mismo colegio: en tu misma aula y en tu mismo año.",s3t:"Revive tu historia",s3:"Bio convierte tu vida en una animación para guardar o compartir.",
-  old_k:"Otras redes",old:"«Fue a tu mismo colegio»",new_k:"Bio",new:"«Estuvo contigo en 6º B, curso 1999–2000»",
+  how_t:"Tu biografía, con las personas que estuvieron ahí",s1t:"Cuenta tus etapas",s1:"Colegios y universidad, pero también trabajos de verano, barrios donde viviste, vacaciones, campamentos, intercambios, equipos o voluntariados. Te guiamos hito a hito, en minutos.",s2t:"Reencuentra a tu gente",s2:"Bio cruza lugar y fechas para mostrarte quién coincidió contigo de verdad: en tu aula, en tu calle antes de mudarte o en aquel campamento de 2009.",s3t:"Construye tu biografía",s3:"Destaca tus logros, guarda los recuerdos que compartiste con los tuyos y mírala como un libro o un vídeo. Aunque sigas en contacto con todos.",
+  old_k:"Otras redes",old:"«Quizá conozcas a…»",new_k:"Bio",new:"«Coincidisteis en el campamento de Gredos, julio de 2008»",
   priv_t:"Tu pasado, bajo tu control",p1t:"Doble confirmación",p1:"Nadie puede vincularte a su historia sin tu permiso.",p2t:"Visibilidad por etapa",p2:"Cada hito puede ser público, para seguidores, para amigos o solo para ti.",p3t:"Tú decides el detalle",p3:"Muestra la ciudad, la institución o el aula: tú eliges hasta dónde.",
-  join_t:"Reserva tu lugar y trae a tu promoción",join_l:"Abrimos Bio promoción por promoción. Cuantos más compañeros tuyos se apunten, antes se abre la tuya.",
-  f_name:"Nombre",f_email:"Email",f_country:"País donde estudiaste",f_year:"Año de graduación del colegio",f_school:"Nombre de tu colegio",f_other:"Otro",f_submit:"Unirme a la lista",f_legal:"Solo usaremos tu email para avisarte del lanzamiento. Puedes darte de baja cuando quieras.",
-  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de tu promoción ya están",d_refs:"invitados",d_share:"Comparte tu enlace con tu grupo de promoción. Cada compañero que se una acerca la apertura de tu promoción.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",d_survey:"¿Nos ayudas con 5 minutos? Responde la encuesta",
-  wa_msg:"Me apunté a Bio, una red para reencontrarnos con quienes estudiaron con nosotros. Apúntate para abrir nuestra promoción:",
-  e_req:"Completa todos los campos.",e_mail:"Revisa tu email.",e_year:"Revisa el año.",e_net:"No pudimos registrarte. Inténtalo de nuevo.",
+  join_t:"Reserva tu lugar y trae a tu gente",join_l:"Abrimos Bio grupo a grupo: una promoción, un barrio, un campamento, un equipo. Cuantas más personas de tu grupo se apunten, antes se abre el tuyo.",
+  f_name:"Nombre",f_email:"Email",f_kind:"¿Dónde perdiste el contacto con alguien?",f_choose:"Elige una opción",
+  k_colegio:"Colegio o instituto",k_universidad:"Universidad",k_trabajo:"Trabajo (también temporal o de verano)",k_barrio:"Barrio o casa anterior",k_vacaciones:"Lugar de vacaciones",k_campamento:"Campamento",k_deporte:"Deporte o club",k_intercambio:"Intercambio",k_otro:"Otro (voluntariado…)",
+  f_place:"Nombre del lugar",f_country:"País del lugar",f_year:"Año aproximado",f_bio:"Me interesa más construir mi biografía (no hace falta indicar un lugar)",f_other:"Otro",f_submit:"Unirme a la lista",f_legal:"Solo usaremos tu email para avisarte del lanzamiento. Puedes darte de baja cuando quieras.",
+  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de tu grupo ya están",d_refs:"invitados",d_share:"Comparte tu enlace con tu grupo. Cada persona que se una acerca la apertura del tuyo.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",d_survey:"¿Nos ayudas con 5 minutos? Responde la encuesta",
+  wa_msg:"Me apunté a Bio, una red para reencontrarnos con quienes compartimos etapas y construir nuestra biografía. Apúntate:",
+  e_req:"Completa todos los campos.",e_place:"Completa el lugar (tipo, nombre y año) o déjalo en blanco.",e_mail:"Revisa tu email.",e_year:"Revisa el año.",e_net:"No pudimos registrarte. Inténtalo de nuevo.",
   foot:"© 2026 Bio · Proyecto en fase de validación"},
- en:{h1:"Who was there with you?",lede:"Tell your life story chapter by chapter and reconnect with the people who shared your classroom, your campus or your neighborhood, in the same place and the same years.",cta:"Get early access",cta_note:"Free. We open whole graduating classes at a time.",
+ en:{h1:"Who was there with you?",lede:"Reconnect with the people who shared a classroom, a street before you moved, a summer or a team with you, and build your life story with your achievements and memories, chapter by chapter.",cta:"Get early access",cta_note:"Free. We open group by group: classes, neighborhoods, camps, teams…",
   m1:"1988 · Caracas",m1s:"Born",m2:"1994 · San José School",m2s:"Grades 1–6, class B",m2m:"12 classmates found",m3:"2006 · UCV, Engineering",m3s:"5 years",m4:"2014 · Madrid",m4s:"New chapter",m5:"Today",
-  how_t:"Your life story, with the people who were there",s1t:"Tell your chapters",s1:"Where you were born, your schools, your university, your jobs. We guide you milestone by milestone, in minutes.",s2t:"Find your people",s2:"Bio matches place and dates to show who was really there with you. Not just the same school: the same classroom, the same year.",s3t:"Relive your story",s3:"Bio turns your life into an animation to keep or share.",
-  old_k:"Other networks",old:"“Went to your school”",new_k:"Bio",new:"“Was in class 6B with you, 1999–2000”",
+  how_t:"Your life story, with the people who were there",s1t:"Tell your chapters",s1:"Schools and university, but also summer jobs, places you lived, holidays, camps, exchanges, teams or volunteering. We guide you milestone by milestone, in minutes.",s2t:"Find your people",s2:"Bio matches place and dates to show who was really there with you: in your classroom, on your street before you moved, or at that 2009 summer camp.",s3t:"Build your life story",s3:"Highlight your achievements, keep the memories you shared with your people and see it as a book or a video. Even if you're still in touch with everyone.",
+  old_k:"Other networks",old:"“People you may know…”",new_k:"Bio",new:"“You were both at Camp Pinewood, July 2008”",
   priv_t:"Your past, under your control",p1t:"Double confirmation",p1:"Nobody can link you to their story without your permission.",p2t:"Visibility per chapter",p2:"Each milestone can be public, for followers, for friends or just for you.",p3t:"You choose the detail",p3:"Show the city, the institution or the classroom: you decide how much.",
-  join_t:"Save your spot and bring your class",join_l:"We're opening Bio one graduating class at a time. The more classmates who join, the sooner yours opens.",
-  f_name:"First name",f_email:"Email",f_country:"Country where you went to school",f_year:"High-school graduation year",f_school:"Your school's name",f_other:"Other",f_submit:"Join the waitlist",f_legal:"We'll only use your email to tell you about the launch. Unsubscribe anytime.",
-  d_t:"You're in!",d_pos:"your spot",d_coh:"from your class already joined",d_refs:"invited",d_share:"Share your link with your class group. Every classmate who joins brings your class opening closer.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",d_survey:"Can you spare 5 minutes? Take our survey",
-  wa_msg:"I joined Bio, a network to reconnect with the people we went to school with. Join so our class opens:",
-  e_req:"Please fill in every field.",e_mail:"Check your email.",e_year:"Check the year.",e_net:"We couldn't sign you up. Please try again.",
+  join_t:"Save your spot and bring your people",join_l:"We're opening Bio group by group: a class, a neighborhood, a camp, a team. The more people from your group who join, the sooner yours opens.",
+  f_name:"First name",f_email:"Email",f_kind:"Where did you lose touch with someone?",f_choose:"Choose an option",
+  k_colegio:"School",k_universidad:"University",k_trabajo:"Job (incl. summer or temporary)",k_barrio:"Neighborhood or previous home",k_vacaciones:"Holiday spot",k_campamento:"Camp",k_deporte:"Sports team or club",k_intercambio:"Exchange",k_otro:"Other (volunteering…)",
+  f_place:"Name of the place",f_country:"Country of the place",f_year:"Approximate year",f_bio:"I'm more interested in building my life story (no place needed)",f_other:"Other",f_submit:"Join the waitlist",f_legal:"We'll only use your email to tell you about the launch. Unsubscribe anytime.",
+  d_t:"You're in!",d_pos:"your spot",d_coh:"from your group already joined",d_refs:"invited",d_share:"Share your link with your group. Everyone who joins brings your group's opening closer.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",d_survey:"Can you spare 5 minutes? Take our survey",
+  wa_msg:"I joined Bio, a network to reconnect with the people we shared chapters of our lives with and build our life story. Join here:",
+  e_req:"Please fill in every field.",e_place:"Complete the place (type, name and year) or leave it blank.",e_mail:"Check your email.",e_year:"Check the year.",e_net:"We couldn't sign you up. Please try again.",
   foot:"© 2026 Bio · Project in validation phase"},
- fr:{h1:"Qui était là avec vous ?",lede:"Racontez votre vie étape par étape et retrouvez celles et ceux qui ont partagé votre classe, votre fac ou votre quartier, au même endroit et les mêmes années.",cta:"Accès anticipé",cta_note:"Gratuit. Nous ouvrons promotion par promotion.",
+ fr:{h1:"Qui était là avec vous ?",lede:"Retrouvez celles et ceux qui ont partagé avec vous une classe, une rue avant votre déménagement, un été ou une équipe, et construisez votre biographie avec vos réussites et vos souvenirs, étape par étape.",cta:"Accès anticipé",cta_note:"Gratuit. Nous ouvrons groupe par groupe : promos, quartiers, colonies, équipes…",
   m1:"1988 · Caracas",m1s:"Naissance",m2:"1994 · École San José",m2s:"Du CP à la 6e, classe B",m2m:"12 camarades retrouvés",m3:"2006 · UCV, Ingénierie",m3s:"5 ans",m4:"2014 · Madrid",m4s:"Nouvelle étape",m5:"Aujourd’hui",
-  how_t:"Votre biographie, avec ceux qui étaient là",s1t:"Racontez vos étapes",s1:"Votre lieu de naissance, vos écoles, votre université, vos emplois. Nous vous guidons étape par étape, en quelques minutes.",s2t:"Retrouvez les vôtres",s2:"Bio croise lieux et dates pour vous montrer qui était vraiment là. Pas seulement la même école : la même classe, la même année.",s3t:"Revivez votre histoire",s3:"Bio transforme votre vie en une animation à garder ou à partager.",
-  old_k:"Autres réseaux",old:"« Est allé dans votre école »",new_k:"Bio",new:"« Était avec vous en 6e B, 1999–2000 »",
+  how_t:"Votre biographie, avec ceux qui étaient là",s1t:"Racontez vos étapes",s1:"École et université, mais aussi jobs d’été, quartiers où vous avez vécu, vacances, colonies, échanges, équipes ou bénévolat. Nous vous guidons étape par étape, en quelques minutes.",s2t:"Retrouvez les vôtres",s2:"Bio croise lieux et dates pour vous montrer qui était vraiment là : dans votre classe, dans votre rue avant le déménagement ou dans cette colonie de 2009.",s3t:"Construisez votre biographie",s3:"Mettez en avant vos réussites, gardez les souvenirs partagés avec les vôtres et regardez-la en livre ou en vidéo. Même si vous êtes toujours en contact avec tout le monde.",
+  old_k:"Autres réseaux",old:"« Vous connaissez peut-être… »",new_k:"Bio",new:"« Vous étiez tous les deux à la colonie des Glénans, juillet 2008 »",
   priv_t:"Votre passé, sous votre contrôle",p1t:"Double confirmation",p1:"Personne ne peut vous lier à son histoire sans votre accord.",p2t:"Visibilité par étape",p2:"Chaque étape peut être publique, pour vos abonnés, vos amis ou vous seul.",p3t:"Vous choisissez le détail",p3:"Ville, établissement ou classe : c’est vous qui décidez.",
-  join_t:"Réservez votre place et invitez votre promo",join_l:"Nous ouvrons Bio promotion par promotion. Plus vos camarades s’inscrivent, plus la vôtre ouvre tôt.",
-  f_name:"Prénom",f_email:"E-mail",f_country:"Pays de scolarité",f_year:"Année du bac / fin du lycée",f_school:"Nom de votre lycée",f_other:"Autre",f_submit:"Rejoindre la liste",f_legal:"Nous utiliserons votre e-mail uniquement pour vous prévenir du lancement. Désinscription à tout moment.",
-  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de votre promo déjà inscrits",d_refs:"invités",d_share:"Partagez votre lien avec le groupe de votre promo. Chaque camarade inscrit rapproche l’ouverture de votre promo.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",d_survey:"Vous nous accordez 5 minutes ? Répondez au questionnaire",
-  wa_msg:"Je me suis inscrit sur Bio, un réseau pour retrouver ceux avec qui on a étudié. Inscris-toi pour ouvrir notre promo :",
-  e_req:"Merci de remplir tous les champs.",e_mail:"Vérifiez votre e-mail.",e_year:"Vérifiez l’année.",e_net:"Inscription impossible. Réessayez.",
+  join_t:"Réservez votre place et invitez les vôtres",join_l:"Nous ouvrons Bio groupe par groupe : une promo, un quartier, une colonie, une équipe. Plus les membres de votre groupe s’inscrivent, plus le vôtre ouvre tôt.",
+  f_name:"Prénom",f_email:"E-mail",f_kind:"Où avez-vous perdu le contact avec quelqu’un ?",f_choose:"Choisissez une option",
+  k_colegio:"École, collège ou lycée",k_universidad:"Université",k_trabajo:"Travail (y compris saisonnier ou d’été)",k_barrio:"Quartier ou ancien logement",k_vacaciones:"Lieu de vacances",k_campamento:"Colonie ou camp",k_deporte:"Sport ou club",k_intercambio:"Échange",k_otro:"Autre (bénévolat…)",
+  f_place:"Nom du lieu",f_country:"Pays du lieu",f_year:"Année approximative",f_bio:"Je m’intéresse surtout à construire ma biographie (pas besoin d’indiquer un lieu)",f_other:"Autre",f_submit:"Rejoindre la liste",f_legal:"Nous utiliserons votre e-mail uniquement pour vous prévenir du lancement. Désinscription à tout moment.",
+  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de votre groupe déjà inscrits",d_refs:"invités",d_share:"Partagez votre lien avec votre groupe. Chaque inscription rapproche l’ouverture du vôtre.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",d_survey:"Vous nous accordez 5 minutes ? Répondez au questionnaire",
+  wa_msg:"Je me suis inscrit sur Bio, un réseau pour retrouver ceux avec qui on a partagé des étapes de vie et construire notre biographie. Inscris-toi :",
+  e_req:"Merci de remplir tous les champs.",e_place:"Complétez le lieu (type, nom et année) ou laissez-le vide.",e_mail:"Vérifiez votre e-mail.",e_year:"Vérifiez l’année.",e_net:"Inscription impossible. Réessayez.",
   foot:"© 2026 Bio · Projet en phase de validation"}
 };
 
@@ -306,23 +325,30 @@ document.getElementById("f").addEventListener("submit", async ev => {
   const f = ev.target, t = T[lang], err = document.getElementById("err");
   const v = Object.fromEntries(new FormData(f));
   err.textContent = "";
-  if (!v.name.trim() || !v.email.trim() || !v.school.trim() || !v.grad_year) return err.textContent = t.e_req;
+  const bio = !!v.bio, school = (v.school || "").trim();
+  const full = !!(v.kind && school && v.grad_year), any = !!(v.kind || school || v.grad_year);
+  if (!v.name.trim() || !v.email.trim() || (!bio && !full)) return err.textContent = t.e_req;
+  if (bio && any && !full) return err.textContent = t.e_place;
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) return err.textContent = t.e_mail;
-  const y = +v.grad_year; if (y < 1950 || y > 2035) return err.textContent = t.e_year;
+  const y = full ? +v.grad_year : null; if (full && (y < 1950 || y > 2035)) return err.textContent = t.e_year;
+  const interest = bio ? (full ? "ambos" : "biografia") : "reencontrar";
   const btn = f.querySelector("button"); btn.disabled = true;
   try {
-    const res = await join({ p_email: v.email, p_name: v.name, p_country: v.country, p_school: v.school,
-      p_grad_year: y, p_lang: lang, p_ref: store.get("bio_ref"), p_utm: qs.get("utm_source"), p_hp: v.website || null });
+    const res = await join({ p_email: v.email, p_name: v.name, p_country: v.country, p_school: full ? school : null,
+      p_grad_year: y, p_lang: lang, p_ref: store.get("bio_ref"), p_utm: qs.get("utm_source"), p_hp: v.website || null,
+      p_place_kind: full ? v.kind : null, p_interest: interest });
     const link = location.origin + location.pathname + "?ref=" + res.code + "&lang=" + lang;
     document.getElementById("pos").textContent = "#" + res.position;
     document.getElementById("coh").textContent = res.cohort;
+    document.getElementById("cohbox").hidden = !full;
     document.getElementById("refs").textContent = res.referrals;
     document.getElementById("link").textContent = link;
     document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent(t.wa_msg + " " + link);
     document.getElementById("copy").onclick = async e => {
       try { await navigator.clipboard.writeText(link); e.target.textContent = t.copied; } catch(_) {}
     };
-    document.getElementById("survey").href = "encuesta.html?lang=" + lang + (qs.get("utm_source") ? "&utm_source=" + encodeURIComponent(qs.get("utm_source")) : "");
+    const sv = document.getElementById("survey");
+    if (sv) sv.href = "encuesta.html?lang=" + lang + (qs.get("utm_source") ? "&utm_source=" + encodeURIComponent(qs.get("utm_source")) : "");
     f.style.display = "none"; document.getElementById("done").classList.add("show");
   } catch (e) { err.textContent = t.e_net; btn.disabled = false; }
 });

@@ -112,13 +112,13 @@ footer{padding:28px 0 40px;color:var(--ink-2);font-size:13px}
    Si se dejan vacías, la encuesta funciona en modo demo (no guarda nada). */
 const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
-const SURVEY_VERSION = "1.0";
+const SURVEY_VERSION = "1.1";
 const STORE_KEY = "bio_encuesta_v1";
 
 /* ---------- Estructura (común a los tres idiomas; códigos = lista blanca de submit_survey) ---------- */
 const COUNTRY_LISTS = { es:["VE","ES","US","CO","AR","MX","FR","GB","XX"], en:["VE","ES","US","CO","AR","MX","FR","GB","XX"], fr:["FR","BE","CH","CA","VE","ES","US","MA","XX"] };
 const Q = {
-  q1:{b:"A",type:"one",req:1,o:["lt18","18_24","25_34","35_44","45_54","55p"]},
+  q1:{b:"A",type:"one",req:1,o:["lt18","18_24","25_29","30_34","35_44","45_54","55p"]},
   q2:{b:"A",type:"select",req:1,o:"countries"},
   q3:{b:"A",type:"select",req:1,o:"countries"},
   q4:{b:"B",type:"one",req:1,o:["yes","no"]},
@@ -142,10 +142,15 @@ const Q = {
   q22:{b:"E",type:"short",max:200,show:a=>!!a.q21&&a.q21!=="no"},
   q23:{b:"E",type:"one",req:1,o:["yes","maybe","no"]},
   q24:{b:"E",type:"one",req:1,o:["lt20","20_39","40_59","60p"],show:a=>!!a.q23&&a.q23!=="no"},
-  q25:{b:"E",type:"one",req:1,o:["yes","maybe","no"]}
+  q25:{b:"E",type:"one",req:1,o:["yes","maybe","no"]},
+  /* v1.1 · H8 (biografía vs. reencuentro) */
+  q26:{b:"A",type:"one",req:1,o:["reconnect","biography","memories","all"]},
+  q27:{b:"B",type:"multi",req:1,o:["colegio","universidad","trabajo","barrio","vacaciones","campamento","deporte","intercambio","otro","none"],excl:"none"},
+  q28:{b:"B",type:"scale",req:1}
 };
 /* Pantallas: una pregunta o un bloque corto (P2+P3) */
-const SCREENS = ["intro",["q1"],["q2","q3"],["q4"],["q5"],["q6"],["q7"],["q8"],["q9"],["q10"],["q11"],
+/* q26 antes de cualquier pregunta que «cebe» una de las dos propuestas; q27 abre el bloque de reencuentros; q28 junto a P9 (contacto) */
+const SCREENS = ["intro",["q1"],["q2","q3"],["q26"],["q27"],["q4"],["q5"],["q6"],["q7"],["q8"],["q9"],["q28"],["q10"],["q11"],
   ["q12"],["q13"],["q14"],["q15"],["q16"],["q17"],["q18"],["q19"],["q20"],["q21"],["q22"],["q23"],["q24"],["q25"],
   "close","thanks","minor"];
 
@@ -155,7 +160,7 @@ const T = {
   title:"Encuesta", foot:"© 2026 Bio · Proyecto en fase de validación",
   demo:"Modo demo: las respuestas no se guardan.",
   i_t:"Ayúdanos a crear Bio · 5 minutos",
-  i_l:"Estamos explorando una idea: una app donde cuentas tu vida por etapas (colegio, universidad, trabajos, ciudades) y que te ayuda a reencontrar a quienes coincidieron contigo en el mismo lugar y momento. Antes de construir nada, queremos saber si de verdad lo necesitas. No hay respuestas correctas: nos ayuda más una opinión sincera que una amable.",
+  i_l:"Estamos explorando una idea: una app para reencontrar a quienes coincidieron contigo en el mismo lugar y momento (el colegio, pero también un barrio antes de mudarte, unas vacaciones, un campamento, un trabajo de verano o un equipo) y para construir tu biografía con tus logros y recuerdos, aunque sigas en contacto con todos. Antes de construir nada, queremos saber si de verdad lo necesitas. No hay respuestas correctas: nos ayuda más una opinión sincera que una amable.",
   i_p:"<strong>Privacidad, en corto.</strong> La encuesta es anónima: no pedimos tu nombre. Al final puedes dejar tu email si quieres acceso anticipado; es opcional y se guarda aparte.<ul><li><strong>Responsable:</strong> el impulsor del proyecto Bio, persona física con residencia en España (datos de contacto en la política).</li><li><strong>Para qué:</strong> investigación de mercado: estudiar el interés en Bio y decidir si se desarrolla. No vendemos ni cedemos tus datos; no los usamos para publicidad.</li><li><strong>Base legal:</strong> tu consentimiento (art. 6.1.a RGPD), que puedes retirar cuando quieras.</li><li><strong>Dónde:</strong> en nuestra base de datos de Supabase (UE, Fráncfort). Sin cookies ni herramientas de terceros.</li><li><strong>Cuánto tiempo:</strong> hasta 12 meses después de terminar la fase de validación; si el proyecto no sigue, se borra todo.</li><li><strong>Tus derechos:</strong> acceso, rectificación, supresión, oposición, limitación y portabilidad. Puedes reclamar ante la AEPD (aepd.es).</li></ul>",
   i_link:"Política de privacidad completa",
   i_c:"Tengo 18 años o más, he leído la información de privacidad y acepto participar.",
@@ -173,7 +178,10 @@ const T = {
   m_t:"Gracias por tu interés", m_l:"Esta encuesta es solo para personas de 18 años o más, así que no hemos guardado ninguna respuesta.", m_btn:"Volver a Bio",
   countries:{VE:"Venezuela",ES:"España",US:"Estados Unidos",CO:"Colombia",AR:"Argentina",MX:"México",FR:"Francia",GB:"Reino Unido",BE:"Bélgica",CH:"Suiza",CA:"Canadá",MA:"Marruecos",XX:"Otro país"},
   q:{
-   q1:["¿Qué edad tienes?",{lt18:"Menos de 18","18_24":"18–24","25_34":"25–34","35_44":"35–44","45_54":"45–54","55p":"55 o más"}],
+   q26:["¿Qué te atrae más de Bio?",{reconnect:"Reencontrar a personas con las que perdí el contacto",biography:"Construir y mostrar mi historia y mis logros",memories:"Recordar momentos compartidos (aquellas vacaciones, aquel lugar…)",all:"Todo por igual"}],
+   q27:["¿En qué lugares hiciste amistades y luego perdiste el contacto?",{colegio:"Colegio o instituto",universidad:"Universidad",trabajo:"Trabajo (también temporal o de verano)",barrio:"Barrio o casa anterior",vacaciones:"Lugar de vacaciones",campamento:"Campamento",deporte:"Deporte o club",intercambio:"Intercambio",otro:"Otro (voluntariado…)",none:"En ninguno: sigo en contacto"}],
+   q28:["¿Mantienes el contacto con la mayoría de tus amigos de las distintas etapas?","1 = Con casi ninguno","5 = Con casi todos"],
+   q1:["¿Qué edad tienes?",{lt18:"Menos de 18","18_24":"18–24","25_29":"25–29","30_34":"30–34","35_44":"35–44","45_54":"45–54","55p":"55 o más"}],
    q2:["¿En qué país terminaste la secundaria o el bachillerato?"],
    q3:["¿En qué país vives hoy?"],
    q4:["En los últimos 12 meses, ¿has intentado encontrar a alguien de tu colegio, universidad o algún trabajo anterior?",{yes:"Sí",no:"No"}],
@@ -203,7 +211,7 @@ const T = {
   title:"Survey", foot:"© 2026 Bio · Project in validation phase",
   demo:"Demo mode: answers are not saved.",
   i_t:"Help us build Bio · 5 minutes",
-  i_l:"We're exploring an idea: an app where you tell your life story in stages (school, university, jobs, cities) and that helps you reconnect with people who were in the same place at the same time. Before building anything, we want to know if you actually need it. There are no right answers: an honest opinion helps us more than a kind one.",
+  i_l:"We're exploring an idea: an app to reconnect with people who were in the same place at the same time as you (school, but also a neighborhood before you moved, a holiday, a camp, a summer job or a team) and to build your life story with your achievements and memories, even if you're still in touch with everyone. Before building anything, we want to know if you actually need it. There are no right answers: an honest opinion helps us more than a kind one.",
   i_p:"<strong>Privacy, in short.</strong> This survey is anonymous: we don't ask for your name. At the end you can leave your email for early access; it's optional and stored separately.<ul><li><strong>Controller:</strong> the founder of the Bio project, a private individual resident in Spain (contact details in the policy).</li><li><strong>Purpose:</strong> market research: to study interest in Bio and decide whether to build it. We don't sell or share your data, and we don't use it for advertising.</li><li><strong>Legal basis:</strong> your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time.</li><li><strong>Where:</strong> in our Supabase database (EU, Frankfurt). No cookies or third-party tools.</li><li><strong>Retention:</strong> up to 12 months after the validation phase ends; if the project doesn't go ahead, everything is deleted.</li><li><strong>Your rights:</strong> access, rectification, erasure, objection, restriction and portability. You can complain to your data protection authority (AEPD in Spain, ICO in the UK).</li></ul>",
   i_link:"Full privacy policy",
   i_c:"I am 18 or older, I have read the privacy information and I agree to take part.",
@@ -221,7 +229,10 @@ const T = {
   m_t:"Thanks for your interest", m_l:"This survey is only for people aged 18 or over, so we haven't saved any answers.", m_btn:"Back to Bio",
   countries:{VE:"Venezuela",ES:"Spain",US:"United States",CO:"Colombia",AR:"Argentina",MX:"Mexico",FR:"France",GB:"United Kingdom",BE:"Belgium",CH:"Switzerland",CA:"Canada",MA:"Morocco",XX:"Other"},
   q:{
-   q1:["How old are you?",{lt18:"Under 18","18_24":"18–24","25_34":"25–34","35_44":"35–44","45_54":"45–54","55p":"55 or older"}],
+   q26:["What attracts you most about Bio?",{reconnect:"Reconnecting with people I lost touch with",biography:"Building and showing my story and achievements",memories:"Remembering shared moments (that holiday, that place…)",all:"All of it equally"}],
+   q27:["Where did you make friends and then lose touch?",{colegio:"School",universidad:"University",trabajo:"Job (incl. summer or temporary)",barrio:"Neighborhood or previous home",vacaciones:"Holiday spot",campamento:"Camp",deporte:"Sports team or club",intercambio:"Exchange",otro:"Other (volunteering…)",none:"Nowhere: I'm still in touch"}],
+   q28:["Do you keep in touch with most of your friends from the different stages of your life?","1 = Hardly any","5 = Almost all"],
+   q1:["How old are you?",{lt18:"Under 18","18_24":"18–24","25_29":"25–29","30_34":"30–34","35_44":"35–44","45_54":"45–54","55p":"55 or older"}],
    q2:["In which country did you finish high school / secondary school?"],
    q3:["In which country do you live today?"],
    q4:["In the last 12 months, have you tried to find someone from your school, university or a previous job?",{yes:"Yes",no:"No"}],
@@ -251,7 +262,7 @@ const T = {
   title:"Questionnaire", foot:"© 2026 Bio · Projet en phase de validation",
   demo:"Mode démo : les réponses ne sont pas enregistrées.",
   i_t:"Aidez-nous à créer Bio · 5 minutes",
-  i_l:"Nous explorons une idée : une appli où vous racontez votre vie par étapes (école, études, emplois, villes) et qui vous aide à retrouver les personnes qui étaient au même endroit, au même moment. Avant de construire quoi que ce soit, nous voulons savoir si vous en avez vraiment besoin. Il n'y a pas de bonne réponse : un avis sincère nous aide plus qu'un avis aimable.",
+  i_l:"Nous explorons une idée : une appli pour retrouver les personnes qui étaient au même endroit, au même moment que vous (l'école, mais aussi un quartier avant un déménagement, des vacances, une colonie, un job d'été ou une équipe) et pour construire votre biographie avec vos réussites et vos souvenirs, même si vous êtes toujours en contact avec tout le monde. Avant de construire quoi que ce soit, nous voulons savoir si vous en avez vraiment besoin. Il n'y a pas de bonne réponse : un avis sincère nous aide plus qu'un avis aimable.",
   i_p:"<strong>Confidentialité, en bref.</strong> Ce questionnaire est anonyme : nous ne demandons pas votre nom. À la fin, vous pouvez laisser votre e-mail pour un accès anticipé ; c'est facultatif et conservé à part.<ul><li><strong>Responsable du traitement :</strong> le porteur du projet Bio, personne physique résidant en Espagne (coordonnées dans la politique).</li><li><strong>Finalité :</strong> étude de marché : étudier l'intérêt pour Bio et décider de le développer ou non. Nous ne vendons ni ne cédons vos données, et ne les utilisons pas pour de la publicité.</li><li><strong>Base légale :</strong> votre consentement (art. 6.1.a RGPD), que vous pouvez retirer à tout moment.</li><li><strong>Où :</strong> dans notre base de données Supabase (UE, Francfort). Ni cookies ni outils tiers.</li><li><strong>Durée de conservation :</strong> jusqu'à 12 mois après la fin de la phase de validation ; si le projet ne se poursuit pas, tout est supprimé.</li><li><strong>Vos droits :</strong> accès, rectification, effacement, opposition, limitation et portabilité. Vous pouvez saisir la CNIL (France) ou l'AEPD (Espagne).</li></ul>",
   i_link:"Politique de confidentialité complète",
   i_c:"J'ai 18 ans ou plus, j'ai lu les informations sur la confidentialité et j'accepte de participer.",
@@ -269,7 +280,10 @@ const T = {
   m_t:"Merci de votre intérêt", m_l:"Ce questionnaire est réservé aux personnes de 18 ans ou plus : nous n'avons enregistré aucune réponse.", m_btn:"Retour à Bio",
   countries:{VE:"Venezuela",ES:"Espagne",US:"États-Unis",CO:"Colombie",AR:"Argentine",MX:"Mexique",FR:"France",GB:"Royaume-Uni",BE:"Belgique",CH:"Suisse",CA:"Canada",MA:"Maroc",XX:"Autre pays"},
   q:{
-   q1:["Quel âge avez-vous ?",{lt18:"Moins de 18 ans","18_24":"18–24","25_34":"25–34","35_44":"35–44","45_54":"45–54","55p":"55 ou plus"}],
+   q26:["Qu'est-ce qui vous attire le plus dans Bio ?",{reconnect:"Retrouver des personnes perdues de vue",biography:"Construire et montrer mon histoire et mes réussites",memories:"Me souvenir de moments partagés (ces vacances, cet endroit…)",all:"Tout, à égalité"}],
+   q27:["Dans quels lieux vous êtes-vous fait des amis avant de perdre le contact ?",{colegio:"École, collège ou lycée",universidad:"Université",trabajo:"Travail (y compris saisonnier ou d'été)",barrio:"Quartier ou ancien logement",vacaciones:"Lieu de vacances",campamento:"Colonie ou camp",deporte:"Sport ou club",intercambio:"Échange",otro:"Autre (bénévolat…)",none:"Nulle part : je suis toujours en contact"}],
+   q28:["Gardez-vous le contact avec la plupart de vos amis des différentes étapes de votre vie ?","1 = Presque aucun","5 = Presque tous"],
+   q1:["Quel âge avez-vous ?",{lt18:"Moins de 18 ans","18_24":"18–24","25_29":"25–29","30_34":"30–34","35_44":"35–44","45_54":"45–54","55p":"55 ou plus"}],
    q2:["Dans quel pays avez-vous terminé le lycée (ou l'enseignement secondaire) ?"],
    q3:["Dans quel pays vivez-vous aujourd'hui ?"],
    q4:["Au cours des 12 derniers mois, avez-vous essayé de retrouver quelqu'un de votre école, de vos études ou d'un ancien travail ?",{yes:"Oui",no:"Non"}],
@@ -373,9 +387,10 @@ function renderQuestion(id, solo){
       return `<label class="opt"><input type="${typ}" name="${name}" value="${esc(c)}"${on ? " checked" : ""}><span>${esc(tx[1][c])}</span></label>`;
     }).join("") + `</div>`;
   } else if (q.type === "scale") {
+    const lo = tx[1] || t.s_lo, hi = tx[2] || t.s_hi;
     body = `<div class="scale">` + [1,2,3,4,5].map(n =>
-      `<label class="opt"><input type="radio" name="${name}" value="${n}"${answers[id] === n ? " checked" : ""} aria-label="${n}${n===1 ? " — " + esc(t.s_lo) : n===5 ? " — " + esc(t.s_hi) : ""}"><span aria-hidden="true">${n}</span></label>`).join("") +
-      `</div><div class="scale-l" aria-hidden="true"><span>${esc(t.s_lo)}</span><span>${esc(t.s_hi)}</span></div>`;
+      `<label class="opt"><input type="radio" name="${name}" value="${n}"${answers[id] === n ? " checked" : ""} aria-label="${n}${n===1 ? " — " + esc(lo) : n===5 ? " — " + esc(hi) : ""}"><span aria-hidden="true">${n}</span></label>`).join("") +
+      `</div><div class="scale-l" aria-hidden="true"><span>${esc(lo)}</span><span>${esc(hi)}</span></div>`;
   } else if (q.type === "select") {
     body = `<label class="f"><span class="sr">${esc(tx[0])}</span><select name="${name}" aria-labelledby="${legendId}"><option value="">${esc(t.choose)}</option>` +
       optionCodes(id).map(c => `<option value="${c}"${answers[id] === c ? " selected" : ""}>${esc(t.countries[c])}</option>`).join("") + `</select></label>`;
