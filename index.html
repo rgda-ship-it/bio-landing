@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bio — ¿Quién estuvo contigo?</title>
+<meta name="description" content="Cuenta tu vida etapa a etapa y reencuéntrate con quienes compartieron tu aula, tu facultad o tu barrio.">
+<meta property="og:title" content="Bio — ¿Quién estuvo contigo?">
+<meta property="og:description" content="Tu vida, etapa a etapa. Y las personas que estuvieron ahí.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rgda-ship-it.github.io/bio-landing/">
+<meta property="og:image" content="https://rgda-ship-it.github.io/bio-landing/og-es.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bio — ¿Quién estuvo contigo?">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e7; --paper-2:#efe7d6; --ink:#1f1a14; --ink-2:#5b5245; --line:#d9cdb5;
+  --accent:#c4552d; --accent-ink:#fff; --ok:#2f7d4f; --card:#fffdf8;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#16130f; --paper-2:#1e1a15; --ink:#f1e9da; --ink-2:#b4a892; --line:#3a332a;
+    --accent:#e0754b; --accent-ink:#1b120c; --ok:#6cc08f; --card:#211c16;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#16130f; --paper-2:#1e1a15; --ink:#f1e9da; --ink-2:#b4a892; --line:#3a332a;
+  --accent:#e0754b; --accent-ink:#1b120c; --ok:#6cc08f; --card:#211c16;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font:600 26px/1 Fraunces,serif;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.langs{display:flex;gap:4px}
+.langs button{background:none;border:1px solid transparent;color:var(--ink-2);font:500 13px Inter;padding:6px 9px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed="true"]{border-color:var(--line);color:var(--ink);background:var(--card)}
+h1,h2{font-family:Fraunces,serif;font-weight:600;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(40px,7vw,76px);line-height:1.02}
+h2{font-size:clamp(28px,4vw,40px);line-height:1.1}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:40px 0 72px}
+.lede{font-size:19px;color:var(--ink-2);max-width:34ch;margin:22px 0 30px}
+.btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:15px 22px;font:600 16px Inter;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.05)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.note{font-size:13px;color:var(--ink-2);margin-top:12px}
+/* línea de vida animada */
+.life{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 22px 10px;box-shadow:0 20px 50px -30px rgba(60,40,10,.35)}
+.life svg{width:100%;height:auto;display:block}
+.life .path{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 5s ease forwards .3s}
+.life .dot{fill:var(--paper);stroke:var(--accent);stroke-width:2.5;opacity:0;animation:pop .4s ease forwards}
+.life .lbl{fill:var(--ink);font:600 12px Inter;opacity:0;animation:pop .4s ease forwards}
+.life .sub{fill:var(--ink-2);font:400 11px Inter;opacity:0;animation:pop .4s ease forwards}
+.life .match{fill:var(--ok);opacity:0;animation:pop .4s ease forwards}
+.life .mtxt{fill:var(--ok);font:600 11px Inter;opacity:0;animation:pop .4s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.life *{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}}
+section{padding:72px 0;border-top:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.step b{display:block;font:600 22px Fraunces,serif;margin:6px 0 8px}
+.step .n{font:600 13px Inter;color:var(--accent)}
+.step p{margin:0;color:var(--ink-2)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+.cmp{border-radius:16px;padding:22px;border:1px solid var(--line)}
+.cmp.old{color:var(--ink-2)}
+.cmp.new{background:var(--card);border-color:var(--accent)}
+.cmp small{display:block;font:600 12px Inter;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.cmp p{font:500 20px/1.35 Fraunces,serif;margin:0}
+.privacy{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px}
+.privacy h3{font:600 17px Inter;margin:0 0 6px}
+.privacy p{margin:0;color:var(--ink-2)}
+/* formulario */
+.join{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+form{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;display:grid;gap:14px}
+label{font:500 13px Inter;color:var(--ink-2);display:grid;gap:6px}
+input,select{font:16px Inter;padding:12px 13px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.err{color:var(--accent);font-size:14px;min-height:1em;margin:0}
+.done{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;display:none}
+.done.show{display:block}
+.stats{display:flex;gap:28px;margin:18px 0 22px}
+.stats div b{display:block;font:600 34px Fraunces,serif}
+.stats div span{font-size:13px;color:var(--ink-2)}
+.share{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.reflink{font:500 14px ui-monospace,Menlo,monospace;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;word-break:break-all}
+footer{padding:36px 0 48px;color:var(--ink-2);font-size:13px;border-top:1px solid var(--line)}
+@media (max-width:820px){
+  .hero,.join{grid-template-columns:1fr;gap:32px}
+  .steps,.privacy,.compare{grid-template-columns:1fr}
+  .wrap{padding:0 16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">bio<span>.</span></div>
+    <div class="langs" role="group" aria-label="Idioma">
+      <button data-l="es">ES</button><button data-l="en">EN</button><button data-l="fr">FR</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1 data-i="h1"></h1>
+      <p class="lede" data-i="lede"></p>
+      <a class="btn" href="#join" data-i="cta"></a>
+      <p class="note" data-i="cta_note"></p>
+    </div>
+    <div class="life" aria-hidden="true">
+      <svg viewBox="0 0 420 330">
+        <path class="path" d="M30 300 C 90 290, 80 230, 130 220 S 210 200, 220 150 S 300 120, 320 90 S 380 40, 395 30"/>
+        <circle class="dot" cx="30" cy="300" r="7" style="animation-delay:.3s"/>
+        <text class="lbl" x="46" y="314" style="animation-delay:.4s" data-s="m1"></text>
+        <text class="sub" x="46" y="327" style="animation-delay:.4s" data-s="m1s"></text>
+        <circle class="dot" cx="130" cy="220" r="7" style="animation-delay:1.4s"/>
+        <text class="lbl" x="144" y="236" style="animation-delay:1.5s" data-s="m2"></text>
+        <text class="sub" x="144" y="251" style="animation-delay:1.5s" data-s="m2s"></text>
+        <circle class="match" cx="118" cy="200" r="5" style="animation-delay:1.9s"/>
+        <circle class="match" cx="106" cy="206" r="5" style="animation-delay:2s"/>
+        <text class="mtxt" x="40" y="196" style="animation-delay:2.1s" data-s="m2m"></text>
+        <circle class="dot" cx="220" cy="150" r="7" style="animation-delay:2.6s"/>
+        <text class="lbl" x="234" y="166" style="animation-delay:2.7s" data-s="m3"></text>
+        <text class="sub" x="234" y="181" style="animation-delay:2.7s" data-s="m3s"></text>
+        <circle class="dot" cx="320" cy="90" r="7" style="animation-delay:3.8s"/>
+        <text class="lbl" x="210" y="76" style="animation-delay:3.9s" data-s="m4"></text>
+        <text class="sub" x="210" y="91" style="animation-delay:3.9s" data-s="m4s"></text>
+        <circle class="dot" cx="395" cy="30" r="7" style="animation-delay:4.9s"/>
+        <text class="lbl" x="300" y="22" style="animation-delay:5s" data-s="m5"></text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<section><div class="wrap">
+  <h2 data-i="how_t"></h2>
+  <div class="steps">
+    <div class="step"><span class="n">01</span><b data-i="s1t"></b><p data-i="s1"></p></div>
+    <div class="step"><span class="n">02</span><b data-i="s2t"></b><p data-i="s2"></p></div>
+    <div class="step"><span class="n">03</span><b data-i="s3t"></b><p data-i="s3"></p></div>
+  </div>
+  <div class="compare">
+    <div class="cmp old"><small data-i="old_k"></small><p data-i="old"></p></div>
+    <div class="cmp new"><small data-i="new_k"></small><p data-i="new"></p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 data-i="priv_t"></h2>
+  <div class="privacy">
+    <div><h3 data-i="p1t"></h3><p data-i="p1"></p></div>
+    <div><h3 data-i="p2t"></h3><p data-i="p2"></p></div>
+    <div><h3 data-i="p3t"></h3><p data-i="p3"></p></div>
+  </div>
+</div></section>
+
+<section id="join"><div class="wrap join">
+  <div>
+    <h2 data-i="join_t"></h2>
+    <p class="lede" data-i="join_l"></p>
+  </div>
+  <div>
+    <form id="f" novalidate>
+      <label><span data-i="f_name"></span><input name="name" required maxlength="80" autocomplete="given-name"></label>
+      <label><span data-i="f_email"></span><input name="email" type="email" required autocomplete="email"></label>
+      <div class="row">
+        <label><span data-i="f_country"></span>
+          <select name="country" required>
+            <option value="VE">Venezuela</option><option value="ES">España</option>
+            <option value="US">United States</option><option value="GB">United Kingdom</option>
+            <option value="FR">France</option><option value="CO">Colombia</option>
+            <option value="AR">Argentina</option><option value="MX">México</option>
+            <option value="CL">Chile</option><option value="PE">Perú</option>
+            <option value="XX" data-i="f_other"></option>
+          </select></label>
+        <label><span data-i="f_year"></span><input name="grad_year" type="number" min="1950" max="2035" required inputmode="numeric"></label>
+      </div>
+      <label><span data-i="f_school"></span><input name="school" required maxlength="120"></label>
+      <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" type="submit" data-i="f_submit"></button>
+      <p class="note" data-i="f_legal"></p>
+    </form>
+    <div class="done" id="done" aria-live="polite">
+      <h2 data-i="d_t"></h2>
+      <div class="stats">
+        <div><b id="pos">—</b><span data-i="d_pos"></span></div>
+        <div><b id="coh">—</b><span data-i="d_coh"></span></div>
+        <div><b id="refs">0</b><span data-i="d_refs"></span></div>
+      </div>
+      <p data-i="d_share"></p>
+      <div class="reflink" id="link"></div>
+      <div class="share">
+        <a class="btn" id="wa" target="_blank" rel="noopener" data-i="d_wa"></a>
+        <button class="btn ghost" id="copy" type="button" data-i="d_copy"></button>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="wrap"><footer data-i="foot"></footer></div>
+
+<script>
+/* ===== Configuración: rellenar con el proyecto de Supabase (Settings → API) =====
+   Si se dejan vacíos, la página funciona en modo demo (sin guardar datos). */
+const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";      // p.ej. "https://abcd1234.supabase.co"
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg"; // clave pública "anon"
+
+const T = {
+ es:{h1:"¿Quién estuvo contigo?",lede:"Cuenta tu vida etapa a etapa y reencuéntrate con quienes compartieron tu aula, tu facultad o tu barrio, en el mismo lugar y en los mismos años.",cta:"Quiero acceso anticipado",cta_note:"Gratis. Empezamos por promociones completas.",
+  m1:"1988 · Caracas",m1s:"Nací",m2:"1994 · Colegio San José",m2s:"1º a 6º grado, sección B",m2m:"12 compañeros encontrados",m3:"2006 · UCV, Ingeniería",m3s:"5 años",m4:"2014 · Madrid",m4s:"Nueva etapa",m5:"Hoy",
+  how_t:"Tu biografía, con las personas que estuvieron ahí",s1t:"Cuenta tus etapas",s1:"Dónde naciste, tus colegios, tu universidad, tus trabajos. Te guiamos hito a hito, en minutos.",s2t:"Encuentra a tu gente",s2:"Bio cruza lugar y fechas para mostrarte quién coincidió contigo de verdad. No solo en el mismo colegio: en tu misma aula y en tu mismo año.",s3t:"Revive tu historia",s3:"Bio convierte tu vida en una animación para guardar o compartir.",
+  old_k:"Otras redes",old:"«Fue a tu mismo colegio»",new_k:"Bio",new:"«Estuvo contigo en 6º B, curso 1999–2000»",
+  priv_t:"Tu pasado, bajo tu control",p1t:"Doble confirmación",p1:"Nadie puede vincularte a su historia sin tu permiso.",p2t:"Visibilidad por etapa",p2:"Cada hito puede ser público, para seguidores, para amigos o solo para ti.",p3t:"Tú decides el detalle",p3:"Muestra la ciudad, la institución o el aula: tú eliges hasta dónde.",
+  join_t:"Reserva tu lugar y trae a tu promoción",join_l:"Abrimos Bio promoción por promoción. Cuantos más compañeros tuyos se apunten, antes se abre la tuya.",
+  f_name:"Nombre",f_email:"Email",f_country:"País donde estudiaste",f_year:"Año de graduación del colegio",f_school:"Nombre de tu colegio",f_other:"Otro",f_submit:"Unirme a la lista",f_legal:"Solo usaremos tu email para avisarte del lanzamiento. Puedes darte de baja cuando quieras.",
+  d_t:"¡Estás dentro!",d_pos:"tu puesto",d_coh:"de tu promoción ya están",d_refs:"invitados",d_share:"Comparte tu enlace con tu grupo de promoción. Cada compañero que se una acerca la apertura de tu promoción.",d_wa:"Enviar por WhatsApp",d_copy:"Copiar enlace",copied:"¡Copiado!",
+  wa_msg:"Me apunté a Bio, una red para reencontrarnos con quienes estudiaron con nosotros. Apúntate para abrir nuestra promoción:",
+  e_req:"Completa todos los campos.",e_mail:"Revisa tu email.",e_year:"Revisa el año.",e_net:"No pudimos registrarte. Inténtalo de nuevo.",
+  foot:"© 2026 Bio · Proyecto en fase de validación"},
+ en:{h1:"Who was there with you?",lede:"Tell your life story chapter by chapter and reconnect with the people who shared your classroom, your campus or your neighborhood, in the same place and the same years.",cta:"Get early access",cta_note:"Free. We open whole graduating classes at a time.",
+  m1:"1988 · Caracas",m1s:"Born",m2:"1994 · San José School",m2s:"Grades 1–6, class B",m2m:"12 classmates found",m3:"2006 · UCV, Engineering",m3s:"5 years",m4:"2014 · Madrid",m4s:"New chapter",m5:"Today",
+  how_t:"Your life story, with the people who were there",s1t:"Tell your chapters",s1:"Where you were born, your schools, your university, your jobs. We guide you milestone by milestone, in minutes.",s2t:"Find your people",s2:"Bio matches place and dates to show who was really there with you. Not just the same school: the same classroom, the same year.",s3t:"Relive your story",s3:"Bio turns your life into an animation to keep or share.",
+  old_k:"Other networks",old:"“Went to your school”",new_k:"Bio",new:"“Was in class 6B with you, 1999–2000”",
+  priv_t:"Your past, under your control",p1t:"Double confirmation",p1:"Nobody can link you to their story without your permission.",p2t:"Visibility per chapter",p2:"Each milestone can be public, for followers, for friends or just for you.",p3t:"You choose the detail",p3:"Show the city, the institution or the classroom: you decide how much.",
+  join_t:"Save your spot and bring your class",join_l:"We're opening Bio one graduating class at a time. The more classmates who join, the sooner yours opens.",
+  f_name:"First name",f_email:"Email",f_country:"Country where you went to school",f_year:"High-school graduation year",f_school:"Your school's name",f_other:"Other",f_submit:"Join the waitlist",f_legal:"We'll only use your email to tell you about the launch. Unsubscribe anytime.",
+  d_t:"You're in!",d_pos:"your spot",d_coh:"from your class already joined",d_refs:"invited",d_share:"Share your link with your class group. Every classmate who joins brings your class opening closer.",d_wa:"Send on WhatsApp",d_copy:"Copy link",copied:"Copied!",
+  wa_msg:"I joined Bio, a network to reconnect with the people we went to school with. Join so our class opens:",
+  e_req:"Please fill in every field.",e_mail:"Check your email.",e_year:"Check the year.",e_net:"We couldn't sign you up. Please try again.",
+  foot:"© 2026 Bio · Project in validation phase"},
+ fr:{h1:"Qui était là avec vous ?",lede:"Racontez votre vie étape par étape et retrouvez celles et ceux qui ont partagé votre classe, votre fac ou votre quartier, au même endroit et les mêmes années.",cta:"Accès anticipé",cta_note:"Gratuit. Nous ouvrons promotion par promotion.",
+  m1:"1988 · Caracas",m1s:"Naissance",m2:"1994 · École San José",m2s:"Du CP à la 6e, classe B",m2m:"12 camarades retrouvés",m3:"2006 · UCV, Ingénierie",m3s:"5 ans",m4:"2014 · Madrid",m4s:"Nouvelle étape",m5:"Aujourd’hui",
+  how_t:"Votre biographie, avec ceux qui étaient là",s1t:"Racontez vos étapes",s1:"Votre lieu de naissance, vos écoles, votre université, vos emplois. Nous vous guidons étape par étape, en quelques minutes.",s2t:"Retrouvez les vôtres",s2:"Bio croise lieux et dates pour vous montrer qui était vraiment là. Pas seulement la même école : la même classe, la même année.",s3t:"Revivez votre histoire",s3:"Bio transforme votre vie en une animation à garder ou à partager.",
+  old_k:"Autres réseaux",old:"« Est allé dans votre école »",new_k:"Bio",new:"« Était avec vous en 6e B, 1999–2000 »",
+  priv_t:"Votre passé, sous votre contrôle",p1t:"Double confirmation",p1:"Personne ne peut vous lier à son histoire sans votre accord.",p2t:"Visibilité par étape",p2:"Chaque étape peut être publique, pour vos abonnés, vos amis ou vous seul.",p3t:"Vous choisissez le détail",p3:"Ville, établissement ou classe : c’est vous qui décidez.",
+  join_t:"Réservez votre place et invitez votre promo",join_l:"Nous ouvrons Bio promotion par promotion. Plus vos camarades s’inscrivent, plus la vôtre ouvre tôt.",
+  f_name:"Prénom",f_email:"E-mail",f_country:"Pays de scolarité",f_year:"Année du bac / fin du lycée",f_school:"Nom de votre lycée",f_other:"Autre",f_submit:"Rejoindre la liste",f_legal:"Nous utiliserons votre e-mail uniquement pour vous prévenir du lancement. Désinscription à tout moment.",
+  d_t:"C’est fait !",d_pos:"votre place",d_coh:"de votre promo déjà inscrits",d_refs:"invités",d_share:"Partagez votre lien avec le groupe de votre promo. Chaque camarade inscrit rapproche l’ouverture de votre promo.",d_wa:"Envoyer sur WhatsApp",d_copy:"Copier le lien",copied:"Copié !",
+  wa_msg:"Je me suis inscrit sur Bio, un réseau pour retrouver ceux avec qui on a étudié. Inscris-toi pour ouvrir notre promo :",
+  e_req:"Merci de remplir tous les champs.",e_mail:"Vérifiez votre e-mail.",e_year:"Vérifiez l’année.",e_net:"Inscription impossible. Réessayez.",
+  foot:"© 2026 Bio · Projet en phase de validation"}
+};
+
+const qs = new URLSearchParams(location.search);
+const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}} };
+if (qs.get("ref")) store.set("bio_ref", qs.get("ref"));
+let lang = qs.get("lang") || store.get("bio_lang") || (navigator.language||"es").slice(0,2);
+if (!T[lang]) lang = "es";
+
+function apply(l){
+  lang = l; store.set("bio_lang", l);
+  document.documentElement.lang = l;
+  document.querySelectorAll("[data-i]").forEach(el => { const v = T[l][el.dataset.i]; if (v!=null) el.textContent = v; });
+  document.querySelectorAll("[data-s]").forEach(el => { el.textContent = T[l][el.dataset.s] || ""; });
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l===l));
+  document.title = "Bio — " + T[l].h1;
+}
+document.querySelectorAll(".langs button").forEach(b => b.onclick = () => apply(b.dataset.l));
+apply(lang);
+
+/* Medición agregada sin datos personales: solo suma 1 a un contador por día, idioma,
+   utm_source y evento en Supabase (public.track_event). Sin cookies ni identificadores.
+   En modo demo (sin claves) no hace nada. */
+function track(ev){
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  try {
+    fetch(SUPABASE_URL + "/rest/v1/rpc/track_event", {
+      method: "POST", keepalive: true,
+      headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ p_event: ev, p_lang: lang, p_utm: qs.get("utm_source"), p_via_ref: !!qs.get("ref") })
+    }).catch(() => {});
+  } catch (_) {}
+}
+track("visita");
+document.getElementById("wa").addEventListener("click", () => track("clic_compartir_whatsapp"));
+document.getElementById("copy").addEventListener("click", () => track("clic_copiar_enlace"));
+
+async function join(data){
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {           // modo demo
+    await new Promise(r => setTimeout(r, 400));
+    return { code: "demo" + Math.random().toString(36).slice(2,6), position: 128, referrals: 0, cohort: 3 };
+  }
+  const r = await fetch(SUPABASE_URL + "/rest/v1/rpc/join_waitlist", {
+    method: "POST",
+    headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+document.getElementById("f").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const f = ev.target, t = T[lang], err = document.getElementById("err");
+  const v = Object.fromEntries(new FormData(f));
+  err.textContent = "";
+  if (!v.name.trim() || !v.email.trim() || !v.school.trim() || !v.grad_year) return err.textContent = t.e_req;
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email)) return err.textContent = t.e_mail;
+  const y = +v.grad_year; if (y < 1950 || y > 2035) return err.textContent = t.e_year;
+  const btn = f.querySelector("button"); btn.disabled = true;
+  try {
+    const res = await join({ p_email: v.email, p_name: v.name, p_country: v.country, p_school: v.school,
+      p_grad_year: y, p_lang: lang, p_ref: store.get("bio_ref"), p_utm: qs.get("utm_source"), p_hp: v.website || null });
+    const link = location.origin + location.pathname + "?ref=" + res.code + "&lang=" + lang;
+    document.getElementById("pos").textContent = "#" + res.position;
+    document.getElementById("coh").textContent = res.cohort;
+    document.getElementById("refs").textContent = res.referrals;
+    document.getElementById("link").textContent = link;
+    document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent(t.wa_msg + " " + link);
+    document.getElementById("copy").onclick = async e => {
+      try { await navigator.clipboard.writeText(link); e.target.textContent = t.copied; } catch(_) {}
+    };
+    f.style.display = "none"; document.getElementById("done").classList.add("show");
+  } catch (e) { err.textContent = t.e_net; btn.disabled = false; }
+});
+</script>
+</body>
+</html>
