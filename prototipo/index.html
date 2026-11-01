@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Bio · Prototipo del onboarding</title>
+<title>Bio · Prototipo: marca tus momentos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#f4eee2;--card:#fffdf8;--soft:#ebe2d0;--line:#d9cdb5;--ink:#221b13;--ink2:#4a4134;--muted:#6a5f4f;--accent:#c4552d;--accent-ink:#a8431f;--sel:#f7ece5;--ok-bg:#e6f0e8;--ok:#1f4d33;
+:root{--paper:#f4eee2;--card:#fffdf8;--soft:#ebe2d0;--line:#d9cdb5;--ink:#221b13;--ink2:#4a4134;--muted:#6a5f4f;--accent:#c4552d;--accent-ink:#a8431f;--sel:#f7ece5;--ok-bg:#e6f0e8;--ok:#1f4d33;--diary:#efe9f5;--diary-ink:#3f2f5c;
 --display:"Fraunces",Georgia,"Times New Roman",serif;--body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;background:#e9e1d1;color:var(--ink);font:16px/1.5 var(--body)}
@@ -18,6 +18,7 @@ html,body{margin:0;background:#e9e1d1;color:var(--ink);font:16px/1.5 var(--body)
 .proto{align-self:center;font-size:12px;color:var(--muted);background:var(--soft);padding:4px 10px;border-radius:10px;margin-bottom:6px}
 h1{font:600 28px/1.15 var(--display);margin:0;text-wrap:balance}
 h1.big{font-size:34px}
+h2{font:600 19px/1.25 var(--display);margin:0}
 p{margin:0}
 .muted{color:var(--muted);font-size:14px}
 .ink2{color:var(--ink2)}
@@ -26,17 +27,18 @@ p{margin:0}
 .bar i{display:block;height:6px;border-radius:3px;background:var(--accent);transition:width .3s}
 .screen{flex-grow:1;display:flex;flex-direction:column;gap:14px}
 .center{justify-content:center}
-button,a.btn,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--accent-ink);outline-offset:2px}
 .icon{width:44px;height:44px;border:0;background:transparent;display:inline-flex;align-items:center;justify-content:center;border-radius:22px;color:var(--ink)}
 .link{min-height:44px;min-width:44px;border:0;background:transparent;color:var(--accent-ink);font-weight:600}
-.primary,.secondary{min-height:52px;border-radius:14px;width:100%;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.primary,.secondary{min-height:52px;border-radius:14px;width:100%;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
 .primary{border:0;background:var(--accent);color:#fff}
 .secondary{border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:500}
 .actions{display:flex;flex-direction:column;gap:10px;margin-top:8px}
-label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);position:relative}
-input.t,select.t{min-height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;width:100%}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+input.t,select.t,textarea.t{min-height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;width:100%}
+textarea.t{padding:14px;min-height:220px;resize:vertical;font:17px/1.6 var(--display)}
 .row{display:flex;gap:10px}.row>*{flex:1 1 0;min-width:0}.row>.w2{flex:2 1 0}
 .seg{display:flex;gap:6px;background:var(--soft);padding:4px;border-radius:14px}
 .seg button{flex:1 1 0;min-height:44px;border-radius:10px;border:0;background:transparent;color:var(--ink);font-weight:500;font-size:14px}
@@ -49,10 +51,18 @@ input.t,select.t{min-height:48px;padding:0 14px;border-radius:12px;border:1px so
 .avatars button{min-height:96px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
 .avatars button[aria-checked=true]{border:3px solid var(--accent-ink)}
 .results{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.results button{min-height:52px;text-align:left;border:0;border-bottom:1px solid var(--soft);background:transparent;padding:6px 14px;display:flex;flex-direction:column;justify-content:center}
+.results button{min-height:52px;text-align:left;border:0;border-bottom:1px solid var(--soft);background:transparent;padding:6px 14px;display:flex;flex-direction:column;justify-content:center;color:var(--ink)}
 .results button:last-child{border-bottom:0}
 .results button[aria-selected=true]{background:var(--sel)}
 .results small{font-size:12px;color:var(--muted)}
+.emos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.emo{min-height:76px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:14px;font-weight:500;padding:6px}
+.emo[aria-pressed=true]{border:3px solid var(--ink);background:var(--sel)}
+.emo .dot,.chip .dot{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none}
+.emo .dot{width:34px;height:34px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:3px 10px 3px 3px;border-radius:14px;background:var(--soft);color:var(--ink)}
+.chip .dot{width:22px;height:22px}
 .opt{min-height:52px;width:100%;display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:12px;border:0;background:transparent;text-align:left;color:var(--ink)}
 .opt[aria-checked=true]{background:var(--sel)}
 .radio{width:20px;height:20px;border-radius:10px;border:2px solid var(--muted);display:flex;align-items:center;justify-content:center;flex:none}
@@ -63,7 +73,7 @@ input.t,select.t{min-height:48px;padding:0 14px;border-radius:12px;border:1px so
 .el[aria-pressed=true]{border:2px solid var(--accent-ink)}
 .el span.l{display:flex;flex-direction:column;flex-grow:1;min-width:0}
 .el small{font-size:12px;color:var(--muted)}
-.badge{font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-bg);padding:3px 8px;border-radius:10px;white-space:nowrap}
+.badge{font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-bg);padding:3px 8px;border-radius:10px;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
 .book{background:var(--card);border:1px solid var(--line);border-radius:6px 16px 16px 6px;box-shadow:inset 8px 0 0 var(--soft);padding:26px 20px 26px 28px;display:flex;flex-direction:column;gap:14px}
 .serif{font-family:var(--display)}
 ol.toc{list-style:none;margin:0;padding:0;background:var(--card);border:1px solid var(--line);border-radius:16px}
@@ -72,42 +82,48 @@ ol.toc button{min-height:60px;width:100%;display:flex;align-items:center;gap:14p
 ol.toc .n{font:20px var(--display);color:var(--accent-ink);width:26px}
 ol.toc .l{flex-grow:1;display:flex;flex-direction:column}
 ol.toc small{font-size:13px;color:var(--muted)}
-.ppl{font-size:13px;color:#276b43;white-space:nowrap}
-.dots{display:flex}.dots i{width:30px;height:30px;border-radius:15px;border:2px solid var(--ok-bg);margin-left:-10px}.dots i:first-child{margin-left:0}
-.mile{display:flex;gap:12px}.mile i{width:10px;height:10px;border-radius:5px;background:var(--accent);margin-top:7px;flex:none}
+.mile{display:flex;gap:12px;align-items:flex-start}
 blockquote{margin:0;font:italic 16px/1.55 var(--display)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px}
+.entry{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.entry.free{background:var(--diary);border-color:#d8cde6}
+.kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tabs{display:flex;gap:6px;background:var(--soft);padding:4px;border-radius:14px}
+.tabs button{flex:1 1 0;min-height:52px;border-radius:10px;border:0;background:transparent;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
+.tabs button small{font-size:11px;color:var(--muted)}
+.tabs button[aria-selected=true]{background:var(--card);box-shadow:0 1px 3px rgba(60,40,10,.18)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px;z-index:5}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 </head>
 <body>
 <main class="frame" id="app" aria-live="polite"></main>
 <script>
-/* Bio · prototipo navegable del onboarding. Datos ficticios, sin backend.
-   i18n: todos los textos visibles salen de I18N[lang]; hoy solo "es". */
+/* Bio · prototipo navegable. Datos ficticios, sin backend.
+   i18n: los textos visibles salen de I18N[lang]; hoy solo "es". */
 (function () {
   "use strict";
   var I18N = { es: {
-    proto: "Prototipo · datos ficticios", step: "Paso {n} de 9 · ≈{s} s", back: "Atrás", skip: "Saltar", next: "Continuar", start: "Empezar",
-    w_title: "Empieza tu historia en menos de 5 minutos", w_text: "Te haremos unas pocas preguntas sobre dónde has estado. Solo el nacimiento es obligatorio; todo lo demás puedes saltarlo.", lang: "Idioma",
+    proto: "Prototipo · datos ficticios", step: "Paso {n} de {t} · ≈{s} s", back: "Atrás", skip: "Saltar", next: "Continuar", start: "Empezar mi historia",
+    w_title: "Marca tus momentos. Revive tu historia.", w_text: "Tu historia la escribes tú: los lugares, los años y cómo te hizo sentir cada momento. En menos de 5 minutos tendrás tus primeros hitos. Solo el nacimiento es obligatorio.", lang: "Idioma",
     a_title: "Elige tu avatar", a_text: "Crecerá contigo en tu historia, de bebé a hoy. Sin fotos de tu cara.", a_more: "Más estilos con Bio Premium, más adelante.",
-    b_title: "¿Dónde y cuándo naciste?", city: "Ciudad", detail: "¿Cuánto detalle quieres dar?", day: "Día", month: "Mes", year: "Solo año", date: "Fecha", b_req: "Este paso es obligatorio: es el inicio de tu línea de vida.", b_err: "Escribe la ciudad y la fecha para continuar.",
+    b_title: "Tu primer hito: dónde y cuándo naciste", city: "Ciudad", detail: "¿Cuánto detalle quieres dar?", day: "Día", month: "Mes", year: "Solo año", date: "Fecha", b_req: "Este paso es obligatorio: es el inicio de tu historia.", b_err: "Escribe la ciudad y la fecha para continuar.",
     who: "Quién lo ve", vis_birth: "Año: Público · resto: Solo yo", vis_friends: "Amigos", change: "Cambiar",
     s_title: "Tu colegio", s_search: "Busca tu centro", s_course: "Último curso", s_section: "Sección", s_years: "Años en el colegio", s_eq: "Equivale a 6º de Primaria (ES), 6e (FR), Year 7 (UK) y 6th grade (US).", s_none: "No encontramos ese centro. Puedes añadirlo después.",
-    u_title: "¿Y después?", uni: "Universidad", work: "Trabajo", u_name: "Universidad", career: "Carrera", company: "Empresa", site: "Sede", team: "Equipo", years: "Años", u_hint: "Podrás añadir más etapas después. Si aún no tienes, pulsa Saltar.",
+    u_title: "Tu siguiente etapa", uni: "Universidad", work: "Trabajo", u_name: "Universidad", career: "Carrera", company: "Empresa", site: "Sede", team: "Equipo", years: "Años", u_hint: "Podrás añadir más hitos después. Si aún no tienes, pulsa Saltar.",
     c_title: "¿Dónde vives ahora?", since: "Desde", c_note_t: "Solo yo, por defecto", c_note: "Dónde vives hoy es reciente y dice dónde encontrarte. Lo guardamos solo para ti; puedes cambiarlo cuando quieras.",
-    m_title: "No estuviste solo", m_main: "{n} personas estuvieron en tu aula {cls}", m_sub: "{school}, {years}. Verás quiénes son cuando cada una confirme que también estuvo allí; hasta entonces nadie ve tus datos ni tú los suyos.", m_uni: "{n} personas de tu {kind}", m_none: "Aún no hay coincidencias. Invita a tu promoción para encontrarlas.", m_ex: "Las cifras son simuladas.",
-    i_title: "Trae a tu promoción", i_text: "Cuantos más de tu aula se unan, más completa será la historia de todos.", i_msg: "¡Hola! Estoy armando mi historia en Bio y ya somos varios del {school}. Únete y vemos quién estuvo en cada etapa: bio.app/i/demo", wa: "Enviar por WhatsApp", copy: "Copiar enlace", copied: "Enlace copiado (simulado)", sent: "En la app real se abriría WhatsApp", later: "Ahora no, terminar",
-    e_title: "Tu historia ha empezado", e_text: "{path}. {n} hitos guardados. Tiempo: {t}.", asBook: "Ver como libro", asVideo: "Ver como vídeo", videoSoon: "La animación está en otro prototipo", edit: "Ajustar quién ve un hito",
-    v_title: "Primer beso", v_kind: "Hito · Liceo", v_text: "Elige quién ve cada parte. Puedes compartir el año y guardarte el resto.", v_who: "¿Quién ve {x}?", v_trace: "Para quien no puede ver este hito…", preview: "Así lo ve…", save: "Guardar visibilidad", saved: "Guardado (simulado)", v_none_h: "No ve nada de este hito. Ni siquiera sabe que existe.", v_none_l: "Ve un candado con «Hito privado», sin título, fecha ni lugar.", v_hidden: "Hay {n} parte(s) de este hito que no puede ver.", v_link_t: "Vínculo mutuo confirmado", v_link: "Luis también registró este recuerdo por su cuenta, así que os lo mostramos a los dos a la vez. Nadie recibió una solicitud.",
-    bk_sub: "Una autobiografía en Bio", bk_open: "Abrir el libro", bk_print: "Pedir impreso · Premium", toc: "Índice", toc_text: "Cada etapa de la vida es un capítulo.", ch: "Capítulo {n}", next_ch: "Siguiente capítulo", prev: "Volver al índice", diary: "Del diario", restart: "Volver a empezar"
+    f_title: "¿Cómo te hizo sentir?", f_sub: "{hito}. Toca una o varias.", f_int: "¿Con qué intensidad? (opcional)", f_line: "En una línea (opcional)", f_ph: "Ej.: la mochila pesaba más que yo", low: "Un poco", mid: "Bastante", high: "Muchísimo",
+    e_title: "Tu historia ha empezado", e_text: "{n} hitos marcados. Tiempo: {t}.", myStory: "Ver mi historia y mi diario", asBook: "Ver como libro", asVideo: "Ver como vídeo", videoSoon: "La animación está en otro prototipo", edit: "Ajustar quién ve un hito",
+    cross_t: "Tu historia se cruza con la de {n} personas", cross: "Coincidisteis en tu aula {cls} y en otras etapas. Las verás cuando cada una confirme; hasta entonces nadie ve tus datos.", invite: "Invitar a mi promoción por WhatsApp", sent: "En la app real se abriría WhatsApp",
+    d_story: "Mi historia", d_story_s: "Hitos · compartibles", d_diary: "Mi diario", d_diary_s: "Personal · cifrado", d_story_txt: "Tus hitos, con lo que sentiste. Cada uno se comparte según la visibilidad que elijas.", d_diary_txt: "Solo para ti, cifrado en tu dispositivo. Escribe con todo el detalle que quieras.",
+    more: "Escribir más sobre este momento", hasMore: "Tienes un texto privado sobre este momento", newEntry: "Nueva entrada de diario", ed_title: "Sobre este momento", ed_free: "Entrada de diario", ed_ph: "Escribe con calma. Nadie más lo leerá.", save: "Guardar", savedPriv: "Guardado, solo para ti (simulado)", e2e: "Solo yo · cifrado", shareable: "Compartible", linkHito: "Unido al hito",
+    v_title: "Primer beso", v_kind: "Hito · Liceo", v_text: "Elige quién ve cada parte. Puedes compartir el año y guardarte el resto.", v_who: "¿Quién ve {x}?", v_trace: "Para quien no puede ver este hito…", preview: "Así lo ve…", savevis: "Guardar visibilidad", saved: "Guardado (simulado)", v_none_h: "No ve nada de este hito. Ni siquiera sabe que existe.", v_none_l: "Ve un candado con «Hito privado», sin título, fecha ni lugar.", v_hidden: "Hay {n} parte(s) de este hito que no puede ver.",
+    bk_sub: "Una autobiografía en Bio", bk_open: "Abrir el libro", bk_print: "Pedir impreso · Premium", toc: "Índice", toc_text: "Cada etapa de la vida es un capítulo.", ch: "Capítulo {n}", prev: "Volver al índice", diary: "Del diario", restart: "Volver a empezar"
   } };
   var lang = "es", T = I18N[lang];
   function t(k, v) { var s = T[k] || k; if (v) Object.keys(v).forEach(function (x) { s = s.split("{" + x + "}").join(v[x]); }); return s; }
 
   /* ---------- medición sin datos personales ---------- */
-  var sentSteps = {};
+  var sent = {};
   function track(ev) {
     var U = window.SUPABASE_URL, K = window.SUPABASE_ANON_KEY;
     if (!U || !K) return;
@@ -118,6 +134,22 @@ blockquote{margin:0;font:italic 16px/1.55 var(--display)}
       }).catch(function () {});
     } catch (e) {}
   }
+
+  /* ---------- emociones: icono original + color, siempre con texto ---------- */
+  var EMO = {
+    alegria:  { l: "Alegría",  c: "#f2c14e", d: '<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>' },
+    orgullo:  { l: "Orgullo",  c: "#e08a3c", d: '<path d="M3 20l6-10 4 6 2-3 6 7z"/><path d="M13 9V3l4 2-4 2"/>' },
+    nostalgia:{ l: "Nostalgia",c: "#b9a3d6", d: '<path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9"/>' },
+    amor:     { l: "Amor",     c: "#e38b9b", d: '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>' },
+    miedo:    { l: "Miedo",    c: "#8fa3b8", d: '<path d="M4 12l3-5 3 10 3-12 3 9 2-4h2"/>' },
+    tristeza: { l: "Tristeza", c: "#7fa7d6", d: '<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>' },
+    gratitud: { l: "Gratitud", c: "#9cc79a", d: '<path d="M12 21v-8"/><path d="M12 13c-4 0-6-3-6-6 3 0 6 2 6 6zM12 13c4 0 6-3 6-6-3 0-6 2-6 6z"/>' },
+    libertad: { l: "Libertad", c: "#79c2c0", d: '<path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0"/>' },
+    otra:     { l: "Otra",     c: "#d9cdb5", d: '<path d="M12 6v12M6 12h12"/>' }
+  };
+  var EMO_KEYS = Object.keys(EMO);
+  function emoIcon(k, size) { return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="#221b13" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + EMO[k].d + "</svg>"; }
+  function chip(k, inten) { return '<span class="chip"><span class="dot" style="background:' + EMO[k].c + '">' + emoIcon(k, 14) + "</span>" + EMO[k].l + (inten ? " · " + inten : "") + "</span>"; }
 
   /* ---------- datos ficticios ---------- */
   var SCHOOLS = [
@@ -134,12 +166,20 @@ blockquote{margin:0;font:italic 16px/1.55 var(--display)}
     { skin: "#f3cfae", hair: "#8e4a2a", outfit: "#7a4b7e", label: "Avatar 4: piel clara, pelo cobrizo" },
     { skin: "#5c3a26", hair: "#17110d", outfit: "#9e3a5a", label: "Avatar 5: piel muy oscura, pelo negro" }
   ];
-  var SECS = [10, 15, 30, 60, 50, 20, 20, 25, 10];
-  var SKIPPABLE = [1, 3, 4, 5, 6, 7];
+  /* Flujo: cada hito (colegio, etapa, ciudad) va seguido de «¿Cómo te hizo sentir?» si no se saltó. */
+  var FLOW = [
+    { id: "welcome", s: 10 }, { id: "avatar", s: 15 }, { id: "birth", s: 30 },
+    { id: "school", s: 50, skip: 1 }, { id: "feel", h: "school", s: 15, skip: 1 },
+    { id: "kind", s: 40, skip: 1 }, { id: "feel", h: "kind", s: 15, skip: 1 },
+    { id: "city", s: 20, skip: 1 }, { id: "feel", h: "city", s: 15, skip: 1 },
+    { id: "end", s: 15 }
+  ];
 
-  var S = { view: "ob", step: 0, startedAt: 0, av: 0, birthCity: "", birthDate: "", prec: "mes", schoolQ: "", school: null, course: "6º grado (Primaria)", section: "B", schoolYears: "1994 – 2000", skippedSchool: false,
-    kind: "uni", uniName: "", career: "", uniSection: "", company: "", site: "", team: "", kindYears: "", skippedKind: false, city: "", since: "",
-    vis: { fecha: "publico", lugar: "publico", persona: "otra", texto: "yo" }, sel: "texto", trace: "ocultar", tab: "cualquiera" };
+  var S = { view: "ob", i: 0, startedAt: 0, av: 0, birthCity: "", birthDate: "", prec: "mes", schoolQ: "", school: null, course: "6º grado (Primaria)", section: "B", schoolYears: "1994 – 2000",
+    kind: "uni", uniName: "", career: "", uniSection: "", company: "", site: "", team: "", kindYears: "", city: "", since: "",
+    skipped: { school: false, kind: false, city: false }, feel: { school: { e: [], n: "", line: "" }, kind: { e: [], n: "", line: "" }, city: { e: [], n: "", line: "" } },
+    tab: "story", editor: null, longText: {}, free: [{ date: "28 oct 2026", text: "Hoy llovió en Madrid como en Caracas en agosto. Me quedé un rato en la ventana." }],
+    vis: { fecha: "publico", lugar: "publico", persona: "otra", texto: "yo" }, sel: "texto", trace: "ocultar", ptab: "cualquiera" };
 
   var app = document.getElementById("app");
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -148,134 +188,191 @@ blockquote{margin:0;font:italic 16px/1.55 var(--display)}
   }
   var IC = {
     back: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
-    lock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+    lock: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
     shield: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:2px"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>',
-    play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>'
+    play: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>',
+    pen: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>'
   };
   function toast(msg) { var d = document.createElement("div"); d.className = "toast"; d.setAttribute("role", "status"); d.textContent = msg; document.body.appendChild(d); setTimeout(function () { d.remove(); }, 1800); }
   function field(id, label, value, extra) { return '<label class="f">' + label + '<input class="t" id="' + id + '" value="' + esc(value) + '"' + (extra || "") + "></label>"; }
-  function vis(label, id) { return '<div class="vis"><span>' + t("who") + ': <b>' + label + '</b></span><button class="link" data-act="vis" id="' + id + '">' + t("change") + "</button></div>"; }
+  function vis(label) { return '<div class="vis"><span>' + t("who") + ': <b>' + label + '</b></span><button class="link" data-act="vis">' + t("change") + "</button></div>"; }
+
+  /* ---------- hitos derivados del onboarding ---------- */
+  function hitos() {
+    var H = [{ key: "birth", title: "Nací en " + (S.birthCity || "—"), when: S.birthDate || "", feel: null, vis: "Año público" }];
+    if (!S.skipped.school && S.school) H.push({ key: "school", title: S.school.name + ", " + (S.course.split(" (")[0]) + " " + S.section, when: S.schoolYears, feel: S.feel.school });
+    if (!S.skipped.kind && (S.uniName || S.company)) H.push({ key: "kind", title: S.kind === "uni" ? (S.uniName + (S.career ? ", " + S.career : "")) : (S.company + (S.team ? ", " + S.team : "")), when: S.kindYears, feel: S.feel.kind });
+    if (!S.skipped.city && S.city) H.push({ key: "city", title: "Vivo en " + S.city, when: S.since ? "Desde " + S.since : "", feel: S.feel.city, vis: "Solo yo" });
+    return H;
+  }
+  function hitoLabel(h) { if (h === "school") return S.school ? S.school.name : "Tu colegio"; if (h === "kind") return S.kind === "uni" ? (S.uniName || "Tu universidad") : (S.company || "Tu trabajo"); return "Vivir en " + (S.city || "tu ciudad"); }
+  function visibleFlow() { return FLOW.filter(function (f) { return !(f.id === "feel" && S.skipped[f.h]); }); }
 
   /* ---------- pantallas del onboarding ---------- */
-  var STEPS = [
-    function () { return '<div class="screen center"><span class="serif" style="font-weight:600;font-size:28px">bio<span style="color:var(--accent)">.</span></span><h1 class="big">' + t("w_title") + '</h1><p class="ink2">' + t("w_text") + '</p><span class="muted">' + t("lang") + '</span><div class="seg" role="radiogroup" aria-label="' + t("lang") + '"><button role="radio" aria-checked="true">Español</button><button role="radio" aria-checked="false" disabled title="Próximamente">English</button><button role="radio" aria-checked="false" disabled title="Próximamente">Français</button></div></div>'; },
-    function () { return '<div class="screen"><h1>' + t("a_title") + '</h1><p class="ink2">' + t("a_text") + '</p><div class="avatars" role="radiogroup" aria-label="' + t("a_title") + '">' + AVATARS.map(function (a, i) { return '<button role="radio" data-act="av" data-i="' + i + '" aria-checked="' + (S.av === i) + '" aria-label="' + a.label + '">' + avatarSvg(a, 72) + "</button>"; }).join("") + '</div><span class="muted">' + t("a_more") + "</span></div>"; },
-    function () { var ph = { dia: "14/03/1988", mes: "03/1988", ano: "1988" }[S.prec];
-      return '<div class="screen"><h1>' + t("b_title") + "</h1>" + field("birthCity", t("city"), S.birthCity, ' placeholder="Caracas, Venezuela" autocomplete="off"') + '<span class="muted">' + t("detail") + '</span><div class="seg" role="radiogroup" aria-label="' + t("detail") + '">' + [["dia", "day"], ["mes", "month"], ["ano", "year"]].map(function (p) { return '<button role="radio" data-act="prec" data-v="' + p[0] + '" aria-checked="' + (S.prec === p[0]) + '">' + t(p[1]) + "</button>"; }).join("") + "</div>" + field("birthDate", t("date"), S.birthDate, ' placeholder="' + ph + '" inputmode="numeric"') + vis(t("vis_birth"), "vb") + '<p class="muted" id="berr">' + t("b_req") + "</p></div>"; },
-    function () { var q = S.schoolQ.trim().toLowerCase(), list = q.length < 2 ? [] : SCHOOLS.filter(function (s) { return s.name.toLowerCase().indexOf(q) >= 0; });
+  var SCREENS = {
+    welcome: function () { return '<div class="screen center"><span class="serif" style="font-weight:600;font-size:28px">bio<span style="color:var(--accent)">.</span></span><h1 class="big">' + t("w_title") + '</h1><p class="ink2">' + t("w_text") + '</p><span class="muted">' + t("lang") + '</span><div class="seg" role="radiogroup" aria-label="' + t("lang") + '"><button role="radio" aria-checked="true">Español</button><button role="radio" aria-checked="false" disabled title="Próximamente">English</button><button role="radio" aria-checked="false" disabled title="Próximamente">Français</button></div></div>'; },
+    avatar: function () { return '<div class="screen"><h1>' + t("a_title") + '</h1><p class="ink2">' + t("a_text") + '</p><div class="avatars" role="radiogroup" aria-label="' + t("a_title") + '">' + AVATARS.map(function (a, i) { return '<button role="radio" data-act="av" data-i="' + i + '" aria-checked="' + (S.av === i) + '" aria-label="' + a.label + '">' + avatarSvg(a, 72) + "</button>"; }).join("") + '</div><span class="muted">' + t("a_more") + "</span></div>"; },
+    birth: function () { var ph = { dia: "14/03/1988", mes: "03/1988", ano: "1988" }[S.prec];
+      return '<div class="screen"><h1>' + t("b_title") + "</h1>" + field("birthCity", t("city"), S.birthCity, ' placeholder="Caracas, Venezuela" autocomplete="off"') + '<span class="muted">' + t("detail") + '</span><div class="seg" role="radiogroup" aria-label="' + t("detail") + '">' + [["dia", "day"], ["mes", "month"], ["ano", "year"]].map(function (p) { return '<button role="radio" data-act="prec" data-v="' + p[0] + '" aria-checked="' + (S.prec === p[0]) + '">' + t(p[1]) + "</button>"; }).join("") + "</div>" + field("birthDate", t("date"), S.birthDate, ' placeholder="' + ph + '" inputmode="numeric"') + vis(t("vis_birth")) + '<p class="muted" id="berr">' + t("b_req") + "</p></div>"; },
+    school: function () { var q = S.schoolQ.trim().toLowerCase(), list = q.length < 2 ? [] : SCHOOLS.filter(function (s) { return s.name.toLowerCase().indexOf(q) >= 0; });
       return '<div class="screen"><h1>' + t("s_title") + "</h1>" + field("schoolQ", t("s_search"), S.schoolQ, ' placeholder="San José" autocomplete="off"') +
-        (list.length ? '<div class="results" role="listbox" aria-label="' + t("s_search") + '">' + list.map(function (s) { return '<button role="option" data-act="school" data-n="' + esc(s.name) + '" aria-selected="' + (S.school && S.school.name === s.name) + '"><b>' + esc(s.name) + "</b><small>" + esc(s.city) + " · " + s.inBio + " personas en Bio</small></button>"; }).join("") + "</div>" : (q.length >= 2 ? '<p class="muted">' + t("s_none") + "</p>" : "")) +
-        '<div class="row"><label class="f w2">' + t("s_course") + '<select class="t" id="course"><option>6º grado (Primaria)</option><option>5º año (Bachillerato)</option></select></label>' + field("section", t("s_section"), S.section) + "</div>" + field("schoolYears", t("s_years"), S.schoolYears) + '<span class="muted" style="font-size:12px">' + t("s_eq") + "</span>" + vis(t("vis_friends"), "vs") + "</div>"; },
-    function () { var u = S.kind === "uni";
-      return '<div class="screen"><h1>' + t("u_title") + '</h1><div class="seg" role="radiogroup">' + [["uni", "uni"], ["work", "work"]].map(function (k) { return '<button role="radio" data-act="kind" data-v="' + k[0] + '" aria-checked="' + (S.kind === k[0]) + '">' + t(k[1]) + "</button>"; }).join("") + "</div>" +
+        (list.length ? '<div class="results" role="listbox" aria-label="' + t("s_search") + '">' + list.map(function (s) { return '<button role="option" data-act="school" data-n="' + esc(s.name) + '" aria-selected="' + (S.school && S.school.name === s.name) + '"><b>' + esc(s.name) + "</b><small>" + esc(s.city) + "</small></button>"; }).join("") + "</div>" : (q.length >= 2 ? '<p class="muted">' + t("s_none") + "</p>" : "")) +
+        '<div class="row"><label class="f w2">' + t("s_course") + '<select class="t" id="course"><option>6º grado (Primaria)</option><option>5º año (Bachillerato)</option></select></label>' + field("section", t("s_section"), S.section) + "</div>" + field("schoolYears", t("s_years"), S.schoolYears) + '<span class="muted" style="font-size:12px">' + t("s_eq") + "</span>" + vis(t("vis_friends")) + "</div>"; },
+    kind: function () { var u = S.kind === "uni";
+      return '<div class="screen"><h1>' + t("u_title") + '</h1><div class="seg" role="radiogroup" aria-label="' + t("u_title") + '">' + [["uni", "uni"], ["work", "work"]].map(function (k) { return '<button role="radio" data-act="kind" data-v="' + k[0] + '" aria-checked="' + (S.kind === k[0]) + '">' + t(k[1]) + "</button>"; }).join("") + "</div>" +
         (u ? field("uniName", t("u_name"), S.uniName, ' placeholder="Universidad Central de Venezuela"') + '<div class="row">' + field("career", t("career"), S.career, ' placeholder="Ingeniería"') + field("uniSection", t("s_section"), S.uniSection, ' placeholder="03"') + "</div>"
            : field("company", t("company"), S.company, ' placeholder="Empresa ficticia C.A."') + '<div class="row">' + field("site", t("site"), S.site, ' placeholder="Chacao"') + field("team", t("team"), S.team, ' placeholder="Soporte"') + "</div>") +
-        field("kindYears", t("years"), S.kindYears, ' placeholder="' + (u ? "2005 – 2010" : "2010 – 2014") + '"') + vis(t("vis_friends"), "vu") + '<p class="muted">' + t("u_hint") + "</p></div>"; },
-    function () { return '<div class="screen"><h1>' + t("c_title") + "</h1>" + field("city", t("city"), S.city, ' placeholder="Madrid, España"') + field("since", t("since"), S.since, ' placeholder="2014" inputmode="numeric"') + '<div class="card note">' + IC.shield + '<div style="display:flex;flex-direction:column;gap:4px"><b>' + t("c_note_t") + '</b><span class="ink2" style="font-size:14px">' + t("c_note") + '</span><button class="link" data-act="vis" style="align-self:flex-start;padding:0;text-decoration:underline">' + t("change") + "</button></div></div></div>"; },
-    function () { var school = S.school && !S.skippedSchool, cls = (S.course.indexOf("6º") === 0 ? "6º " : "5º ") + (S.section || "");
-      var n = school ? Math.max(3, Math.round(S.school.inBio * 0.3)) : 0, hasK = !S.skippedKind && (S.uniName || S.company);
-      var html = '<div class="screen"><h1>' + t("m_title") + "</h1>";
-      if (school) html += '<div class="ok" style="display:flex;flex-direction:column;gap:10px"><div class="dots" aria-hidden="true"><i style="background:#9cc7ab"></i><i style="background:#b7d6c1"></i><i style="background:#cfe3d6"></i></div><b style="font-size:18px">' + t("m_main", { n: n, cls: esc(cls.trim()) }) + '</b><span style="font-size:14px">' + t("m_sub", { school: esc(S.school.name), years: esc(S.schoolYears) }) + "</span></div>";
-      if (hasK) html += '<div class="card"><b>' + t("m_uni", { n: 5, kind: S.kind === "uni" ? "carrera y sección" : "equipo y sede" }) + "</b></div>";
-      if (!school && !hasK) html += '<div class="card"><p>' + t("m_none") + "</p></div>";
-      return html + '<span class="muted">' + t("m_ex") + "</span></div>"; },
-    function () { var sc = S.school ? S.school.name : "colegio";
-      return '<div class="screen"><h1>' + t("i_title") + '</h1><p class="ink2">' + t("i_text") + '</p><div class="card">' + esc(t("i_msg", { school: sc })) + '</div><div class="actions"><button class="primary" data-act="wa">' + t("wa") + '</button><button class="secondary" data-act="copy">' + t("copy") + "</button></div></div>"; },
-    function () { var parts = [S.birthCity || "Nacimiento"]; if (S.school && !S.skippedSchool) parts.push(S.school.name); if (!S.skippedKind && (S.uniName || S.company)) parts.push(S.uniName || S.company); if (S.city) parts.push(S.city);
-      var sec = Math.round((Date.now() - S.startedAt) / 1000), tm = Math.floor(sec / 60) + " min " + (sec % 60) + " s";
-      return '<div class="screen center"><h1 class="big">' + t("e_title") + '</h1><div style="display:flex;justify-content:center">' + avatarSvg(AVATARS[S.av], 110) + '</div><p class="ink2">' + t("e_text", { path: esc(parts.join(" → ")), n: parts.length, t: tm }) + '</p><div class="actions"><button class="primary" data-act="book">' + t("asBook") + '</button><button class="secondary" data-act="video">' + IC.play + t("asVideo") + '</button><button class="link" data-act="vis">' + t("edit") + "</button></div></div>"; }
-  ];
+        field("kindYears", t("years"), S.kindYears, ' placeholder="' + (u ? "2005 – 2010" : "2010 – 2014") + '"') + vis(t("vis_friends")) + '<p class="muted">' + t("u_hint") + "</p></div>"; },
+    city: function () { return '<div class="screen"><h1>' + t("c_title") + "</h1>" + field("city", t("city"), S.city, ' placeholder="Madrid, España"') + field("since", t("since"), S.since, ' placeholder="2014" inputmode="numeric"') + '<div class="card note">' + IC.shield + '<div style="display:flex;flex-direction:column;gap:4px"><b>' + t("c_note_t") + '</b><span class="ink2" style="font-size:14px">' + t("c_note") + '</span><button class="link" data-act="vis" style="align-self:flex-start;padding:0;text-decoration:underline">' + t("change") + "</button></div></div></div>"; },
+    feel: function (f) { var F = S.feel[f.h];
+      return '<div class="screen"><h1>' + t("f_title") + '</h1><p class="ink2">' + t("f_sub", { hito: esc(hitoLabel(f.h)) }) + '</p><div class="emos" role="group" aria-label="' + t("f_title") + '">' +
+        EMO_KEYS.map(function (k) { var on = F.e.indexOf(k) >= 0; return '<button class="emo" data-act="emo" data-k="' + k + '" aria-pressed="' + on + '"><span class="dot" style="background:' + EMO[k].c + '">' + emoIcon(k, 20) + "</span>" + EMO[k].l + "</button>"; }).join("") + "</div>" +
+        (F.e.length ? '<span class="muted">' + t("f_int") + '</span><div class="seg" role="radiogroup" aria-label="' + t("f_int") + '">' + [["low", "low"], ["mid", "mid"], ["high", "high"]].map(function (x) { return '<button role="radio" data-act="int" data-v="' + x[0] + '" aria-checked="' + (F.n === x[0]) + '">' + t(x[1]) + "</button>"; }).join("") + "</div>" : "") +
+        field("line", t("f_line"), F.line, ' maxlength="90" placeholder="' + t("f_ph") + '" autocomplete="off"') + "</div>"; },
+    end: function () { var H = hitos(), sec = Math.round((Date.now() - S.startedAt) / 1000), tm = Math.floor(sec / 60) + " min " + (sec % 60) + " s";
+      var cls = (S.course.indexOf("6º") === 0 ? "6º " : "5º ") + S.section, n = (S.school && !S.skipped.school) ? 12 : 0;
+      return '<div class="screen"><h1 class="big">' + t("e_title") + '</h1><div style="display:flex;gap:14px;align-items:center">' + avatarSvg(AVATARS[S.av], 72) + '<p class="ink2">' + t("e_text", { n: H.length, t: tm }) + "</p></div>" +
+        '<div class="actions" style="margin-top:0"><button class="primary" data-act="diary">' + t("myStory") + '</button><div class="row"><button class="secondary" data-act="book">' + t("asBook") + '</button><button class="secondary" data-act="video">' + IC.play + t("asVideo") + "</button></div></div>" +
+        (n ? '<div class="ok" style="display:flex;flex-direction:column;gap:6px;margin-top:6px"><b>' + t("cross_t", { n: n }) + '</b><span style="font-size:14px">' + t("cross", { cls: esc(cls) }) + '</span><button class="link" data-act="wa" style="align-self:flex-start;color:var(--ok);padding:0;text-decoration:underline">' + t("invite") + "</button></div>" : "") +
+        '<span class="muted" style="font-size:12px">Las cifras son simuladas.</span></div>'; }
+  };
 
   function renderOb() {
-    var n = S.step;
-    if (n > 0 && !sentSteps[n]) { sentSteps[n] = 1; track("proto_paso_" + (n + 1)); }
-    var head = '<span class="proto">' + t("proto") + '</span><div class="top">' + (n > 0 ? '<button class="icon" data-act="back" aria-label="' + t("back") + '">' + IC.back + "</button>" : '<span style="width:44px"></span>') +
-      '<span class="muted" style="font-size:13px">' + t("step", { n: n + 1, s: SECS[n] }) + "</span>" + (SKIPPABLE.indexOf(n) >= 0 ? '<button class="link" data-act="skip">' + t("skip") + "</button>" : '<span style="width:44px"></span>') + "</div>" +
-      '<div class="bar" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="9" aria-valuenow="' + (n + 1) + '"><i style="width:' + Math.round((n + 1) / 9 * 100) + '%"></i></div>';
-    var foot = n < 8 ? '<div class="actions"><button class="primary" data-act="next">' + (n === 0 ? t("start") : n === 7 ? t("later") : t("next")) + "</button></div>" : "";
-    app.innerHTML = head + STEPS[n]() + foot;
+    var vf = visibleFlow(), f = FLOW[S.i], pos = vf.indexOf(f);
+    var key = "s" + S.i; if (S.i > 0 && !sent[key]) { sent[key] = 1; track("proto_paso_" + (pos + 1)); }
+    var head = '<span class="proto">' + t("proto") + '</span><div class="top">' + (S.i > 0 ? '<button class="icon" data-act="back" aria-label="' + t("back") + '">' + IC.back + "</button>" : '<span style="width:44px"></span>') +
+      '<span class="muted" style="font-size:13px">' + t("step", { n: pos + 1, t: vf.length, s: f.s }) + "</span>" + (f.skip ? '<button class="link" data-act="skip">' + t("skip") + "</button>" : '<span style="width:44px"></span>') + "</div>" +
+      '<div class="bar" role="progressbar" aria-label="Progreso" aria-valuemin="1" aria-valuemax="' + vf.length + '" aria-valuenow="' + (pos + 1) + '"><i style="width:' + Math.round((pos + 1) / vf.length * 100) + '%"></i></div>';
+    var foot = f.id !== "end" ? '<div class="actions"><button class="primary" data-act="next">' + (f.id === "welcome" ? t("start") : t("next")) + "</button></div>" : "";
+    app.innerHTML = head + SCREENS[f.id](f) + foot;
+  }
+
+  /* ---------- Mi historia / Mi diario ---------- */
+  var INT = { low: "un poco", mid: "bastante", high: "muchísimo" };
+  function renderDiary() {
+    var head = '<span class="proto">' + t("proto") + '</span><div class="top"><button class="icon" data-act="toend" aria-label="' + t("back") + '">' + IC.back + '</button><span class="serif" style="font-weight:600;font-size:22px">bio<span style="color:var(--accent)">.</span></span><span style="width:44px"></span></div>';
+    if (S.editor) {
+      var ed = S.editor, h = ed.hito ? hitos().filter(function (x) { return x.key === ed.hito; })[0] : null;
+      app.innerHTML = head + '<div class="screen"><span class="badge" style="align-self:flex-start">' + IC.lock + t("e2e") + "</span><h1>" + (h ? t("ed_title") : t("ed_free")) + "</h1>" +
+        (h ? '<div class="card" style="padding:12px 14px"><span class="kicker">' + t("linkHito") + "</span><br><b>" + esc(h.title) + '</b> <span class="muted">' + esc(h.when) + "</span>" + (h.feel && h.feel.e.length ? '<div class="chips" style="margin-top:6px">' + h.feel.e.map(function (k) { return chip(k); }).join("") + "</div>" : "") + "</div>" : '<span class="muted">' + new Date().toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }) + "</span>") +
+        '<label class="f"><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Texto</span><textarea class="t" id="longText" placeholder="' + t("ed_ph") + '">' + esc(ed.text || "") + "</textarea></label>" +
+        '<div class="actions"><button class="primary" data-act="saveEntry">' + t("save") + '</button><button class="secondary" data-act="closeEd">' + t("back") + "</button></div></div>";
+      return;
+    }
+    var story = S.tab === "story";
+    var body = story
+      ? '<p class="muted">' + t("d_story_txt") + "</p>" + hitos().map(function (h) {
+          return '<article class="entry"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span class="kicker">' + esc(h.when) + '</span><span class="muted" style="font-size:12px;display:inline-flex;gap:4px;align-items:center">' + (h.vis === "Solo yo" ? IC.lock + "Solo yo" : esc(h.vis || t("shareable") + " · Amigos")) + "</span></div><h2>" + esc(h.title) + "</h2>" +
+            (h.feel && h.feel.e.length ? '<div class="chips">' + h.feel.e.map(function (k) { return chip(k, h.feel.n ? INT[h.feel.n] : ""); }).join("") + "</div>" : "") +
+            (h.feel && h.feel.line ? "<blockquote>«" + esc(h.feel.line) + "»</blockquote>" : "") +
+            (S.longText[h.key] ? '<span class="badge" style="align-self:flex-start">' + IC.lock + t("hasMore") + "</span>" : "") +
+            '<button class="link" data-act="more" data-k="' + h.key + '" style="align-self:flex-start;padding:0;display:flex;gap:6px;align-items:center">' + IC.pen + t("more") + "</button></article>";
+        }).join("")
+      : '<p class="muted">' + t("d_diary_txt") + '</p><button class="primary" data-act="newEntry">' + IC.pen + t("newEntry") + "</button>" +
+        Object.keys(S.longText).map(function (k) { var h = hitos().filter(function (x) { return x.key === k; })[0]; return h ? '<article class="entry free"><span class="kicker">' + t("linkHito") + ": " + esc(h.title) + '</span><p class="serif">' + esc(S.longText[k].slice(0, 140)) + (S.longText[k].length > 140 ? "…" : "") + "</p></article>" : ""; }).join("") +
+        S.free.map(function (e) { return '<article class="entry free"><span class="kicker">' + esc(e.date) + '</span><p class="serif">' + esc(e.text) + "</p></article>"; }).join("");
+    app.innerHTML = head + '<div class="screen"><div class="tabs" role="tablist" aria-label="Secciones">' +
+      '<button role="tab" data-act="tab" data-k="story" aria-selected="' + story + '"><b>' + t("d_story") + "</b><small>" + t("d_story_s") + "</small></button>" +
+      '<button role="tab" data-act="tab" data-k="diary" aria-selected="' + !story + '"><b>' + t("d_diary") + "</b><small>" + t("d_diary_s") + "</small></button></div>" + body + "</div>";
   }
 
   /* ---------- visibilidad por elemento ---------- */
   var LV = [["yo", "Solo yo", "Nadie más, ni Bio puede leerlo"], ["otra", "Solo la otra persona", "Luis R., si confirma el vínculo"], ["grupo", "Un grupo que elijo", "Amigas del liceo · 5 personas"], ["amigos", "Amigos", "Tus amigos en Bio"], ["seguidores", "Seguidores", "Amigos y quien te sigue"], ["publico", "Público", "Cualquier persona"]];
-  var EL = [["fecha", "Fecha", "2003"], ["lugar", "Lugar", "Caracas"], ["persona", "Persona", "Luis R."], ["texto", "Texto del recuerdo", "«Fue en la fiesta de fin de curso…»"]];
+  var EL = [["fecha", "Fecha", "2003"], ["lugar", "Lugar", "Caracas"], ["persona", "Persona", "Luis R."], ["texto", "Lo que sentí", "Amor, nervios · «Fue en la fiesta de fin de curso»"]];
   function lvName(k) { for (var i = 0; i < LV.length; i++) if (LV[i][0] === k) return LV[i][1]; }
   function renderVis() {
-    var sees = { amigo: ["publico", "seguidores", "amigos"], otra: ["publico", "otra"], cualquiera: ["publico"] }[S.tab];
+    var sees = { amigo: ["publico", "seguidores", "amigos"], otra: ["publico", "otra"], cualquiera: ["publico"] }[S.ptab];
     function v(k) { return sees.indexOf(S.vis[k]) >= 0; }
     var shown = EL.filter(function (e) { return v(e[0]); }).length, meta = [v("fecha") ? "2003" : "", v("lugar") ? "Caracas" : ""].filter(Boolean).join(" · ");
     var selLabel = EL.filter(function (e) { return e[0] === S.sel; })[0][1].toLowerCase();
-    var pv = shown ? '<b class="serif" style="font-size:20px">' + t("v_title") + "</b>" + (meta ? '<span class="muted">' + meta + "</span>" : "") + (v("persona") ? "<span>Con <b>Luis R.</b></span>" : "") + (v("texto") ? "<blockquote>«Fue en la fiesta de fin de curso, en la terraza del liceo, mientras sonaba la última canción.»</blockquote>" : "") + (shown < 4 ? '<span class="muted">' + t("v_hidden", { n: 4 - shown }) + "</span>" : "")
+    var pv = shown ? '<b class="serif" style="font-size:20px">' + t("v_title") + "</b>" + (meta ? '<span class="muted">' + meta + "</span>" : "") + (v("persona") ? "<span>Con <b>Luis R.</b></span>" : "") + (v("texto") ? '<div class="chips">' + chip("amor") + chip("miedo") + "</div><blockquote>«Fue en la fiesta de fin de curso.»</blockquote>" : "") + (shown < 4 ? '<span class="muted">' + t("v_hidden", { n: 4 - shown }) + "</span>" : "")
       : '<span class="muted">' + (S.trace === "ocultar" ? t("v_none_h") : t("v_none_l")) + "</span>";
-    app.innerHTML = '<span class="proto">' + t("proto") + '</span><div class="top"><button class="icon" data-act="tob" aria-label="' + t("back") + '">' + IC.back + '</button><b style="font-size:15px">' + t("who") + '</b><span style="width:44px"></span></div><div class="screen">' +
-      '<div class="card"><span class="muted" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase">' + t("v_kind") + "</span><h1>" + t("v_title") + '</h1><p class="muted">' + t("v_text") + "</p></div>" +
+    app.innerHTML = '<span class="proto">' + t("proto") + '</span><div class="top"><button class="icon" data-act="toend" aria-label="' + t("back") + '">' + IC.back + '</button><b style="font-size:15px">' + t("who") + '</b><span style="width:44px"></span></div><div class="screen">' +
+      '<div class="card"><span class="kicker">' + t("v_kind") + "</span><h1>" + t("v_title") + '</h1><p class="muted">' + t("v_text") + "</p></div>" +
       '<div style="display:flex;flex-direction:column;gap:8px">' + EL.map(function (e) { return '<button class="el" data-act="sel" data-k="' + e[0] + '" aria-pressed="' + (S.sel === e[0]) + '"><span class="l"><small>' + e[1] + "</small><span>" + esc(e[2]) + '</span></span><b style="font-size:13px;white-space:nowrap;display:flex;gap:6px;align-items:center">' + (S.vis[e[0]] === "yo" ? IC.lock : "") + lvName(S.vis[e[0]]) + "</b></button>"; }).join("") + "</div>" +
-      '<div class="card" style="padding:12px"><p class="muted" style="padding:0 4px 6px">' + t("v_who", { x: "<b style=\"color:var(--ink)\">" + selLabel + "</b>" }) + '</p><div role="radiogroup">' + LV.map(function (l) { return '<button class="opt" role="radio" data-act="lv" data-k="' + l[0] + '" aria-checked="' + (S.vis[S.sel] === l[0]) + '"><span class="radio"></span><span class="l"><span>' + l[1] + "</span><small>" + l[2] + "</small></span>" + (l[0] === "yo" ? '<span class="badge">Cifrado E2E</span>' : "") + "</button>"; }).join("") + "</div></div>" +
+      '<div class="card" style="padding:12px"><p class="muted" style="padding:0 4px 6px">' + t("v_who", { x: '<b style="color:var(--ink)">' + selLabel + "</b>" }) + '</p><div role="radiogroup">' + LV.map(function (l) { return '<button class="opt" role="radio" data-act="lv" data-k="' + l[0] + '" aria-checked="' + (S.vis[S.sel] === l[0]) + '"><span class="radio"></span><span class="l"><span>' + l[1] + "</span><small>" + l[2] + "</small></span>" + (l[0] === "yo" ? '<span class="badge">Cifrado E2E</span>' : "") + "</button>"; }).join("") + "</div></div>" +
       '<div class="card" style="padding:12px"><p class="muted" style="padding:0 4px 6px">' + t("v_trace") + '</p><div role="radiogroup">' + [["ocultar", "Ocultar por completo (por defecto)", "No verá ningún rastro: ni el hito, ni un candado, ni un hueco en tu índice."], ["candado", "Mostrar con candado", "Verá que hay algo privado, sin título, fecha ni lugar."]].map(function (o) { return '<button class="opt" role="radio" data-act="trace" data-k="' + o[0] + '" aria-checked="' + (S.trace === o[0]) + '"><span class="radio"></span><span class="l"><span>' + o[1] + "</span><small>" + o[2] + "</small></span></button>"; }).join("") + "</div></div>" +
-      "<b>" + t("preview") + '</b><div class="seg" role="tablist">' + [["amigo", "Un amigo"], ["otra", "Luis R."], ["cualquiera", "Cualquiera"]].map(function (x) { return '<button role="tab" data-act="tab" data-k="' + x[0] + '" aria-selected="' + (S.tab === x[0]) + '">' + x[1] + "</button>"; }).join("") + '</div><div class="card" style="min-height:140px;display:flex;flex-direction:column;gap:8px">' + pv + "</div>" +
-      '<div class="ok note"><div style="display:flex;flex-direction:column;gap:4px"><b>' + t("v_link_t") + '</b><span style="font-size:13px">' + t("v_link") + "</span></div></div>" +
-      '<div class="actions"><button class="primary" data-act="savevis">' + t("save") + "</button></div></div>";
+      "<b>" + t("preview") + '</b><div class="seg" role="tablist">' + [["amigo", "Un amigo"], ["otra", "Luis R."], ["cualquiera", "Cualquiera"]].map(function (x) { return '<button role="tab" data-act="ptab" data-k="' + x[0] + '" aria-selected="' + (S.ptab === x[0]) + '">' + x[1] + "</button>"; }).join("") + '</div><div class="card" style="min-height:140px;display:flex;flex-direction:column;gap:8px">' + pv + "</div>" +
+      '<div class="actions"><button class="primary" data-act="savevis">' + t("savevis") + "</button></div></div>";
   }
 
   /* ---------- libro ---------- */
-  var CH = [["Infancia en Caracas", "1988–1994", "", false], ["Colegio", "1994–2000", "18 personas", false], ["Liceo", "2000–2005", "24 personas", false], ["Universidad", "2005–2010", "42 personas", false], ["Primer trabajo", "2010–2014", "", true], ["Emigrar", "2014", "6 personas", false], ["Madrid", "2014–2021", "", false], ["Hoy", "2021–hoy", "", false]];
+  var CH = [["Infancia en Caracas", "1988–1994", false], ["Colegio", "1994–2000", false], ["Liceo", "2000–2005", false], ["Universidad", "2005–2010", false], ["Primer trabajo", "2010–2014", true], ["Emigrar", "2014", false], ["Madrid", "2014–2021", false], ["Hoy", "2021–hoy", false]];
   function renderBook(page) {
     var head = '<span class="proto">' + t("proto") + "</span>";
     if (page === "cover") {
-      app.innerHTML = head + '<div class="top"><button class="icon" data-act="toend" aria-label="' + t("back") + '">' + IC.back + '</button><span></span><span style="width:44px"></span></div><div class="screen"><div class="book" style="flex-grow:1;align-items:center;justify-content:center;text-align:center"><span class="muted" style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">' + t("bk_sub") + "</span>" + avatarSvg(AVATARS[S.av], 140) + '<h1 class="big">La historia de Andrea</h1><p class="serif muted" style="font-size:18px">1988 — hoy</p></div><div class="actions"><button class="primary" data-act="toc">' + t("bk_open") + '</button><div class="row"><button class="secondary" data-act="video">' + IC.play + t("asVideo") + '</button><button class="secondary" data-act="print" style="border-style:dashed;color:var(--muted)">' + t("bk_print") + "</button></div></div></div>";
+      app.innerHTML = head + '<div class="top"><button class="icon" data-act="toend" aria-label="' + t("back") + '">' + IC.back + '</button><span></span><span style="width:44px"></span></div><div class="screen"><div class="book" style="flex-grow:1;align-items:center;justify-content:center;text-align:center"><span class="kicker">' + t("bk_sub") + "</span>" + avatarSvg(AVATARS[S.av], 140) + '<h1 class="big">La historia de Andrea</h1><p class="serif muted" style="font-size:18px">1988 — hoy</p></div><div class="actions"><button class="primary" data-act="toc">' + t("bk_open") + '</button><div class="row"><button class="secondary" data-act="video">' + IC.play + t("asVideo") + '</button><button class="secondary" data-act="print" style="border-style:dashed;color:var(--muted)">' + t("bk_print") + "</button></div></div></div>";
     } else if (page === "toc") {
-      app.innerHTML = head + '<div class="top"><button class="icon" data-act="book" aria-label="' + t("back") + '">' + IC.back + '</button><b style="font-size:15px">La historia de Andrea</b><span style="width:44px"></span></div><div class="screen"><h1>' + t("toc") + '</h1><p class="muted">' + t("toc_text") + '</p><ol class="toc">' + CH.map(function (c, i) { return c[3] ? "" : '<li><button data-act="chapter" data-i="' + i + '"><span class="n">' + (i + 1) + '</span><span class="l"><b>' + c[0] + "</b><small>" + c[1] + "</small></span>" + (c[2] ? '<span class="ppl">' + c[2] + "</span>" : "") + "</button></li>"; }).join("") + '</ol><p class="muted" style="font-size:13px">En el libro real, un capítulo privado se oculta o aparece con candado según elija su autor.</p></div>';
+      app.innerHTML = head + '<div class="top"><button class="icon" data-act="book" aria-label="' + t("back") + '">' + IC.back + '</button><b style="font-size:15px">La historia de Andrea</b><span style="width:44px"></span></div><div class="screen"><h1>' + t("toc") + '</h1><p class="muted">' + t("toc_text") + '</p><ol class="toc">' + CH.map(function (c, i) { return c[2] ? "" : '<li><button data-act="chapter"><span class="n">' + (i + 1) + '</span><span class="l"><b>' + c[0] + "</b><small>" + c[1] + "</small></span></button></li>"; }).join("") + '</ol><p class="muted" style="font-size:13px">En el libro real, un capítulo privado se oculta o aparece con candado según elija su autor.</p></div>';
     } else {
-      app.innerHTML = head + '<div class="top"><button class="icon" data-act="toc" aria-label="' + t("prev") + '">' + IC.back + '</button><span class="muted" style="font-size:13px">' + t("ch", { n: 2 }) + ' de 8</span><span style="width:44px"></span></div><div class="screen"><article class="book"><span class="muted" style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">' + t("ch", { n: 2 }) + ' · 1994–2000</span><h1>Colegio</h1><p class="serif" style="font-size:17px;line-height:1.6">En septiembre de 1994 Andrea entró por primera vez en el Colegio San José, en Caracas, con una mochila más grande que ella. Seis cursos después salió de 6º B con amigas para toda la vida.</p>' +
-        [["Primer día de colegio", "Sep 1994 · Colegio San José, Caracas"], ["Excursión de la clase a la Colonia Tovar", "May 1997 · Colonia Tovar"], ["Graduación de 6º grado, sección B", "Jul 2000 · Caracas"]].map(function (m) { return '<div class="mile"><i></i><div><b>' + m[0] + '</b><br><span class="muted">' + m[1] + "</span></div></div>"; }).join("") +
-        '<div class="ok"><b>12 compañeros de tu aula 6º B</b><br><span style="font-size:13px">Coincidieron contigo entre 1999 y 2000</span></div><div class="card" style="background:#f7f1e6;border:0"><span class="muted" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em">' + t("diary") + " · 12 jun 2000</span><blockquote>«Último día de clase. La maestra Carmen nos hizo escribir una carta para abrir dentro de diez años. Yo puse que quería vivir en otro país.»</blockquote></div></article>" +
+      var M = [["Primer día de colegio", "Sep 1994 · Colegio San José, Caracas", ["miedo", "alegria"], "La mochila pesaba más que yo."], ["Excursión a la Colonia Tovar", "May 1997 · Colonia Tovar", ["libertad", "alegria"], ""], ["Graduación de 6º grado, sección B", "Jul 2000 · Caracas", ["orgullo", "nostalgia"], "No quería que se acabara."]];
+      app.innerHTML = head + '<div class="top"><button class="icon" data-act="toc" aria-label="' + t("prev") + '">' + IC.back + '</button><span class="muted" style="font-size:13px">' + t("ch", { n: 2 }) + ' de 8</span><span style="width:44px"></span></div><div class="screen"><article class="book"><span class="kicker">' + t("ch", { n: 2 }) + ' · 1994–2000</span><h1>Colegio</h1><p class="serif" style="font-size:17px;line-height:1.6">En septiembre de 1994 entré por primera vez en el Colegio San José, en Caracas. Seis cursos después salí de 6º B con amigas para toda la vida.</p>' +
+        M.map(function (m) { return '<div class="mile"><span class="dot" style="width:30px;height:30px;border-radius:15px;display:inline-flex;align-items:center;justify-content:center;flex:none;background:' + EMO[m[2][0]].c + '">' + emoIcon(m[2][0], 16) + '</span><div style="display:flex;flex-direction:column;gap:4px"><b>' + m[0] + '</b><span class="muted">' + m[1] + '</span><div class="chips">' + m[2].map(function (k) { return chip(k); }).join("") + "</div>" + (m[3] ? '<span class="serif" style="font-style:italic">«' + m[3] + "»</span>" : "") + "</div></div>"; }).join("") +
+        '<div class="card" style="background:#f7f1e6;border:0"><span class="kicker">' + t("diary") + " · 12 jun 2000</span><blockquote>«Último día de clase. La maestra Carmen nos hizo escribir una carta para abrir dentro de diez años. Yo puse que quería vivir en otro país.»</blockquote></div>" +
+        '<p class="muted" style="font-size:13px">12 compañeros de tu aula 6º B también marcaron esta etapa.</p></article>' +
         '<div class="actions"><button class="secondary" data-act="toc">' + t("prev") + '</button><button class="link" data-act="restart">' + t("restart") + "</button></div></div>";
     }
   }
 
   function render() {
-    if (S.view === "ob") renderOb(); else if (S.view === "vis") renderVis(); else renderBook(S.view);
-    var h = app.querySelector("h1"); if (h) { h.setAttribute("tabindex", "-1"); }
+    if (S.view === "ob") renderOb(); else if (S.view === "vis") renderVis(); else if (S.view === "diary") renderDiary(); else renderBook(S.view);
+    var h = app.querySelector("h1"); if (h) h.setAttribute("tabindex", "-1");
   }
-  function focusTitle() { var h = app.querySelector("h1"); if (h) h.focus({ preventScroll: false }); window.scrollTo(0, 0); }
+  function focusTitle() { var h = app.querySelector("h1"); if (h) h.focus(); window.scrollTo(0, 0); }
 
   /* ---------- eventos ---------- */
   var MAP = ["birthCity", "birthDate", "schoolQ", "section", "schoolYears", "uniName", "career", "uniSection", "company", "site", "team", "kindYears", "city", "since"];
   app.addEventListener("input", function (e) {
-    var id = e.target.id; if (MAP.indexOf(id) < 0) return;
+    var id = e.target.id, f = FLOW[S.i];
+    if (id === "line" && f.id === "feel") { S.feel[f.h].line = e.target.value; return; }
+    if (id === "longText" && S.editor) { S.editor.text = e.target.value; return; }
+    if (MAP.indexOf(id) < 0) return;
     S[id] = e.target.value;
-    if (id === "schoolQ") { S.school = null; var pos = e.target.selectionStart; render(); var el = document.getElementById("schoolQ"); el.focus(); el.setSelectionRange(pos, pos); }
+    if (id === "schoolQ") { S.school = null; var p = e.target.selectionStart; render(); var el = document.getElementById("schoolQ"); el.focus(); el.setSelectionRange(p, p); }
   });
   app.addEventListener("change", function (e) { if (e.target.id === "course") S.course = e.target.value; });
+  function advance() {
+    var j = S.i + 1;
+    while (j < FLOW.length && FLOW[j].id === "feel" && S.skipped[FLOW[j].h]) j++;
+    S.i = j; render(); focusTitle();
+    if (FLOW[S.i].id === "end") track("proto_fin");
+  }
   app.addEventListener("click", function (e) {
     var b = e.target.closest("[data-act]"); if (!b) return;
-    var a = b.dataset.act, go = function (n) { S.step = n; render(); focusTitle(); };
+    var a = b.dataset.act, f = FLOW[S.i];
     switch (a) {
       case "next":
-        if (S.step === 0) { S.startedAt = Date.now(); track("proto_inicio"); }
-        if (S.step === 2 && (!S.birthCity.trim() || !S.birthDate.trim())) { var er = document.getElementById("berr"); er.textContent = t("b_err"); er.style.color = "var(--accent-ink)"; document.getElementById(S.birthCity.trim() ? "birthDate" : "birthCity").focus(); return; }
-        if (S.step === 3) S.skippedSchool = !S.school;
-        if (S.step === 4) S.skippedKind = false;
-        go(S.step + 1); if (S.step === 8) track("proto_fin"); break;
-      case "skip": if (S.step === 3) S.skippedSchool = true; if (S.step === 4) S.skippedKind = true; go(S.step + 1); if (S.step === 8) track("proto_fin"); break;
-      case "back": go(S.step - 1); break;
+        if (f.id === "welcome") { S.startedAt = Date.now(); track("proto_inicio"); }
+        if (f.id === "birth" && (!S.birthCity.trim() || !S.birthDate.trim())) { var er = document.getElementById("berr"); er.textContent = t("b_err"); er.style.color = "var(--accent-ink)"; document.getElementById(S.birthCity.trim() ? "birthDate" : "birthCity").focus(); return; }
+        if (f.id === "school") S.skipped.school = !S.school;
+        if (f.id === "kind") S.skipped.kind = !(S.uniName || S.company);
+        if (f.id === "city") S.skipped.city = !S.city;
+        advance(); break;
+      case "skip": if (S.skipped.hasOwnProperty(f.id)) S.skipped[f.id] = true; advance(); break;
+      case "back": var j = S.i - 1; while (j > 0 && FLOW[j].id === "feel" && S.skipped[FLOW[j].h]) j--; S.i = j; render(); focusTitle(); break;
       case "av": S.av = +b.dataset.i; render(); app.querySelector('[data-act=av][data-i="' + S.av + '"]').focus(); break;
       case "prec": S.prec = b.dataset.v; render(); break;
       case "school": S.school = SCHOOLS.filter(function (s) { return s.name === b.dataset.n; })[0]; S.schoolQ = S.school.name; render(); break;
       case "kind": S.kind = b.dataset.v; render(); break;
+      case "emo": var F = S.feel[f.h], k = b.dataset.k, ix = F.e.indexOf(k); if (ix >= 0) F.e.splice(ix, 1); else F.e.push(k); if (!F.e.length) F.n = ""; render(); app.querySelector('[data-act=emo][data-k="' + k + '"]').focus(); break;
+      case "int": S.feel[f.h].n = S.feel[f.h].n === b.dataset.v ? "" : b.dataset.v; render(); break;
       case "wa": toast(t("sent")); break;
-      case "copy": try { navigator.clipboard.writeText("https://bio.app/i/demo").catch(function () {}); } catch (x) {} toast(t("copied")); break;
+      case "diary": S.view = "diary"; S.editor = null; render(); focusTitle(); break;
+      case "tab": S.tab = b.dataset.k; render(); app.querySelector('[data-act=tab][data-k="' + S.tab + '"]').focus(); break;
+      case "more": S.editor = { hito: b.dataset.k, text: S.longText[b.dataset.k] || "" }; render(); document.getElementById("longText").focus(); break;
+      case "newEntry": S.editor = { hito: null, text: "" }; render(); document.getElementById("longText").focus(); break;
+      case "saveEntry": var ed = S.editor; if (ed.text.trim()) { if (ed.hito) S.longText[ed.hito] = ed.text; else S.free.unshift({ date: new Date().toLocaleDateString("es-ES", { day: "numeric", month: "short", year: "numeric" }), text: ed.text }); } S.editor = null; if (!ed.hito) S.tab = "diary"; render(); toast(t("savedPriv")); break;
+      case "closeEd": S.editor = null; render(); break;
       case "vis": S.view = "vis"; render(); focusTitle(); break;
-      case "tob": S.view = S.step === 8 ? "ob" : "ob"; render(); focusTitle(); break;
       case "sel": S.sel = b.dataset.k; render(); break;
       case "lv": S.vis[S.sel] = b.dataset.k; render(); break;
       case "trace": S.trace = b.dataset.k; render(); break;
-      case "tab": S.tab = b.dataset.k; render(); break;
+      case "ptab": S.ptab = b.dataset.k; render(); break;
       case "savevis": toast(t("saved")); break;
       case "book": S.view = "cover"; render(); focusTitle(); break;
       case "toc": S.view = "toc"; render(); focusTitle(); break;
       case "chapter": S.view = "chapter"; render(); focusTitle(); break;
-      case "toend": S.view = "ob"; S.step = 8; render(); focusTitle(); break;
+      case "toend": S.view = "ob"; S.editor = null; S.i = FLOW.length - 1; render(); focusTitle(); break;
       case "video": toast(t("videoSoon")); break;
       case "print": toast("Función premium (simulada)"); break;
       case "restart": location.reload(); break;
