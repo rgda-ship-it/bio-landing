@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Invitación a Bio</title>
+<meta property="og:title" content="¿Me ayudas a construir Bio?">
+<meta property="og:description" content="Una invitación personal de Daniel para colaborar en Bio desde el principio.">
+<meta property="og:image" content="https://rgda-ship-it.github.io/bio-landing/og-es.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: una carta de una sola columna, con bandas de papel y tarjetas puntuales; identidad de la landing de Bio */
+:root{
+  --paper:#f6f1e7; --paper-2:#eee6d5; --card:#fffdf8; --ink:#1f1a14; --ink-2:#5b5245; --line:#ddd1ba;
+  --accent:#b44d27; --accent-ink:#fff; --match:#2f7d4f;
+  --display:"Fraunces",Georgia,"Times New Roman",serif; --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#17140f; --paper-2:#1f1b15; --card:#221d17; --ink:#f1e9da; --ink-2:#b8ac96; --line:#3b342a;
+  --accent:#e2784e; --accent-ink:#1b120c; --match:#6cc08f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#17140f; --paper-2:#1f1b15; --card:#221d17; --ink:#f1e9da; --ink-2:#b8ac96; --line:#3b342a;
+  --accent:#e2784e; --accent-ink:#1b120c; --match:#6cc08f; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:17px/1.65 var(--body);-webkit-font-smoothing:antialiased}
+.band{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:56px}
+.band.alt{background:var(--paper-2)}
+.wrap{max-width:720px;margin:0 auto;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.015em;margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,8vw,64px);line-height:1.03}
+h2{font-size:clamp(26px,5vw,36px);line-height:1.12}
+h3{font-size:20px;line-height:1.25}
+p{margin:0;max-width:65ch}
+.eyebrow{font:600 12px/1 var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:20px;color:var(--ink-2)}
+.logo{font:600 28px/1 var(--display)}
+.logo span{color:var(--accent)}
+.sign{font-family:var(--display);font-size:20px}
+.quote{font:500 22px/1.4 var(--display);border-left:3px solid var(--accent);padding-left:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.video{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;max-width:300px;justify-self:center;width:100%}
+.video video{width:100%;max-width:100%;aspect-ratio:9/16;border-radius:12px;display:block;background:#000}
+.video small{display:block;text-align:center;color:var(--ink-2);font-size:13px;margin-top:8px}
+ul.plain{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+ul.plain li{display:grid;grid-template-columns:22px 1fr;gap:10px}
+ul.plain li::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:9px}
+ul.done li::before{background:var(--match)}
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.role{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;gap:8px;align-content:start}
+.role p{color:var(--ink-2);font-size:15px}
+.role .t{font:500 13px var(--body);color:var(--accent)}
+.timeline{display:grid;gap:0;border-left:2px solid var(--line);margin-left:6px}
+.step{position:relative;padding:0 0 18px 22px}
+.step::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--accent)}
+.step b{display:block;font-weight:600}
+.step span{color:var(--ink-2);font-size:15px}
+.step.now::before{background:var(--accent)}
+.join{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;display:grid;gap:16px}
+.checks{display:grid;gap:10px}
+.checks label{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:var(--paper)}
+.checks input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--accent)}
+.field{display:grid;gap:6px;font-size:14px;color:var(--ink-2)}
+.field input,.field textarea{font:16px var(--body);padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
+textarea{resize:vertical;min-height:70px}
+.msg{white-space:pre-wrap;background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:14px;font-size:15px;min-height:60px}
+.btn{font:600 16px var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:14px 20px;cursor:pointer;justify-self:start}
+.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.status{font-size:14px;color:var(--match);min-height:1.2em}
+.url{font:500 15px ui-monospace,Menlo,Consolas,monospace;word-break:break-all;user-select:all}
+.small{font-size:14px;color:var(--ink-2)}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--ink-2)}
+.consent input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--accent)}
+.join a{color:var(--accent)}
+.err{color:var(--accent);font-size:14px;min-height:1.2em;margin:0}
+.done h3{margin:0}
+[hidden]{display:none!important}
+@media (max-width:640px){.two,.roles{grid-template-columns:1fr}.band{padding-block:40px}}
+</style>
+</head>
+<body>
+
+<section class="band">
+  <div class="wrap">
+    <div class="logo">bio<span>.</span></div>
+    <p class="eyebrow">Una invitación personal</p>
+    <h1>¿Me ayudas a construir Bio?</h1>
+    <p class="lede">Te escribo porque eres de las personas cuya opinión me importa y con quien me gustaría hacer esto. Estoy arrancando un proyecto que me ilusiona mucho y quiero que formes parte de él desde el principio.</p>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <p class="eyebrow">La idea</p>
+    <div class="two">
+      <div style="display:grid;gap:16px;min-width:0">
+        <h2>Marca tus momentos. Revive tu historia.</h2>
+        <p>Bio es una app para construir <b>tu</b> historia. Aquí el protagonista eres tú, no los demás.</p>
+        <p>No hace falta escribir párrafos. Marcas tus momentos como hitos (dónde fue, cuándo y qué pasó) y en cada uno guardas <b>cómo te hizo sentir</b>: aquel verano, el primer día de universidad, la mudanza, un logro. Así tus recuerdos quedan unidos a lo que sentiste. Si quieres contar más, tus hitos aparecen en tu diario, un espacio solo tuyo para escribir con calma.</p>
+        <p>Bio convierte tu historia en una animación o en un libro. Y cuando tu historia se cruza con la de otras personas, descubres quién te acompañó en cada momento.</p>
+      </div>
+      <div class="video">
+        <video src="animacion.mp4#t=6" controls muted playsinline preload="metadata" aria-label="Prototipo de la animación de vida de Bio con una persona ficticia"></video>
+        <small>Prototipo de la animación (persona ficticia)</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Por qué creo que puede funcionar</p>
+    <h2>No es otro Facebook</h2>
+    <p>Las redes sociales viven del presente y de lo que mostramos a los demás. Las apps de memorias que más gustan, como Storyworth, demuestran que la gente quiere contar su vida, pero se quedan en un libro privado. Nadie ha juntado las dos cosas: construir tu historia de forma sencilla y emocional, y que esa historia te reconecte con quienes la vivieron contigo.</p>
+    <ul class="plain">
+      <li><span><b>Tú en el centro:</b> tu historia entera, para ti y para quien tú elijas, no un escaparate para los demás.</span></li>
+      <li><span><b>Emoción:</b> cada momento guarda cómo te hizo sentir: alegría, nostalgia, orgullo, el primer amor.</span></li>
+      <li><span><b>Confianza:</b> cada recuerdo tiene su propia privacidad, desde «solo yo» hasta público, y nadie puede vincularte a su historia sin tu permiso.</span></li>
+      <li><span><b>Reencuentros como consecuencia:</b> cuando dos historias coinciden en lugar y fechas, Bio te muestra quién te acompañó.</span></li>
+    </ul>
+    <p class="quote">Una regla que no vamos a romper: nunca cobraremos por reencontrarte con alguien.</p>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <p class="eyebrow">Dónde estamos</p>
+    <h2>Ya hay mucho hecho</h2>
+    <p>Estamos en la fase de validación. Hasta mediados de diciembre comprobamos si la idea engancha antes de construir la app. Trabajo con un equipo de agentes de inteligencia artificial que me ayudan con la técnica, el diseño, lo legal y el marketing, así que avanzamos rápido. Ya tenemos:</p>
+    <ul class="plain done">
+      <li><span>Una prueba técnica que encuentra coincidencias entre casi 10 millones de recuerdos en menos de medio segundo.</span></li>
+      <li><span>El prototipo de la animación de vida que ves arriba.</span></li>
+      <li><span>Las pantallas del libro, del diario y de la privacidad de cada recuerdo.</span></li>
+      <li><span>La web con la lista de espera, en español, inglés y francés.</span></li>
+    </ul>
+    <p>Lo que falta no lo puede hacer ninguna inteligencia artificial: <b>personas reales</b> que lo prueben, lo compartan y digan lo que piensan.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Lo que te pido</p>
+    <h2>Cuatro formas de ayudar</h2>
+    <p>Elige las que te apetezcan. Con una o dos horas a la semana, cuando puedas, ya es muchísimo.</p>
+    <div class="roles">
+      <div class="role"><span class="t">Difusión</span><h3>Abrir puertas</h3><p>Compartir la web en tu grupo de promoción, en el de la universidad o en el del trabajo. Te doy los mensajes ya escritos.</p></div>
+      <div class="role"><span class="t">Pruebas</span><h3>Probar antes que nadie</h3><p>Usar los prototipos, registrarte en la web y decirme qué no se entiende o qué falla.</p></div>
+      <div class="role"><span class="t">Ideas</span><h3>Pensar conmigo</h3><p>Proponer funciones, nombres o mejoras, y ser sincero cuando algo no te convenza.</p></div>
+      <div class="role"><span class="t">Tareas</span><h3>Echar una mano</h3><p>Ayudar con la encuesta, conseguir respuestas y revisar textos o traducciones.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt">
+  <div class="wrap">
+    <p class="eyebrow">Lo que te llevas</p>
+    <h2>Estar desde el principio</h2>
+    <ul class="plain">
+      <li><span>Acceso antes que nadie a cada versión de Bio.</span></li>
+      <li><span>Voz real en cómo será el producto: tus ideas se discuten y se prueban.</span></li>
+      <li><span>Reconocimiento como colaborador fundador.</span></li>
+      <li><span>Si la app sale adelante, eres de las primeras personas a las que quiero en el equipo.</span></li>
+    </ul>
+    <p class="small">Para ser transparente: ahora mismo es un proyecto sin financiación y nadie cobra, yo tampoco. Lo hacemos porque creemos en la idea. Cuando haya algo más que ofrecer, lo hablaremos con calma.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow">Las próximas semanas</p>
+    <h2>El plan hasta diciembre</h2>
+    <div class="timeline">
+      <div class="step now"><b>2–15 de noviembre</b><span>Lanzamos la web y la encuesta. Aquí tu ayuda con la difusión vale oro.</span></div>
+      <div class="step"><b>16–29 de noviembre</b><span>Analizamos qué dice la gente y decidimos qué entra en la primera versión.</span></div>
+      <div class="step"><b>30 de noviembre – 6 de diciembre</b><span>Pruebas de los prototipos con usuarios. Necesito probadores.</span></div>
+      <div class="step"><b>7–13 de diciembre</b><span>Decidimos juntos si construimos la app.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="apuntate">
+  <div class="wrap">
+    <p class="eyebrow">¿Te apuntas?</p>
+    <h2>Dime cómo quieres ayudar</h2>
+    <form class="join" id="f" novalidate>
+      <div class="field"><label for="nombre">Tu nombre</label><input id="nombre" name="name" autocomplete="name" maxlength="80" required placeholder="Por ejemplo, Ana"></div>
+      <div class="field"><label for="contacto">Tu email o tu WhatsApp, para escribirte</label><input id="contacto" name="contact" maxlength="120" required placeholder="ana@email.com o +34 600 000 000"></div>
+      <div class="checks" role="group" aria-label="Cómo quieres ayudar">
+        <label><input type="checkbox" name="role" value="difusion" checked> <span><b>Difusión:</b> compartir la web en mis grupos</span></label>
+        <label><input type="checkbox" name="role" value="pruebas" checked> <span><b>Pruebas:</b> probar la web y los prototipos</span></label>
+        <label><input type="checkbox" name="role" value="ideas"> <span><b>Ideas:</b> pensar funciones y mejoras</span></label>
+        <label><input type="checkbox" name="role" value="tareas"> <span><b>Tareas:</b> encuesta, textos, traducciones</span></label>
+      </div>
+      <div class="field"><label for="grupos">¿En qué grupos podrías compartirlo? (opcional)</label><textarea id="grupos" name="groups" maxlength="500" placeholder="Por ejemplo: grupo de la universidad, amigos de los veranos en Margarita…"></textarea></div>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <label class="consent"><input type="checkbox" id="consent" required> <span>Acepto que Daniel guarde estos datos para contactarme sobre el proyecto, según la <a href="privacy.html" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" id="send" type="submit">Me apunto</button>
+    </form>
+    <div class="join done" id="done" hidden>
+      <h3>¡Gracias, ya estás dentro!</h3>
+      <p>Te escribiré muy pronto con los primeros pasos. Mientras tanto, empieza por lo más sencillo:</p>
+      <ul class="plain">
+        <li><span>Apúntate tú también a la lista de espera: <a href="index.html?utm_source=invitacion">rgda-ship-it.github.io/bio-landing</a></span></li>
+        <li><span>Responde la encuesta, son 5 minutos: <a href="encuesta.html?utm_source=invitacion">encuesta</a></span></li>
+        <li><span>Prueba el prototipo y cuéntame qué te parece: <a href="prototipo/?utm_source=invitacion">prototipo</a></span></li>
+      </ul>
+    </div>
+    <p class="sign">Gracias por leer hasta aquí. Me haría muchísima ilusión hacerlo contigo.<br>— Daniel</p>
+    <p class="small">Te pido algo de discreción con los detalles de la idea mientras estamos en esta fase.</p>
+  </div>
+</section>
+
+<script>
+const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
+(function(){
+  const f = document.getElementById('f'), err = document.getElementById('err'), btn = document.getElementById('send');
+  f.addEventListener('submit', async (ev) => {
+    ev.preventDefault(); err.textContent = '';
+    const name = f.name.value.trim(), contact = f.contact.value.trim();
+    const roles = [...f.querySelectorAll('input[name=role]:checked')].map((c) => c.value);
+    if (!name || contact.length < 5) { err.textContent = 'Escribe tu nombre y un email o teléfono para contactarte.'; return; }
+    if (!document.getElementById('consent').checked) { err.textContent = 'Marca la casilla de privacidad para continuar.'; return; }
+    btn.disabled = true; btn.textContent = 'Enviando…';
+    try {
+      const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/join_collaborators', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY },
+        body: JSON.stringify({ p_name: name, p_contact: contact, p_roles: roles, p_groups: f.groups.value.trim() || null, p_lang: 'es', p_consent: true, p_website: f.website.value || null })
+      });
+      if (!r.ok) throw new Error(await r.text());
+      f.hidden = true; document.getElementById('done').hidden = false;
+      try { fetch(SUPABASE_URL + '/rest/v1/rpc/track_event', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }, body: JSON.stringify({ p_event: 'visita', p_lang: 'es', p_utm: 'invitacion_colaborador', p_via_ref: false }) }).catch(() => {}); } catch (e) {}
+    } catch (e) {
+      err.textContent = 'No se pudo enviar. Inténtalo de nuevo en un momento o escríbeme directamente.';
+      btn.disabled = false; btn.textContent = 'Me apunto';
+    }
+  });
+})();
+</script>
+</body>
+</html>
