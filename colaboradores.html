@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bio — Comparte con un toque</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f6f1e7;--ink:#1f1a14;--ink-2:#5b5245;--line:#d9cdb5;--accent:#c4552d;--accent-ink:#fff;--ok:#2f7d4f;--card:#fffdf8}
+@media (prefers-color-scheme:dark){:root{--paper:#16130f;--ink:#f1e9da;--ink-2:#b4a892;--line:#3a332a;--accent:#e0754b;--accent-ink:#1b120c;--ok:#6cc08f;--card:#211c16}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:520px;margin:0 auto;padding:24px 16px 48px;display:grid;gap:22px}
+.logo{font:600 26px/1 Fraunces,Georgia,serif;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+h1{font:600 clamp(30px,8vw,40px)/1.08 Fraunces,Georgia,serif;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.lede{color:var(--ink-2);margin:10px 0 0}
+.actions{display:grid;gap:12px}
+.btn{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:14px 18px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 17px Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer;text-align:left}
+.btn small{display:block;font:400 13px Inter,system-ui,sans-serif;color:var(--ink-2);margin-top:2px}
+.btn .ic{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--paper);font-size:18px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary small{color:var(--accent-ink);opacity:.85}
+.btn.primary .ic{background:rgba(255,255,255,.18)}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn:active{transform:scale(.99)}
+.status{min-height:1.4em;color:var(--ok);font-weight:500;margin:0;text-align:center}
+.note{font-size:13px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px;margin:0}
+.msg{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--ink-2);margin:0}
+</style>
+</head>
+<body>
+<main>
+  <div class="logo">bio<span>.</span></div>
+  <header>
+    <h1 id="saludo">Gracias por ser parte de Bio</h1>
+    <p class="lede">Elige lo que te apetezca. Todo está listo: un toque y ya está.</p>
+  </header>
+
+  <div class="actions">
+    <a class="btn primary" id="wa" target="_blank" rel="noopener">
+      <span class="ic" aria-hidden="true">💬</span>
+      <span>Compartir por WhatsApp<small>El mensaje ya va escrito</small></span>
+    </a>
+    <button class="btn" id="copy" type="button">
+      <span class="ic" aria-hidden="true">🔗</span>
+      <span>Copiar enlace<small id="copy-sub">Para pegarlo donde quieras</small></span>
+    </button>
+    <a class="btn" id="survey" target="_blank" rel="noopener">
+      <span class="ic" aria-hidden="true">📝</span>
+      <span>Compartir la encuesta<small>3 minutos que nos ayudan mucho</small></span>
+    </a>
+    <a class="btn" id="proto" target="_blank" rel="noopener">
+      <span class="ic" aria-hidden="true">✨</span>
+      <span>Probar el prototipo<small>Marca tus primeros momentos</small></span>
+    </a>
+    <a class="btn" id="video" target="_blank" rel="noopener">
+      <span class="ic" aria-hidden="true">🎬</span>
+      <span>Ver la animación<small>Así se revive una historia</small></span>
+    </a>
+  </div>
+
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+
+  <p class="msg" id="preview"></p>
+  <p class="note">Esta página no pide ni guarda datos personales. Solo contamos, de forma anónima, cuántas veces se comparte desde cada enlace.</p>
+</main>
+
+<script>
+const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
+
+const base = new URL("./", location.href).href;           // misma carpeta que la landing
+const raw = new URLSearchParams(location.search).get("c") || "";
+const c = /^[A-Za-z0-9]{1,20}$/.test(raw) ? raw.toLowerCase() : "";
+const utm = c ? "colab_" + c : "colab";
+
+const landing = base + "?utm_source=" + encodeURIComponent(utm);
+const survey  = base + "encuesta.html?utm_source=" + encodeURIComponent(utm);
+const proto   = base + "prototipo/?utm_source=" + encodeURIComponent(utm);
+const video   = base + "animacion.mp4";
+
+const msg = "Marca tus momentos. Revive tu historia. ✨ Estoy apoyando Bio, una app para contar tu vida en momentos: dónde, cuándo y cómo te hizo sentir. Sin escribir párrafos. Al final la ves animada en vídeo o como libro. Está en prueba, ¿te apuntas? " + landing;
+const surveyMsg = "¿Me regalas 3 minutos? Estamos validando Bio, una app para contar tu vida en momentos y verla animada o como libro. Tu opinión decide qué construimos: " + survey + " 🙏";
+
+if (c) document.getElementById("saludo").textContent = "Gracias por ser parte de Bio, " + c.charAt(0).toUpperCase() + c.slice(1);
+document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
+document.getElementById("survey").href = "https://wa.me/?text=" + encodeURIComponent(surveyMsg);
+document.getElementById("proto").href = proto;
+document.getElementById("video").href = video;
+document.getElementById("preview").textContent = "Mensaje que se envía: «" + msg + "»";
+
+function track(ev){
+  try {
+    fetch(SUPABASE_URL + "/rest/v1/rpc/track_event", {
+      method: "POST", keepalive: true,
+      headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ p_event: ev, p_lang: "es", p_utm: utm, p_via_ref: false })
+    }).catch(() => {});
+  } catch (_) {}
+}
+const status = document.getElementById("status");
+document.getElementById("wa").addEventListener("click", () => track("clic_compartir_whatsapp"));
+document.getElementById("copy").addEventListener("click", async () => {
+  track("clic_copiar_enlace");
+  try { await navigator.clipboard.writeText(landing); status.textContent = "¡Enlace copiado!"; }
+  catch (_) {
+    const t = document.createElement("textarea"); t.value = landing; document.body.appendChild(t); t.select();
+    try { document.execCommand("copy"); status.textContent = "¡Enlace copiado!"; } catch (e) { status.textContent = landing; }
+    t.remove();
+  }
+  setTimeout(() => { status.textContent = ""; }, 3000);
+});
+</script>
+</body>
+</html>
