@@ -92,8 +92,8 @@ footer{padding:28px 0 40px;color:var(--ink-2);font-size:13px}
 <div class="wrap">
   <header>
     <a class="logo" href="index.html" id="home">bio<span>.</span></a>
-    <div class="langs" role="group" aria-label="Idioma / Language / Langue">
-      <button type="button" data-l="es">ES</button><button type="button" data-l="en">EN</button><button type="button" data-l="fr">FR</button>
+    <div class="langs" role="group" aria-label="Idioma / Language / Langue / Lingua">
+      <button type="button" data-l="es">ES</button><button type="button" data-l="en">EN</button><button type="button" data-l="fr">FR</button><button type="button" data-l="ca">CA</button><button type="button" data-l="it">IT</button>
     </div>
   </header>
   <main>
@@ -116,7 +116,7 @@ const SURVEY_VERSION = "1.1";
 const STORE_KEY = "bio_encuesta_v1";
 
 /* ---------- Estructura (común a los tres idiomas; códigos = lista blanca de submit_survey) ---------- */
-const COUNTRY_LISTS = { es:["VE","ES","US","CO","AR","MX","FR","GB","XX"], en:["VE","ES","US","CO","AR","MX","FR","GB","XX"], fr:["FR","BE","CH","CA","VE","ES","US","MA","XX"] };
+const COUNTRY_LISTS = { ca:["ES","AD","FR","IT","VE","CO","AR","MX","XX"], it:["IT","CH","ES","FR","VE","AR","US","GB","XX"], es:["VE","ES","US","CO","AR","MX","FR","GB","XX"], en:["VE","ES","US","CO","AR","MX","FR","GB","XX"], fr:["FR","BE","CH","CA","VE","ES","US","MA","XX"] };
 const Q = {
   q1:{b:"A",type:"one",req:1,o:["lt18","18_24","25_29","30_34","35_44","45_54","55p"]},
   q2:{b:"A",type:"select",req:1,o:"countries"},
@@ -176,7 +176,7 @@ const T = {
   g_btn:"Unirme a la lista de espera", g_share:"¿Conoces a 2 personas de tu promoción a las que les interese? Compárteles esta encuesta: cada respuesta cuenta.",
   g_wa:"Compartir por WhatsApp", wa_msg:"Estoy ayudando a crear Bio, una app para reencontrarnos con quienes estudiaron con nosotros. ¿Respondes esta encuesta de 5 minutos?",
   m_t:"Gracias por tu interés", m_l:"Esta encuesta es solo para personas de 18 años o más, así que no hemos guardado ninguna respuesta.", m_btn:"Volver a Bio",
-  countries:{VE:"Venezuela",ES:"España",US:"Estados Unidos",CO:"Colombia",AR:"Argentina",MX:"México",FR:"Francia",GB:"Reino Unido",BE:"Bélgica",CH:"Suiza",CA:"Canadá",MA:"Marruecos",XX:"Otro país"},
+  countries:{VE:"Venezuela",ES:"España",US:"Estados Unidos",CO:"Colombia",AR:"Argentina",MX:"México",FR:"Francia",GB:"Reino Unido",IT:"Italia",AD:"Andorra",BE:"Bélgica",CH:"Suiza",CA:"Canadá",MA:"Marruecos",XX:"Otro país"},
   q:{
    q26:["¿Qué te atrae más de Bio?",{reconnect:"Reencontrar a personas con las que perdí el contacto",biography:"Construir y mostrar mi historia y mis logros",memories:"Recordar momentos compartidos (aquellas vacaciones, aquel lugar…)",all:"Todo por igual"}],
    q27:["¿En qué lugares hiciste amistades y luego perdiste el contacto?",{colegio:"Colegio o instituto",universidad:"Universidad",trabajo:"Trabajo (también temporal o de verano)",barrio:"Barrio o casa anterior",vacaciones:"Lugar de vacaciones",campamento:"Campamento",deporte:"Deporte o club",intercambio:"Intercambio",otro:"Otro (voluntariado…)",none:"En ninguno: sigo en contacto"}],
@@ -227,7 +227,7 @@ const T = {
   g_btn:"Join the waitlist", g_share:"Know 2 people from your class who'd be interested? Share this survey with them: every answer counts.",
   g_wa:"Share on WhatsApp", wa_msg:"I'm helping build Bio, an app to reconnect with the people we went to school with. Could you answer this 5-minute survey?",
   m_t:"Thanks for your interest", m_l:"This survey is only for people aged 18 or over, so we haven't saved any answers.", m_btn:"Back to Bio",
-  countries:{VE:"Venezuela",ES:"Spain",US:"United States",CO:"Colombia",AR:"Argentina",MX:"Mexico",FR:"France",GB:"United Kingdom",BE:"Belgium",CH:"Switzerland",CA:"Canada",MA:"Morocco",XX:"Other"},
+  countries:{VE:"Venezuela",ES:"Spain",US:"United States",CO:"Colombia",AR:"Argentina",MX:"Mexico",FR:"France",GB:"United Kingdom",IT:"Italy",AD:"Andorra",BE:"Belgium",CH:"Switzerland",CA:"Canada",MA:"Morocco",XX:"Other"},
   q:{
    q26:["What attracts you most about Bio?",{reconnect:"Reconnecting with people I lost touch with",biography:"Building and showing my story and achievements",memories:"Remembering shared moments (that holiday, that place…)",all:"All of it equally"}],
    q27:["Where did you make friends and then lose touch?",{colegio:"School",universidad:"University",trabajo:"Job (incl. summer or temporary)",barrio:"Neighborhood or previous home",vacaciones:"Holiday spot",campamento:"Camp",deporte:"Sports team or club",intercambio:"Exchange",otro:"Other (volunteering…)",none:"Nowhere: I'm still in touch"}],
@@ -278,7 +278,7 @@ const T = {
   g_btn:"Rejoindre la liste d'attente", g_share:"Vous connaissez 2 personnes de votre promo que cela intéresserait ? Partagez-leur ce questionnaire : chaque réponse compte.",
   g_wa:"Partager sur WhatsApp", wa_msg:"J'aide à créer Bio, une appli pour retrouver ceux avec qui on a étudié. Tu peux répondre à ce questionnaire de 5 minutes ?",
   m_t:"Merci de votre intérêt", m_l:"Ce questionnaire est réservé aux personnes de 18 ans ou plus : nous n'avons enregistré aucune réponse.", m_btn:"Retour à Bio",
-  countries:{VE:"Venezuela",ES:"Espagne",US:"États-Unis",CO:"Colombie",AR:"Argentine",MX:"Mexique",FR:"France",GB:"Royaume-Uni",BE:"Belgique",CH:"Suisse",CA:"Canada",MA:"Maroc",XX:"Autre pays"},
+  countries:{VE:"Venezuela",ES:"Espagne",US:"États-Unis",CO:"Colombie",AR:"Argentine",MX:"Mexique",FR:"France",GB:"Royaume-Uni",IT:"Italie",AD:"Andorre",BE:"Belgique",CH:"Suisse",CA:"Canada",MA:"Maroc",XX:"Autre pays"},
   q:{
    q26:["Qu'est-ce qui vous attire le plus dans Bio ?",{reconnect:"Retrouver des personnes perdues de vue",biography:"Construire et montrer mon histoire et mes réussites",memories:"Me souvenir de moments partagés (ces vacances, cet endroit…)",all:"Tout, à égalité"}],
    q27:["Dans quels lieux vous êtes-vous fait des amis avant de perdre le contact ?",{colegio:"École, collège ou lycée",universidad:"Université",trabajo:"Travail (y compris saisonnier ou d'été)",barrio:"Quartier ou ancien logement",vacaciones:"Lieu de vacances",campamento:"Colonie ou camp",deporte:"Sport ou club",intercambio:"Échange",otro:"Autre (bénévolat…)",none:"Nulle part : je suis toujours en contact"}],
@@ -308,6 +308,108 @@ const T = {
    q23:["Paieriez-vous pour avoir votre histoire imprimée sous forme de livre ?",{yes:"Oui",maybe:"Peut-être",no:"Non"}],
    q24:["Combien paieriez-vous au maximum pour ce livre imprimé (couverture rigide, environ 100 pages, avec photos) ?",{lt20:"Moins de 20 €","20_39":"20–39 €","40_59":"40–59 €","60p":"60 € ou plus"}],
    q25:["Retrouver quelqu'un sur Bio serait toujours gratuit. Paieriez-vous pour des extras facultatifs de l'animation (avatars, styles visuels, musique) ?",{yes:"Oui",maybe:"Peut-être",no:"Non"}]
+  }},
+ ca:{
+  title:"Enquesta", foot:"© 2026 Bio · Projecte en fase de validació",
+  demo:"Mode demo: les respostes no es desen.",
+  i_t:"Ajuda’ns a crear Bio · 5 minuts",
+  i_l:"Estem creant Bio, una app per marcar els moments de la teva vida (on i quan van ser, i com et van fer sentir) i reviure la teva història animada o com un llibre, sense escriure paràgrafs. I quan la teva història es creua amb la d’altres, descobreixes qui et va acompanyar. Abans de construir res, volem saber si de debò ho necessites. No hi ha respostes correctes: ens ajuda més una opinió sincera que una d’amable.",
+  i_p:"<strong>Privacitat, en resum.</strong> L’enquesta és anònima: no et demanem el nom. Al final pots deixar el teu correu si vols accés anticipat; és opcional i es desa a part.<ul><li><strong>Responsable:</strong> l’impulsor del projecte Bio, persona física resident a Espanya (dades de contacte a la política).</li><li><strong>Per a què:</strong> investigació de mercat: estudiar l’interès per Bio i decidir si es desenvolupa. No venem ni cedim les teves dades i no les fem servir per a publicitat.</li><li><strong>Base legal:</strong> el teu consentiment (art. 6.1.a RGPD), que pots retirar quan vulguis.</li><li><strong>On:</strong> a la nostra base de dades de Supabase (UE, Frankfurt). Sense galetes ni eines de tercers.</li><li><strong>Quant de temps:</strong> fins a 12 mesos després d’acabar la fase de validació; si el projecte no continua, s’esborra tot.</li><li><strong>Els teus drets:</strong> accés, rectificació, supressió, oposició, limitació i portabilitat. Pots reclamar davant l’AEPD (aepd.es) o l’Autoritat Catalana de Protecció de Dades (apdcat.cat).</li></ul>",
+  i_link:"Política de privacitat completa",
+  i_c:"Tinc 18 anys o més, he llegit la informació de privacitat i accepto participar.",
+  start:"Començar", next:"Següent", back:"Enrere", send:"Enviar les respostes", sending:"Enviant…",
+  prog:"Pregunta {n} de {t}", opt:"(opcional)", multi:"Marca totes les que corresponguin.", choose:"Tria una opció",
+  s_lo:"1 = Gens d’acord", s_hi:"5 = Totalment d’acord", chars:"{n}/{m}",
+  blocks:{A:"Bloc A · Sobre tu",B:"Bloc B · Retrobaments",C:"Bloc C · La teva història",D:"Bloc D · Privacitat i confiança",E:"Bloc E · Convidar i pagar"},
+  e_consent:"Per participar, marca la casella de consentiment.", e_req:"Tria una resposta per continuar.",
+  e_mail:"Revisa el correu.", e_mailc:"Per desar el correu, marca la seva casella (o deixa el camp buit).", e_net:"No hem pogut enviar les teves respostes. Torna-ho a provar.",
+  c_t:"Últim pas", c_l:"Opcional: si vols que t’avisem del llançament, deixa el teu correu. Es desa a part de les respostes.",
+  c_email:"Correu electrònic (opcional)", c_c:"Accepto que el responsable de Bio faci servir el meu correu només per avisar-me del llançament de Bio. Em puc donar de baixa en qualsevol moment.",
+  g_t:"Gràcies! Les teves respostes ja ens ajuden.", g_l:"Si vols accés anticipat i ser membre fundador de Bio, apunta’t a la llista d’espera.",
+  g_btn:"Apuntar-me a la llista d’espera", g_share:"Coneixes 2 persones de la teva promoció a qui els pugui interessar? Comparteix-los aquesta enquesta: cada resposta compta.",
+  g_wa:"Compartir per WhatsApp", wa_msg:"Estic ajudant a crear Bio, una app per marcar els moments de la vida i reviure-la animada o en un llibre. Respons aquesta enquesta de 5 minuts?",
+  m_t:"Gràcies pel teu interès", m_l:"Aquesta enquesta és només per a persones de 18 anys o més, així que no hem desat cap resposta.", m_btn:"Tornar a Bio",
+  countries:{VE:"Veneçuela",ES:"Espanya",AD:"Andorra",IT:"Itàlia",US:"Estats Units",CO:"Colòmbia",AR:"Argentina",MX:"Mèxic",FR:"França",GB:"Regne Unit",BE:"Bèlgica",CH:"Suïssa",CA:"Canadà",MA:"Marroc",XX:"Un altre país"},
+  q:{
+   q26:["Què t’atrau més de Bio?",{reconnect:"Retrobar persones amb qui vaig perdre el contacte",biography:"Construir i mostrar la meva història i els meus èxits",memories:"Recordar moments compartits (aquelles vacances, aquell lloc…)",all:"Tot per igual"}],
+   q27:["On vas fer amistats que després vas perdre de vista?",{colegio:"Escola o institut",universidad:"Universitat",trabajo:"Feina (també temporal o d’estiu)",barrio:"Barri o casa anterior",vacaciones:"Lloc de vacances",campamento:"Colònies o campament",deporte:"Esport o club",intercambio:"Intercanvi",otro:"Un altre (voluntariat…)",none:"Enlloc: hi continuo en contacte"}],
+   q28:["Mantens el contacte amb la majoria dels teus amics de les diferents etapes?","1 = Amb gairebé cap","5 = Amb gairebé tots"],
+   q1:["Quina edat tens?",{lt18:"Menys de 18","18_24":"18–24","25_29":"25–29","30_34":"30–34","35_44":"35–44","45_54":"45–54","55p":"55 o més"}],
+   q2:["En quin país vas acabar la secundària o el batxillerat?"],
+   q3:["En quin país vius avui?"],
+   q4:["En els últims 12 mesos, has intentat trobar algú de l’escola, de la universitat o d’alguna feina anterior?",{yes:"Sí",no:"No"}],
+   q5:["Com ho vas intentar?",{facebook:"Facebook",instagram:"Instagram",linkedin:"LinkedIn",google:"Google",whatsapp:"Grup de WhatsApp",acquaintances:"Preguntant a coneguts",other:"Una altra manera"}],
+   q6:["Ho vas aconseguir?",{yes:"Sí",partly:"Només en part",no:"No"}],
+   q7:["Explica’ns aquella última vegada: qui buscaves, com ho vas fer i què va passar?"],
+   q8:["Ets en algun grup de la teva promoció de l’escola o de la universitat (WhatsApp, Facebook o un altre)?",{active:"Sí, i és actiu",inactive:"Sí, però gairebé no es fa servir",no:"No"}],
+   q9:["Amb quantes persones de la teva promoció de l’escola continues en contacte?",{none:"Cap","1_5":"1–5","6_20":"6–20",gt20:"Més de 20"}],
+   q10:["«M’agradaria saber què se n’ha fet dels meus companys de classe.»"],
+   q11:["Imagina que una app et mostra un d’aquests suggeriments. Quin et seria més útil?",{A:"A · «La Maria Puig també va estudiar a l’Escola Sant Josep.»",B:"B · «La Maria Puig era a la teva mateixa classe, 5è B, el curs 2003–2004.»",indiff:"M’és igual"}],
+   q12:["Dedicaries uns 5 minuts a registrar les teves etapes (escoles, universitats, feines i ciutats)?",{yes:"Sí",maybe:"Potser",no:"No"}],
+   q13:["«M’agradaria veure una animació curta de la meva vida: els llocs i les etapes per on he passat.»"],
+   q14:["Si tinguessis aquesta animació, on la compartiries?",{instagram:"Històries d’Instagram",tiktok:"TikTok",whatsapp:"Estat o grup de WhatsApp",facebook:"Facebook",other:"En un altre lloc",none:"No la compartiria"}],
+   q15:["Com t’agradaria veure la teva història?",{video:"Com un vídeo animat",book:"Com un llibre per capítols",map:"Com un mapa o una línia de temps interactiva",several:"Diverses d’aquestes",none:"Cap"}],
+   q16:["«M’agradaria portar un diari a la mateixa app on hi ha la història de la meva vida.»"],
+   q17:["«Em preocupa que altres persones sàpiguen on vaig estudiar o viure i en quins anys.»"],
+   q18:["Si algú indica a l’app que va coincidir amb tu (un company, un col·lega o una exparella), què prefereixes?",{A:"A · Que el vincle només aparegui quan jo el confirmi",B:"B · Que aparegui automàticament, sense demanar-me confirmació",indiff:"M’és igual"}],
+   q19:["Qui hauria de veure les teves etapes per defecte?",{anyone:"Qualsevol persona",followers:"Només qui em segueix",contacts:"Només els meus contactes confirmats",me:"Només jo"}],
+   q20:["Què et preocuparia de compartir on i quan vas ser a cada etapa de la teva vida?"],
+   q21:["Si Bio existís, l’enviaries al grup de la teva promoció?",{yes_sure:"Sí, segur",probably:"Probablement",no:"No"}],
+   q22:["A quin grup l’enviaries?","Per exemple: «Promoció 2005 de l’Institut X»"],
+   q23:["Pagaries per tenir la teva història impresa com un llibre?",{yes:"Sí",maybe:"Potser",no:"No"}],
+   q24:["Quant pagaries com a màxim per aquest llibre imprès (tapa dura, unes 100 pàgines, amb fotos)?",{lt20:"Menys de 20 €","20_39":"20–39 €","40_59":"40–59 €","60p":"60 € o més"}],
+   q25:["Retrobar-se a Bio sempre seria gratis. Pagaries per extres opcionals de l’animació (avatars, estils visuals, música)?",{yes:"Sí",maybe:"Potser",no:"No"}]
+  }},
+ it:{
+  title:"Questionario", foot:"© 2026 Bio · Progetto in fase di validazione",
+  demo:"Modalità demo: le risposte non vengono salvate.",
+  i_t:"Aiutaci a creare Bio · 5 minuti",
+  i_l:"Stiamo creando Bio, un’app per segnare i momenti della tua vita (dove e quando sono successi, e come ti hanno fatto sentire) e rivivere la tua storia animata o come un libro, senza scrivere paragrafi. E quando la tua storia incrocia quella di altri, scopri chi c’era con te. Prima di costruire qualsiasi cosa, vogliamo capire se ti serve davvero. Non ci sono risposte giuste: ci aiuta più un’opinione sincera che una gentile.",
+  i_p:"<strong>Privacy, in breve.</strong> Il questionario è anonimo: non ti chiediamo il nome. Alla fine puoi lasciare la tua email se vuoi l’accesso anticipato; è facoltativo e viene conservata a parte.<ul><li><strong>Titolare:</strong> il promotore del progetto Bio, persona fisica residente in Spagna (recapiti nell’informativa).</li><li><strong>Finalità:</strong> ricerca di mercato: capire l’interesse per Bio e decidere se svilupparlo. Non vendiamo né cediamo i tuoi dati e non li usiamo per pubblicità.</li><li><strong>Base giuridica:</strong> il tuo consenso (art. 6.1.a GDPR), che puoi revocare quando vuoi.</li><li><strong>Dove:</strong> nel nostro database Supabase (UE, Francoforte). Niente cookie né strumenti di terzi.</li><li><strong>Per quanto tempo:</strong> fino a 12 mesi dopo la fine della fase di validazione; se il progetto non prosegue, cancelliamo tutto.</li><li><strong>I tuoi diritti:</strong> accesso, rettifica, cancellazione, opposizione, limitazione e portabilità. Puoi presentare reclamo al Garante per la protezione dei dati personali (garanteprivacy.it) o all’AEPD (Spagna).</li></ul>",
+  i_link:"Informativa privacy completa",
+  i_c:"Ho almeno 18 anni, ho letto le informazioni sulla privacy e accetto di partecipare.",
+  start:"Inizia", next:"Avanti", back:"Indietro", send:"Invia le risposte", sending:"Invio in corso…",
+  prog:"Domanda {n} di {t}", opt:"(facoltativa)", multi:"Seleziona tutte le opzioni pertinenti.", choose:"Scegli un’opzione",
+  s_lo:"1 = Per niente d’accordo", s_hi:"5 = Completamente d’accordo", chars:"{n}/{m}",
+  blocks:{A:"Sezione A · Su di te",B:"Sezione B · Ritrovarsi",C:"Sezione C · La tua storia",D:"Sezione D · Privacy e fiducia",E:"Sezione E · Invitare e pagare"},
+  e_consent:"Per partecipare, spunta la casella del consenso.", e_req:"Scegli una risposta per continuare.",
+  e_mail:"Controlla la tua email.", e_mailc:"Per salvare la tua email, spunta la sua casella (o lascia il campo vuoto).", e_net:"Non siamo riusciti a inviare le tue risposte. Riprova.",
+  c_t:"Ultimo passo", c_l:"Facoltativo: se vuoi che ti avvisiamo del lancio, lascia la tua email. Viene conservata separatamente dalle risposte.",
+  c_email:"Email (facoltativa)", c_c:"Accetto che il titolare di Bio usi la mia email solo per avvisarmi del lancio di Bio. Posso cancellarmi in qualsiasi momento.",
+  g_t:"Grazie! Le tue risposte ci stanno già aiutando.", g_l:"Se vuoi l’accesso anticipato e diventare membro fondatore di Bio, iscriviti alla lista d’attesa.",
+  g_btn:"Iscrivimi alla lista d’attesa", g_share:"Conosci 2 persone della tua classe a cui potrebbe interessare? Condividi con loro questo questionario: ogni risposta conta.",
+  g_wa:"Condividi su WhatsApp", wa_msg:"Sto aiutando a creare Bio, un’app per segnare i momenti della vita e rivederla animata o in un libro. Mi rispondi a questo questionario di 5 minuti?",
+  m_t:"Grazie per l’interesse", m_l:"Questo questionario è riservato a chi ha almeno 18 anni, quindi non abbiamo salvato nessuna risposta.", m_btn:"Torna a Bio",
+  countries:{VE:"Venezuela",ES:"Spagna",AD:"Andorra",IT:"Italia",US:"Stati Uniti",CO:"Colombia",AR:"Argentina",MX:"Messico",FR:"Francia",GB:"Regno Unito",BE:"Belgio",CH:"Svizzera",CA:"Canada",MA:"Marocco",XX:"Altro paese"},
+  q:{
+   q26:["Che cosa ti attira di più di Bio?",{reconnect:"Ritrovare persone con cui ho perso i contatti",biography:"Costruire e mostrare la mia storia e i miei traguardi",memories:"Ricordare momenti condivisi (quelle vacanze, quel posto…)",all:"Tutto allo stesso modo"}],
+   q27:["In quali luoghi hai stretto amicizie con cui poi hai perso i contatti?",{colegio:"Scuola",universidad:"Università",trabajo:"Lavoro (anche stagionale o estivo)",barrio:"Quartiere o casa precedente",vacaciones:"Luogo delle vacanze",campamento:"Campo estivo",deporte:"Sport o club",intercambio:"Scambio",otro:"Altro (volontariato…)",none:"In nessuno: sono ancora in contatto"}],
+   q28:["Sei ancora in contatto con la maggior parte degli amici delle diverse fasi della tua vita?","1 = Quasi con nessuno","5 = Quasi con tutti"],
+   q1:["Quanti anni hai?",{lt18:"Meno di 18","18_24":"18–24","25_29":"25–29","30_34":"30–34","35_44":"35–44","45_54":"45–54","55p":"55 o più"}],
+   q2:["In quale paese hai finito le scuole superiori?"],
+   q3:["In quale paese vivi oggi?"],
+   q4:["Negli ultimi 12 mesi hai provato a ritrovare qualcuno della tua scuola, dell’università o di un lavoro precedente?",{yes:"Sì",no:"No"}],
+   q5:["Come ci hai provato?",{facebook:"Facebook",instagram:"Instagram",linkedin:"LinkedIn",google:"Google",whatsapp:"Gruppo WhatsApp",acquaintances:"Chiedendo a conoscenti",other:"Altro"}],
+   q6:["Ci sei riuscito/a?",{yes:"Sì",partly:"Solo in parte",no:"No"}],
+   q7:["Raccontaci l’ultima volta: chi cercavi, come hai fatto e com’è andata?"],
+   q8:["Fai parte di un gruppo della tua classe delle superiori o dell’università (WhatsApp, Facebook o altro)?",{active:"Sì, ed è attivo",inactive:"Sì, ma non si usa quasi più",no:"No"}],
+   q9:["Con quante persone della tua classe delle superiori sei ancora in contatto?",{none:"Nessuna","1_5":"1–5","6_20":"6–20",gt20:"Più di 20"}],
+   q10:["«Mi piacerebbe sapere che fine hanno fatto i miei compagni di classe.»"],
+   q11:["Immagina che un’app ti mostri uno di questi suggerimenti. Quale ti sarebbe più utile?",{A:"A · «Maria Rossi ha studiato anche lei al Liceo San Giuseppe.»",B:"B · «Maria Rossi era nella tua stessa classe, la 5ª B, nell’anno 2003–2004.»",indiff:"È indifferente"}],
+   q12:["Dedicheresti circa 5 minuti a inserire le tappe della tua vita (scuole, università, lavori e città)?",{yes:"Sì",maybe:"Forse",no:"No"}],
+   q13:["«Mi piacerebbe vedere una breve animazione della mia vita: i luoghi e le tappe che ho attraversato.»"],
+   q14:["Se avessi quell’animazione, dove la condivideresti?",{instagram:"Storie di Instagram",tiktok:"TikTok",whatsapp:"Stato o gruppo WhatsApp",facebook:"Facebook",other:"Altrove",none:"Non la condividerei"}],
+   q15:["Come ti piacerebbe vedere la tua storia?",{video:"Come un video animato",book:"Come un libro a capitoli",map:"Come una mappa o una linea del tempo interattiva",several:"Più di uno di questi",none:"Nessuno"}],
+   q16:["«Mi piacerebbe tenere un diario nella stessa app dove c’è la storia della mia vita.»"],
+   q17:["«Mi preoccupa che altre persone sappiano dove ho studiato o vissuto, e in quali anni.»"],
+   q18:["Se qualcuno indica nell’app di averti incrociato (un compagno, un collega o un ex), che cosa preferisci?",{A:"A · Che il collegamento compaia solo quando lo confermo io",B:"B · Che compaia automaticamente, senza chiedermi conferma",indiff:"È indifferente"}],
+   q19:["Chi dovrebbe vedere le tue tappe per impostazione predefinita?",{anyone:"Chiunque",followers:"Solo chi mi segue",contacts:"Solo i miei contatti confermati",me:"Solo io"}],
+   q20:["Che cosa ti preoccuperebbe nel condividere dove e quando sei stato/a in ogni fase della tua vita?"],
+   q21:["Se Bio esistesse, lo invieresti al gruppo della tua classe?",{yes_sure:"Sì, di sicuro",probably:"Probabilmente",no:"No"}],
+   q22:["A quale gruppo lo invieresti?","Per esempio: «Maturità 2005 del Liceo X»"],
+   q23:["Pagheresti per avere la tua storia stampata come un libro?",{yes:"Sì",maybe:"Forse",no:"No"}],
+   q24:["Quanto pagheresti al massimo per quel libro stampato (copertina rigida, circa 100 pagine, con foto)?",{lt20:"Meno di 20 €","20_39":"20–39 €","40_59":"40–59 €","60p":"60 € o più"}],
+   q25:["Ritrovarsi su Bio sarebbe sempre gratis. Pagheresti per extra facoltativi dell’animazione (avatar, stili grafici, musica)?",{yes:"Sì",maybe:"Forse",no:"No"}]
   }}
 };
 
