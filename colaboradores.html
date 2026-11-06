@@ -75,18 +75,37 @@ const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
 
 const base = new URL("./", location.href).href;           // misma carpeta que la landing
-const raw = new URLSearchParams(location.search).get("c") || "";
-const c = /^[A-Za-z0-9]{1,20}$/.test(raw) ? raw.toLowerCase() : "";
-const utm = c ? "colab_" + c : "colab";
+const qs = new URLSearchParams(location.search);
+/* Token opaco del colaborador (10 caracteres base32, sin 0/1/l/o). El antiguo ?c=nombre
+   se ignora y se quita de la barra de direcciones para no dejar nombres en la URL. */
+const rawT = (qs.get("t") || "").trim().toLowerCase();
+const token = /^[2-9a-hjkmnp-z]{10}$/.test(rawT) ? rawT : "";
+if (qs.has("c")) {
+  qs.delete("c");
+  try { history.replaceState(null, "", location.pathname + (qs.toString() ? "?" + qs : "") + location.hash); } catch (_) {}
+}
+const utm = token ? "colab_" + token : "colab";
+const params = new URLSearchParams(token ? { t: token, utm_source: utm } : { utm_source: utm }).toString();
 
-const landing = base + "?utm_source=" + encodeURIComponent(utm);
-const survey  = base + "encuesta.html?utm_source=" + encodeURIComponent(utm);
+const landing = base + "?" + params;
+const survey  = base + "encuesta.html?" + params;
 const video   = base + "animacion.mp4";
 
 const msg = "Marca tus momentos. Revive tu historia. ✨ Estoy apoyando Bio, una app para contar tu vida en momentos: dónde, cuándo y cómo te hizo sentir. Sin escribir párrafos. Al final la ves animada en vídeo o como libro. Está en prueba, ¿te apuntas? " + landing;
 const surveyMsg = "¿Me regalas 3 minutos? Estamos validando Bio, una app para contar tu vida en momentos y verla animada o como libro. Tu opinión decide qué construimos: " + survey + " 🙏";
 
-if (c) document.getElementById("saludo").textContent = "Gracias por ser parte de Bio, " + c.charAt(0).toUpperCase() + c.slice(1);
+/* Saludo: solo el primer nombre, que devuelve Supabase a partir del token (o nada). */
+if (token && SUPABASE_URL && SUPABASE_ANON_KEY) {
+  try {
+    fetch(SUPABASE_URL + "/rest/v1/rpc/collab_greeting", {
+      method: "POST",
+      headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ p_token: token })
+    }).then(r => r.ok ? r.json() : null).then(n => {
+      if (typeof n === "string" && n.trim()) document.getElementById("saludo").textContent = "Gracias por ser parte de Bio, " + n.trim().slice(0, 40);
+    }).catch(() => {});
+  } catch (_) {}
+}
 document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
 document.getElementById("survey").href = "https://wa.me/?text=" + encodeURIComponent(surveyMsg);
 document.getElementById("dosurvey").href = survey;

@@ -287,6 +287,10 @@ const T = {
 const qs = new URLSearchParams(location.search);
 const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}} };
 if (qs.get("ref")) store.set("bio_ref", qs.get("ref"));
+/* collab-token */ /* token opaco del colaborador: ?t= (10 caracteres base32); se recuerda en este navegador */
+const COLLAB_RE = /^[2-9a-hjkmnp-z]{10}$/;
+{ const t = (qs.get("t") || "").trim().toLowerCase(); if (COLLAB_RE.test(t)) store.set("bio_collab", t); }
+const collab = () => { const t = store.get("bio_collab"); return t && COLLAB_RE.test(t) ? t : null; };
 let lang = qs.get("lang") || store.get("bio_lang") || (navigator.language||"es").slice(0,2);
 if (!T[lang]) lang = "es";
 
@@ -328,7 +332,10 @@ async function join(data){
     headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
     body: JSON.stringify(data)
   });
-  if (!r.ok) throw new Error(await r.text());
+  if (!r.ok) {
+    if (data.p_collab) { const d = Object.assign({}, data); delete d.p_collab; return join(d); }   // base sin p_collab aún
+    throw new Error(await r.text());
+  }
   return r.json();
 }
 
@@ -348,7 +355,7 @@ document.getElementById("f").addEventListener("submit", async ev => {
   try {
     const res = await join({ p_email: v.email, p_name: v.name, p_country: v.country, p_school: full ? school : null,
       p_grad_year: y, p_lang: lang, p_ref: store.get("bio_ref"), p_utm: qs.get("utm_source"), p_hp: v.website || null,
-      p_place_kind: full ? v.kind : null, p_interest: interest });
+      p_place_kind: full ? v.kind : null, p_interest: interest, ...(collab() ? { p_collab: collab() } : {}) });
     const link = location.origin + location.pathname + "?ref=" + res.code + "&lang=" + lang;
     document.getElementById("pos").textContent = "#" + res.position;
     document.getElementById("coh").textContent = res.cohort;
