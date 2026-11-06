@@ -79,7 +79,7 @@ const qs = new URLSearchParams(location.search);
 /* Token opaco del colaborador (10 caracteres base32, sin 0/1/l/o). El antiguo ?c=nombre
    se ignora y se quita de la barra de direcciones para no dejar nombres en la URL. */
 const rawT = (qs.get("t") || "").trim().toLowerCase();
-const token = /^[2-9a-hjkmnp-z]{10}$/.test(rawT) ? rawT : "";
+const token = /^[2-9a-km-np-z]{10}$/.test(rawT) ? rawT : "";
 if (qs.has("c")) {
   qs.delete("c");
   try { history.replaceState(null, "", location.pathname + (qs.toString() ? "?" + qs : "") + location.hash); } catch (_) {}

@@ -288,7 +288,7 @@ const qs = new URLSearchParams(location.search);
 const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}} };
 if (qs.get("ref")) store.set("bio_ref", qs.get("ref"));
 /* collab-token */ /* token opaco del colaborador: ?t= (10 caracteres base32); se recuerda en este navegador */
-const COLLAB_RE = /^[2-9a-hjkmnp-z]{10}$/;
+const COLLAB_RE = /^[2-9a-km-np-z]{10}$/;
 { const t = (qs.get("t") || "").trim().toLowerCase(); if (COLLAB_RE.test(t)) store.set("bio_collab", t); }
 const collab = () => { const t = store.get("bio_collab"); return t && COLLAB_RE.test(t) ? t : null; };
 let lang = qs.get("lang") || store.get("bio_lang") || (navigator.language||"es").slice(0,2);
