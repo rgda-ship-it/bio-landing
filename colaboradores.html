@@ -50,13 +50,13 @@ h1{font:600 clamp(30px,8vw,40px)/1.08 Fraunces,Georgia,serif;letter-spacing:-.02
       <span class="ic" aria-hidden="true">🔗</span>
       <span>Copiar enlace<small id="copy-sub">Para pegarlo donde quieras</small></span>
     </button>
+    <a class="btn" id="dosurvey" target="_blank" rel="noopener">
+      <span class="ic" aria-hidden="true">✅</span>
+      <span>Responder la encuesta<small>5 minutitos para darme tu opinión</small></span>
+    </a>
     <a class="btn" id="survey" target="_blank" rel="noopener">
       <span class="ic" aria-hidden="true">📝</span>
       <span>Compartir la encuesta<small>3 minutos que nos ayudan mucho</small></span>
-    </a>
-    <a class="btn" id="proto" target="_blank" rel="noopener">
-      <span class="ic" aria-hidden="true">✨</span>
-      <span>Probar el prototipo<small>Marca tus primeros momentos</small></span>
     </a>
     <a class="btn" id="video" target="_blank" rel="noopener">
       <span class="ic" aria-hidden="true">🎬</span>
@@ -81,7 +81,6 @@ const utm = c ? "colab_" + c : "colab";
 
 const landing = base + "?utm_source=" + encodeURIComponent(utm);
 const survey  = base + "encuesta.html?utm_source=" + encodeURIComponent(utm);
-const proto   = base + "prototipo/?utm_source=" + encodeURIComponent(utm);
 const video   = base + "animacion.mp4";
 
 const msg = "Marca tus momentos. Revive tu historia. ✨ Estoy apoyando Bio, una app para contar tu vida en momentos: dónde, cuándo y cómo te hizo sentir. Sin escribir párrafos. Al final la ves animada en vídeo o como libro. Está en prueba, ¿te apuntas? " + landing;
@@ -90,7 +89,7 @@ const surveyMsg = "¿Me regalas 3 minutos? Estamos validando Bio, una app para c
 if (c) document.getElementById("saludo").textContent = "Gracias por ser parte de Bio, " + c.charAt(0).toUpperCase() + c.slice(1);
 document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
 document.getElementById("survey").href = "https://wa.me/?text=" + encodeURIComponent(surveyMsg);
-document.getElementById("proto").href = proto;
+document.getElementById("dosurvey").href = survey;
 document.getElementById("video").href = video;
 document.getElementById("preview").textContent = "Mensaje que se envía: «" + msg + "»";
 
