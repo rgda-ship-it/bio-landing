@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+<script>window.SUPABASE_URL="https://jxkckdzzlmzgvnvoqrml.supabase.co";window.SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
@@ -310,6 +311,31 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
 .tab.plus svg{width:28px;height:28px;stroke-width:2.6}
 :root[data-skin="revelado"] .tab.plus,:root[data-skin="avion"] .tab.plus{border-radius:8px}
 
+.av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;font-weight:800;flex:none;color:#2A1D2B;letter-spacing:-.02em}
+.av.lockav{background:var(--sunk);color:var(--ink2)}
+.av.lockav svg{width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.av.part{background:var(--sunk);color:var(--ink2);border:2px dashed var(--line)}
+:root[data-skin="revelado"] .av,:root[data-skin="avion"] .av{border-radius:6px}
+.avs{display:inline-flex;flex:none}.avs .av{box-shadow:0 0 0 2px var(--bg)}.avs .av+.av{margin-left:-8px}
+.prow{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--soft)}
+.prow:last-child{border-bottom:0}
+.prow .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.prow .tx b{font-size:17px}.prow .tx span{font-size:15px;color:var(--ink2)}
+.stc{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:650;border-radius:999px;padding:3px 10px;background:var(--sunk);white-space:nowrap}
+.stc i{width:8px;height:8px;border-radius:50%;background:var(--alba)}
+.stc.ok i{background:var(--ok)}
+.res{list-style:none;margin:0;padding:6px;display:flex;flex-direction:column;background:var(--card);border-radius:16px;box-shadow:var(--shadow)}
+.res button{width:100%;min-height:60px;display:flex;align-items:center;gap:12px;border:0;background:transparent;text-align:left;padding:8px 12px;border-radius:12px}
+.res button:hover,.res button[aria-selected="true"]{background:var(--sunk)}
+.res .tx{flex:1;display:flex;flex-direction:column}.res .tx small{font-size:15px;color:var(--ink2)}
+.ck2{display:flex;gap:12px;align-items:flex-start;min-height:44px;font-size:16px;line-height:1.4;padding-top:8px}
+.ck2 input{width:24px;height:24px;margin:0;flex:none;accent-color:var(--act)}
+.metbox{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:16px;background:var(--sunk)}
+.stg{display:flex;flex-wrap:wrap;gap:6px}
+.stg button{min-height:44px;border-radius:999px;border:2px solid var(--soft);background:var(--card);padding:0 14px;font-size:15px;font-weight:650}
+.stg button[aria-checked="true"]{border-color:var(--ink)}
+.req{padding:18px;display:flex;flex-direction:column;gap:12px}
+.req q{font-family:var(--f-voice);font-size:var(--voice-size);line-height:1.45;quotes:"«" "»"}
 .toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:50;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:16px;width:max-content;line-height:1.35;font-weight:600;font-size:16px;box-shadow:var(--shadow2);animation:enter .25s var(--ease);max-width:calc(100% - 32px);text-align:center}
 .saved-burst{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:var(--sunk)}
 .saved-burst .sun2{width:44px;height:22px;border-radius:44px 44px 0 0;background:var(--sol);animation:rise .9s var(--ease) both;flex:none}
@@ -324,7 +350,6 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
 <div class="desk-note" id="deskNote"></div>
 <div id="live" class="sr" aria-live="polite"></div>
 
-<script>window.SUPABASE_URL="https://jxkckdzzlmzgvnvoqrml.supabase.co";window.SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";</script>
 <script>
 (function () {
   "use strict";
@@ -342,7 +367,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       st_hora: "Hora dorada", st_hora_d: "Cada emoción es un cielo", st_revelado: "Revelado", st_revelado_d: "Como fotos de verano recién reveladas", st_avion: "Por avión", st_avion_d: "Tu vida contada en cartas",
       tab_story: "Historia", tab_diary: "Diario", tab_new: "Nuevo momento", tab_relive: "Revivir", tab_settings: "Ajustes",
       h_title: "Tu historia", h_sub: "{n} momentos en {c} etapas", h_sky: "El cielo de tu vida, de 1988 a hoy",
-      h_cross: "Tu historia se cruza con la de {n} personas", h_cross_s: "Nadie ve tus datos hasta que los dos aceptéis.", see: "Ver",
+      h_cross: "Tu historia se cruza con la de {n} personas", h_cross_s: "Nadie ve tus datos hasta que las dos partes quieran conectar sus historias.", see: "Ver",
       stage: "Etapa {n}", photo: "Con foto", newb: "Nuevo",
       d_place: "Lugar", d_date: "Fecha", d_more: "Escribir más en mi diario", d_open: "Abrir en mi diario", d_hasdiary: "Tienes una entrada en tu diario sobre este momento.", d_who: "Quién lo ve", d_crossed: "Alguien más estuvo aquí en esas fechas.",
       i1: "Un poco", i2: "Bastante", i3: "Muchísimo",
@@ -364,19 +389,35 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       en_title: "Entrada del diario", en_about: "Sobre: {t}", en_l: "Escribe con calma", en_ph: "Nadie más lo leerá.", en_saved: "Guardado y cifrado", en_link: "Unir a un momento", en_nolink: "Sin momento",
       rv_title: "Revivir", rv_book: "Libro", rv_video: "Vídeo", rv_open: "Abrir el libro", rv_toc: "Índice", rv_toc_s: "Cada etapa de tu vida es un capítulo.", rv_ch: "Capítulo {n}", rv_prevch: "Anterior", rv_nextch: "Siguiente", rv_totoc: "Volver al índice", rv_fromdiary: "Del diario", rv_swipe: "Desliza para pasar a la página siguiente.", rv_cover_s: "Una historia contada en Bio",
       rv_v_load: "Cargando la animación…", rv_v_err: "No se pudo cargar la animación. Comprueba tu conexión y vuelve a intentarlo.", rv_v_s: "La historia de Andrea, de Caracas a Madrid, en menos de un minuto.", retry: "Reintentar",
-      x_title: "Tu historia se cruza con…", x_text: "Cuando dos historias coinciden en lugar y fechas, Bio os lo dice a las dos personas. No verás quién es, ni esa persona a ti, hasta que las dos aceptéis.",
-      x_how1: "Bio detecta que coincidisteis.", x_how2: "Tú decides si quieres conoceros.", x_how3: "La otra persona decide lo mismo.", x_how4: "Solo si las dos aceptáis, os veis.",
-      x_loading: "Buscando dónde se cruza tu historia…", x_new: "Nueva coincidencia", x_wait: "Esperando a la otra persona", x_ok: "Os habéis encontrado",
-      x_accept: "Quiero conocerla", x_later: "Ahora no", x_never: "No volver a mostrar", x_sim: "Simular que la otra persona acepta", x_simnote: "Solo en el prototipo.", x_chat: "Escribirle un mensaje", x_chat_t: "En la app real se abriría una conversación.",
+      x_title: "Tu historia se cruza con…", x_text: "Cuando dos historias coinciden en lugar y fechas, Bio os lo cuenta a las dos. Ninguna sabrá quién es la otra hasta que las dos queráis conectar vuestras historias.",
+      x_how1: "Bio detecta que coincidisteis.", x_how2: "Tú decides si quieres conectar vuestras historias.", x_how3: "La otra persona decide lo mismo.", x_how4: "Si las dos aceptáis, sabréis quién es la otra y podréis recordar juntas ese momento.",
+      x_loading: "Buscando dónde se cruza tu historia…", x_new: "Nueva coincidencia", x_wait: "Esperando a la otra persona", x_ok: "Historias conectadas",
+      x_accept: "Conectar nuestras historias", x_later: "Ahora no", x_never: "No volver a mostrar", x_sim: "Simular que la otra persona también quiere", x_simnote: "Solo en el prototipo.", x_chat: "Recordar juntos este momento", x_chat_t: "En la app real podréis añadir vuestros recuerdos a este momento compartido.",
       x_okt: "Ahora compartís el momento «{t}». Lo demás de vuestras historias sigue siendo privado.",
       x_empty_t: "Por ahora no hay cruces", x_empty: "Cuando tu historia coincida con la de alguien, te lo diremos aquí, con calma.",
-      x_accepted: "Hecho. Te avisaremos si la otra persona también acepta.", x_hidden: "No volverás a ver esta coincidencia.",
+      x_accepted: "Hecho. Si la otra persona también quiere conectar vuestras historias, te lo contaremos.", x_hidden: "No volverás a ver esta coincidencia.",
       se_title: "Ajustes", se_style: "Estilo de tu historia", se_theme: "Apariencia", th_sys: "Sistema", th_light: "Claro", th_dark: "Oscuro", se_lang: "Idioma",
       se_priv: "Privacidad", se_def: "Visibilidad de los momentos nuevos", se_def_s: "Puedes cambiarla en cada momento.", se_find: "Cruces de historias", se_find_s: "Avisarme cuando mi historia coincida con otra. Siempre con doble confirmación.",
       se_place: "Detalle del lugar por defecto", pl_city: "Ciudad", pl_hood: "Barrio", pl_exact: "Exacto",
       se_enc: "Diario cifrado", se_enc_s: "Siempre activado. No se puede desactivar.", se_reset: "Reiniciar el prototipo", se_reset_s: "Vuelve a la bienvenida y restaura la historia de Andrea.", se_reset_done: "Prototipo reiniciado",
       style_applied: "Estilo «{s}» aplicado", theme_applied: "Apariencia: {s}",
-      who_amigos: "Amigos", m_new: "Nuevo"
+      who_amigos: "Amigos", m_new: "Nuevo",
+      pp_title: "Con quién lo viviste", pp_add: "Añadir a alguien", pp_ok: "Confirmado", pp_pend: "Pendiente de confirmar", pp_pend_n: "No aparece en tu momento hasta que confirme.",
+      pp_secret: "Alguien que solo tú sabes", pp_secret_s: "Un amor secreto. Bio no guarda ningún nombre ni avisa a nadie.", pp_past: "Recuerdo privado · pareja pasada", pp_past_s: "Vínculo mutuo sin notificaciones. Solo lo veis vosotros dos.",
+      pp_none: "Aún no has dicho con quién lo viviste.", pp_optional: "Opcional. Nadie aparece hasta que confirma.",
+      ap_title: "¿Con quién lo viviste?", ap_q: "Busca por nombre o usuario", ap_ph: "Nombre o @usuario", ap_rel: "Vínculo", ap_vis: "Quién puede ver que estuvo contigo", ap_add: "Añadir y enviar solicitud", ap_sent: "{n} recibirá tu solicitud. Aparecerá cuando confirme.",
+      ap_pastq: "Fue una pareja pasada", ap_past_s: "Se guarda como recuerdo privado. Si los dos confirmáis, el vínculo es mutuo y sin notificaciones. Puedes bloquear cuando quieras.",
+      ap_secret: "Es un amor secreto", ap_secret_s: "Bio solo guardará que hubo alguien. Nunca un nombre, nunca un aviso.", ap_secret_btn: "Guardar como amor secreto", ap_secret_done: "Guardado como amor secreto",
+      ap_none: "No encontramos a nadie con «{q}». Prueba con su @usuario.", ap_hint: "Escribe al menos dos letras.",
+      pe_title: "Personas", pe_text: "Busca a alguien por su nombre o su usuario y dile qué es para ti. Seguir a alguien no es lo mismo que ser amigos.",
+      pe_mine: "Tus vínculos", pe_rel: "Qué es para ti", pe_send: "Enviar solicitud", pe_sent: "Solicitud enviada a {n}", pe_pending: "Solicitud enviada, pendiente de que {n} confirme",
+      pe_follow: "Seguir", pe_following: "Siguiendo", pe_follow_s: "Seguir no es ser amigos: solo verás lo que {n} haga público.",
+      pe_invite: "Invitar a compartir un momento", pe_invite_btn: "Enviar invitación", pe_invited: "Invitación enviada. {n} tiene que confirmar para aparecer en «{t}».",
+      pe_block: "Bloquear", pe_unblock: "Desbloquear", pe_blocked: "Bloqueado. No podrá encontrarte ni ver nada de tu historia.", pe_vinc: "Vínculo: {r}",
+      mt_add: "Añadir cómo os conocisteis", mt_opt: "Opcional", mt_when: "Cuándo", mt_month: "Mes", mt_year: "Año", mt_anymonth: "No lo sé", mt_where: "Dónde o en qué etapa", mt_how: "Cómo fue, en una frase", mt_how_ph: "Ej.: Nos sentaban juntas en 6º B", mt_note: "Si confirma, se crea «Cuando nos conocimos» en vuestras dos historias.",
+      rq_title: "Solicitudes", rq_wants: "{n} quiere añadirte como {r}", rq_met: "Cómo os conocisteis, según {n}", rq_vis: "Quién verá «Cuando nos conocimos» en tu historia", rq_ok: "Confirmar", rq_fix: "Corregir", rq_no: "Rechazar", rq_fixsave: "Confirmar con mis cambios",
+      rq_done: "Confirmado. «Cuando nos conocimos» ya está en vuestras dos historias.", rq_rejected: "Solicitud rechazada. {n} no recibirá ningún aviso.", rq_home: "{n} quiere añadirte como {r}", pe_sim: "Simular que acepta", met_title: "Cuando nos conocimos",
+      x_with: "Con quién", x_reveal: "Si las dos queréis conectar vuestras historias, sabrás quién es.", x_shared: "Ver el momento compartido", x_family: "Tu familia en este momento", x_people: "Personas"
     },
     en: { l_wip: "The prototype is in Spanish for now. The full translation will come with the app.", proto: "Prototype · sample data" },
     fr: { l_wip: "Le prototype est en espagnol pour l’instant. La traduction complète arrivera avec l’application.", proto: "Prototype · données fictives" },
@@ -479,12 +520,13 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   function seed() {
     return [
       { id: "h1", ch: "c1", title: "La casa de la abuela", place: "La Pastora, Caracas", d: { p: "year", y: 1993 }, emo: [["nostalgia", 3], ["amor", 2]], line: "Olía a café colado y a tierra mojada. Todavía la sueño algunas noches.", vis: DV },
-      { id: "h2", ch: "c1", title: "Mi primer día de colegio", place: "Colegio Los Robles, Caracas", d: { p: "month", y: 1994, m: 9 }, emo: [["miedo", 2], ["alegria", 2]], line: "Me solté de la mano de mamá en la puerta y no lloré. Casi.", vis: DV, cross: "x2" },
-      { id: "h3", ch: "c1", title: "El verano en Margarita", place: "Playa El Agua, Margarita", d: { p: "month", y: 1999, m: 8 }, emo: [["alegria", 3], ["libertad", 2]], line: "Aprendí a nadar sin manguitos. Papá aplaudía desde la orilla.", photo: "playa", vis: DV },
+      { id: "h2", ch: "c1", title: "Mi último año de colegio", place: "Colegio Los Robles, Caracas", d: { p: "year", y: 1999 }, emo: [["alegria", 2], ["nostalgia", 2]], line: "El último día firmamos las camisas del uniforme. La mía sigue en un cajón.", vis: DV, cross: "x2" },
+      { id: "h3", ch: "c1", title: "El verano en Margarita", place: "Playa El Agua, Margarita", d: { p: "month", y: 1997, m: 8 }, emo: [["alegria", 3], ["libertad", 2]], line: "Aprendí a nadar sin manguitos. Papá aplaudía desde la orilla.", photo: "playa", vis: DV, cross: "x3" },
       { id: "h4", ch: "c2", title: "Me gradué de bachiller", place: "Caracas", d: { p: "day", y: 2005, m: 7, dd: 15 }, emo: [["orgullo", 3], ["gratitud", 2]], line: "Busqué a mis padres entre el público y los encontré llorando.", vis: DV },
-      { id: "h5", ch: "c2", title: "Mi primer amor", place: "Parque del Este, Caracas", d: { p: "year", y: 2007 }, emo: [["amor", 3]], line: "Un domingo cualquiera que se volvió todos los domingos.", vis: { place: "yo", date: "amigos", line: "yo", emo: "amigos", photo: "yo" } },
+      { id: "h5", ch: "c2", title: "Mi primer amor", place: "Liceo San José, Caracas", d: { p: "year", y: 2003 }, emo: [["amor", 3], ["alegria", 2]], line: "Me pasó una nota en clase de química. Todavía sé de memoria lo que decía.", vis: { place: "yo", date: "yo", line: "yo", emo: "yo", photo: "yo" }, people: [{ p: "p1", rel: "pareja", st: "ok", vis: "yo", past: true }], cross: "x5" },
+      { id: "h13", ch: "c2", title: "Un amor secreto", place: "Caracas", d: { p: "year", y: 2009 }, emo: [["amor", 3], ["nostalgia", 2]], line: "Nadie lo supo. Y así quiero que siga.", vis: { place: "yo", date: "yo", line: "yo", emo: "yo", photo: "yo" }, people: [{ secret: true }] },
       { id: "h6", ch: "c2", title: "Arquitecta, por fin", place: "Ciudad Universitaria, Caracas", d: { p: "month", y: 2012, m: 11 }, emo: [["orgullo", 3], ["alegria", 2]], line: "Seis años de maquetas a las tres de la mañana. Valió cada una.", vis: DV },
-      { id: "h7", ch: "c3", title: "La despedida en Maiquetía", place: "Aeropuerto de Maiquetía", d: { p: "day", y: 2014, m: 8, dd: 30 }, emo: [["tristeza", 3], ["amor", 3]], line: "Mamá me dio un termo de café para el avión. No me lo tomé.", vis: DV },
+      { id: "h7", ch: "c3", title: "La despedida en Maiquetía", place: "Aeropuerto de Maiquetía", d: { p: "day", y: 2014, m: 8, dd: 30 }, emo: [["tristeza", 3], ["amor", 3]], line: "Mamá me dio un termo de café para el avión. No me lo tomé.", vis: DV, cross: "x4", people: [{ p: "p2", rel: "madre", st: "ok", vis: "amigos" }, { p: "p3", rel: "padre", st: "ok", vis: "amigos" }, { p: "p4", rel: "hermano", st: "pend", vis: "amigos" }] },
       { id: "h8", ch: "c3", title: "El primer día en Madrid", place: "Puerta del Sol, Madrid", d: { p: "day", y: 2014, m: 9, dd: 12 }, emo: [["miedo", 3], ["libertad", 1]], line: "Salí del metro con dos maletas y nadie a quien llamar. Me temblaban las manos, pero no me di la vuelta.", photo: "madrid", vis: DV, cross: "x1" },
       { id: "h9", ch: "c3", title: "Mi primer invierno", place: "Madrid", d: { p: "month", y: 2014, m: 12 }, emo: [["nostalgia", 2], ["tristeza", 1]], line: "Nadie me había avisado de que el frío también se siente por dentro.", vis: DV },
       { id: "h10", ch: "c4", title: "Mi primer trabajo aquí", place: "Chamberí, Madrid", d: { p: "month", y: 2016, m: 3 }, emo: [["orgullo", 2], ["gratitud", 2]], line: "Firmé el contrato y llamé a Caracas antes de salir del portal.", vis: DV },
@@ -502,10 +544,55 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   }
   function seedCross() {
     return [
-      { id: "x1", h: "h8", st: "new", text: "En septiembre de 2014, otra persona en Bio también empezó una etapa nueva en Madrid, a pocas calles de la Puerta del Sol." },
-      { id: "x2", h: "h2", st: "wait", text: "Alguien que también empezó el colegio en 1994 en el Colegio Los Robles está construyendo su historia." }
+      { id: "x1", h: "h8", st: "new", hint: "Alguien que también llegó a Madrid en septiembre de 2014", who: "p6", rel: "otro", text: "Las dos empezasteis una etapa nueva a pocas calles de la Puerta del Sol." },
+      { id: "x2", h: "h2", st: "wait", hint: "Alguien que estuvo en tu aula 6º B, 1999", who: "p5", rel: "clase", text: "Coincidisteis todo el curso en el Colegio Los Robles." },
+      { id: "x3", h: "h3", st: "new", hint: "Una persona de tu familia", who: "p7", rel: "primo", text: "También guardó ese verano en Margarita en su historia." },
+      { id: "x4", h: "h7", st: "ok", group: true },
+      { id: "x5", h: "h5", st: "ok", past: true }
     ];
   }
+  var PEOPLE = {
+    p1: { n: "Luis R.", u: "@luisr", c: "Caracas", g: "m", col: "#8FC1D4" },
+    p2: { n: "Carmen M.", u: "@carmen.m", c: "Caracas", g: "f", col: "#F7B7C3" },
+    p3: { n: "José M.", u: "@josem", c: "Caracas", g: "m", col: "#A8C9A0" },
+    p4: { n: "Diego M.", u: "@diegom", c: "Bogotá", g: "m", col: "#F49B5E" },
+    p5: { n: "Valeria G.", u: "@vale.g", c: "Doral, Florida", g: "f", col: "#FFC657" },
+    p6: { n: "Marta S.", u: "@martas", c: "Madrid", g: "f", col: "#E8798C" },
+    p7: { n: "Andrés M.", u: "@andresm", c: "Maracaibo", g: "m", col: "#BFCBF0" },
+    p8: { n: "Lucía P.", u: "@luciap", c: "Madrid", g: "f", col: "#FFE3A3" },
+    p9: { n: "Valentina R.", u: "@valen.r", c: "Caracas", g: "f", col: "#F7B7C3" },
+    p10: { n: "Tomás A.", u: "@tomas.a", c: "Lyon", g: "m", col: "#A8C9A0" },
+    p11: { n: "Sofía L.", u: "@sofil", c: "Miami", g: "f", col: "#8FC1D4" },
+    p12: { n: "Javier C.", u: "@javi.c", c: "Madrid", g: "m", col: "#F49B5E" }
+  };
+  var REL = { amigo: ["Amigo", "Amiga", "Amigo/a"], mejor: ["Mejor amigo", "Mejor amiga", "Mejor amigo/a"], conocido: ["Conocido", "Conocida", "Conocido/a"], madre: ["Madre", "Madre", "Madre"], padre: ["Padre", "Padre", "Padre"], hermano: ["Hermano", "Hermana", "Hermano/a"], abuelo: ["Abuelo", "Abuela", "Abuelo/a"], tio: ["Tío", "Tía", "Tío/a"], primo: ["Primo", "Prima", "Primo/a"], pareja: ["Pareja", "Pareja", "Pareja"], clase: ["Compañero de clase", "Compañera de clase", "Compañero/a de clase"], trabajo: ["Compañero de trabajo", "Compañera de trabajo", "Compañero/a de trabajo"], vecino: ["Vecino", "Vecina", "Vecino/a"], otro: ["Otro vínculo", "Otro vínculo", "Otro"] };
+  var REL_GROUPS = [["Amistad", ["amigo", "mejor", "conocido"]], ["Familia", ["madre", "padre", "hermano", "abuelo", "tio", "primo"]], ["Pareja", ["pareja"]], ["Compañeros", ["clase", "trabajo"]], ["Otros", ["vecino", "otro"]]];
+  function relLabel(r, pid) { var g = pid && PEOPLE[pid] ? (PEOPLE[pid].g === "f" ? 1 : 0) : 2; return (REL[r] || REL.otro)[g]; }
+  function relSelect(id, val) { return '<select class="inp" id="' + id + '">' + REL_GROUPS.map(function (g) { return '<optgroup label="' + g[0] + '">' + g[1].map(function (k) { return '<option value="' + k + '"' + (val === k ? " selected" : "") + ">" + REL[k][2] + "</option>"; }).join("") + "</optgroup>"; }).join("") + "</select>"; }
+  function initials(n) { return n.split(" ").map(function (w) { return w[0]; }).join("").slice(0, 2); }
+  function avatar(pid, sz) { var P = PEOPLE[pid], z = sz || 44; return '<span class="av" aria-hidden="true" style="width:' + z + "px;height:" + z + "px;font-size:" + Math.round(z * 0.38) + "px;background:" + P.col + '">' + initials(P.n) + "</span>"; }
+  function lockAv(sz) { var z = sz || 44; return '<span class="av lockav" aria-hidden="true" style="width:' + z + "px;height:" + z + 'px"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>'; }
+  function partAv(sz) { var z = sz || 44; return '<span class="av part" aria-hidden="true" style="width:' + z + "px;height:" + z + "px;font-size:" + Math.round(z * 0.42) + 'px">?</span>'; }
+  var STAGES = [["h2", "En el colegio Los Robles"], ["h5", "En el liceo San José"], ["h6", "En la UCV"], ["h10", "En el trabajo, en Chamberí"], ["h11", "En Lavapiés"]];
+  function seedReqs() { return [{ id: "r1", from: "p9", rel: "mejor", st: "new", met: { m: "", y: "1996", stage: "En el colegio Los Robles", how: "Nos sentaban juntas en 4º B y desde entonces nadie nos separó." } }]; }
+  function newMet() { return { open: false, m: "", y: "", stage: "", how: "" }; }
+  function stagePlace(st) { for (var i = 0; i < STAGES.length; i++) if (STAGES[i][1] === st) { var h = hitoById(STAGES[i][0]); return h ? h.place : st; } return st ? st.replace(/^En (el |la )?/, "") : "Caracas"; }
+  function metSummary(M) { var w = []; if (M.y) w.push((M.m ? MONTHS[M.m - 1] + " de " : "") + M.y); if (M.stage) w.push(M.stage.charAt(0).toLowerCase() + M.stage.slice(1)); return w.join(", "); }
+  function metForm(ctx, M) {
+    if (!M.open) return '<button class="btn t" style="align-self:flex-start;text-decoration:none;color:var(--ink);padding:0" data-act="metToggle" data-v="' + ctx + '" aria-expanded="false">+ ' + t("mt_add") + ' <span class="hint">(' + t("mt_opt").toLowerCase() + ")</span></button>";
+    return '<div class="metbox"><div class="row" style="justify-content:space-between"><b>' + t("mt_add") + '</b><button class="btn t" style="min-height:44px" data-act="metToggle" data-v="' + ctx + '" aria-expanded="true">' + t("close") + "</button></div>" +
+      '<div class="row" style="flex-wrap:nowrap"><label class="fld" for="' + ctx + 'm" style="flex:1.3;font-size:16px">' + t("mt_month") + '<select class="inp" id="' + ctx + 'm"><option value="">' + t("mt_anymonth") + "</option>" + MONTHS.map(function (m, i) { return '<option value="' + (i + 1) + '"' + (String(M.m) === String(i + 1) ? " selected" : "") + ">" + m + "</option>"; }).join("") + '</select></label><label class="fld" for="' + ctx + 'y" style="flex:1;font-size:16px">' + t("mt_year") + '<input class="inp" id="' + ctx + 'y" inputmode="numeric" maxlength="4" placeholder="1996" value="' + esc(M.y) + '"></label></div>' +
+      '<div class="stack" style="gap:8px"><b style="font-size:16px">' + t("mt_where") + '</b><div class="stg" role="radiogroup" aria-label="' + t("mt_where") + '">' + STAGES.map(function (x) { return '<button role="radio" aria-checked="' + (M.stage === x[1]) + '" data-act="metStage" data-ctx="' + ctx + '" data-v="' + esc(x[1]) + '">' + esc(x[1]) + "</button>"; }).join("") + "</div></div>" +
+      '<label class="fld" for="' + ctx + 'how" style="font-size:16px">' + t("mt_how") + '<input class="inp" id="' + ctx + 'how" maxlength="140" placeholder="' + t("mt_how_ph") + '" value="' + esc(M.how) + '" aria-describedby="' + ctx + 'howc"></label><span class="hint" id="' + ctx + 'howc">' + M.how.length + " / 140 · " + t("mt_note") + "</span></div>";
+  }
+  function getMet(ctx) { if (ctx === "ap") return S.ap && S.ap.met; if (ctx === "pf") return S.pf && S.pf.met; if (ctx === "rq") return S.rqEdit && S.rqEdit.met; return null; }
+  function createMetHito(pid, rel, M, vis) {
+    var y = parseInt(M.y, 10) || 2000, d = M.m ? { p: "month", y: y, m: +M.m } : { p: "year", y: y };
+    var ch = y <= 2000 ? "c1" : y <= 2013 ? "c2" : y === 2014 ? "c3" : "c4", id = "m" + Date.now();
+    S.hitos.push({ id: id, ch: ch, title: t("met_title"), place: stagePlace(M.stage), d: d, emo: [["alegria", 2], ["gratitud", 2]], line: M.how || "", vis: { place: vis, date: vis, line: vis, emo: vis, photo: vis }, people: [{ p: pid, rel: rel, st: "ok", vis: vis }] });
+    S.newId = id; return id;
+  }
+  function seedRels() { return { p1: { rel: "pareja", st: "ok", past: true }, p2: { rel: "madre", st: "ok" }, p3: { rel: "padre", st: "ok" }, p4: { rel: "hermano", st: "ok" } }; }
   var PLACES = ["Retiro, Madrid", "Puerta del Sol, Madrid", "Lavapiés, Madrid", "Malasaña, Madrid", "Chamberí, Madrid", "Aeropuerto de Barajas, Madrid", "Caracas, Venezuela", "La Pastora, Caracas", "Altamira, Caracas", "Mérida, Venezuela", "Maracaibo, Venezuela", "Playa El Agua, Margarita", "Doral, Florida", "Miami, Florida", "Barcelona, España", "Valencia, España", "Lyon, Francia", "París, Francia"];
   var MONTHS = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
   var MSHORT = ["ene.", "feb.", "mar.", "abr.", "may.", "jun.", "jul.", "ago.", "sept.", "oct.", "nov.", "dic."];
@@ -517,11 +604,11 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   function sortKey(h) { return h.d.y * 10000 + (h.d.m || 6) * 100 + (h.d.dd || 15); }
 
   /* ================= estado ================= */
-  var KEY = "bio-proto-v2";
+  var KEY = "bio-proto-v21";
   var S = load() || fresh();
   function fresh() {
     return { lang: "es", skin: "hora", theme: "system", onboarded: false, route: "welcome", hitos: seed(), diary: seedDiary(), cross: seedCross(),
-      prefs: { defVis: "amigos", find: true, place: "hood" }, newId: null, diaryOpened: false, crossOpened: false, rv: "book", book: "cover", bookCh: "c1", dyFilter: "all", draft: null };
+      prefs: { defVis: "amigos", find: true, place: "hood" }, rels: seedRels(), reqs: seedReqs(), rqEdit: null, rqVis: "amigos", follows: {}, blocked: {}, ap: null, pq: "", newId: null, diaryOpened: false, crossOpened: false, rv: "book", book: "cover", bookCh: "c1", dyFilter: "all", draft: null };
   }
   function load() { try { var j = localStorage.getItem(KEY); return j ? JSON.parse(j) : null; } catch (e) { return null; } }
   function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
@@ -593,6 +680,9 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       case "entry": html = vEntry(arg); break;
       case "relive": html = vRelive(); tab = "relive"; break;
       case "cross": html = vCross(); break;
+      case "people": html = vPeople(); break;
+      case "person": html = vPerson(arg); break;
+      case "addp": html = vAddPerson(); break;
       case "settings": html = vSettings(); tab = "settings"; break;
       default: html = vHome(); tab = "home";
     }
@@ -648,16 +738,17 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   /* ---------- Mi historia ---------- */
   function vHome() {
     var all = sorted(), nCross = S.cross.filter(function (x) { return x.st !== "hidden"; }).length;
-    var html = topBar("", '<span class="spacer"></span>', "") + '<main><div class="stack" style="gap:6px"><h1 class="h1">' + t("h_title") + '</h1><p class="meta">Andrea M. · ' + t("h_sub", { n: all.length, c: CHAPTERS.length }) + "</p></div>" +
+    var html = topBar("", '<span class="spacer"></span>', '<button class="ib" data-go="people" aria-label="' + t("pe_title") + '">' + I.friends + "</button>") + '<main><div class="stack" style="gap:6px"><h1 class="h1">' + t("h_title") + '</h1><p class="meta">Andrea M. · ' + t("h_sub", { n: all.length, c: CHAPTERS.length }) + "</p></div>" +
       '<figure style="margin:0;display:flex;flex-direction:column;gap:8px"><div class="lifesky" role="img" aria-label="' + t("h_sky") + '">' + all.map(function (h) { return '<i style="--c:' + EMO[h.emo[0][0]].bg + '"></i>'; }).join("") + '</div><figcaption class="meta">' + t("h_sky") + "</figcaption></figure>";
     if (S.prefs.find && nCross) html += '<button class="cross-card" data-go="cross">' + I.cross + '<span class="tx"><b>' + t("h_cross", { n: nCross }) + "</b><span>" + t("h_cross_s") + '</span></span><span class="meta" aria-hidden="true">' + t("see") + "</span></button>";
+    (S.reqs || []).filter(function (r) { return r.st === "new"; }).forEach(function (r) { html += '<button class="cross-card" data-go="people">' + avatar(r.from, 44) + '<span class="tx"><b>' + esc(t("rq_home", { n: PEOPLE[r.from].n, r: relLabel(r.rel, r.from).toLowerCase() })) + "</b><span>" + esc(metSummary(r.met)) + '</span></span><span class="meta" aria-hidden="true">' + t("see") + "</span></button>"; });
     CHAPTERS.forEach(function (c) {
       var list = inCh(c.id); if (!list.length) return;
       var first = list[0];
       html += '<section class="chap" aria-labelledby="ch-' + c.id + '">' + bandOf(list) +
         '<div class="chap-h"><div><span class="meta">' + t("stage", { n: c.n }) + '</span><h2 class="h2" id="ch-' + c.id + '">' + c.t + '</h2></div><span class="pm" aria-hidden="true">' + pmCity(first.place) + "<b>" + String(first.d.y) + '</b></span><span class="yr">' + c.y + "</span></div>" +
         '<ol class="hlist">' + list.map(function (h) {
-          return '<li><button class="hrow" data-go="hito:' + h.id + '">' + emoIcon(h.emo[0][0], 48) + '<span class="tx"><b>' + esc(h.title) + (S.newId === h.id ? '<span class="new">' + t("newb") + "</span>" : "") + "</b><span>" + esc(h.place.split(",")[0]) + ", " + fmtDate(h.d) + " · " + h.emo.map(function (e) { return EMO[e[0]].l.toLowerCase(); }).join(", ") + "</span></span>" + (h.photo ? I.cam + '<span class="sr">' + t("photo") + "</span>" : "") + "</button></li>";
+          return '<li><button class="hrow" data-go="hito:' + h.id + '">' + emoIcon(h.emo[0][0], 48) + '<span class="tx"><b>' + esc(h.title) + (S.newId === h.id ? '<span class="new">' + t("newb") + "</span>" : "") + "</b><span>" + esc(h.place.split(",")[0]) + ", " + fmtDate(h.d) + " · " + h.emo.map(function (e) { return EMO[e[0]].l.toLowerCase(); }).join(", ") + "</span></span>" + rowPeople(h) + (h.photo ? I.cam + '<span class="sr">' + t("photo") + "</span>" : "") + "</button></li>";
         }).join("") + "</ol></section>";
     });
     return html + "</main>";
@@ -673,6 +764,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       '<div class="stack"><span class="meta">' + esc(h.place) + ", " + fmtDate(h.d) + '</span><h1 class="h1">' + esc(h.title) + '</h1><div class="emos">' + h.emo.map(function (e) { return emoChip(e[0], e[1]); }).join("") + "</div>" +
       (h.line && h.line !== h.title ? '<p class="voice">«' + esc(h.line) + '»</p>' : "") + '</div>' +
       '<div class="card" style="padding:4px 16px"><div class="set" style="padding:0;background:transparent"><div class="it"><span class="l"><b>' + t("d_who") + "</b><span>" + t("el_place") + ": " + t(VLV[h.vis.place][0]) + " · " + t("el_line") + ": " + t(VLV[h.vis.line][0]) + "</span></span>" + visChip(h.vis.line) + "</div></div></div>" +
+      peopleSection(h) +
       (entry ? '<div class="lockbar">' + I.lock + "<span><b>" + t("d_hasdiary") + '</b></span></div><button class="btn p w" data-go="entry:' + entry.id + '">' + t("d_open") + "</button>"
         : '<button class="btn p w" data-act="newEntry" data-h="' + h.id + '">' + I.pen + t("d_more") + "</button>") +
       (x ? '<button class="cross-card" data-go="cross">' + I.cross + '<span class="tx"><b>' + t("d_crossed") + "</b><span>" + t("h_cross_s") + '</span></span><span class="meta" aria-hidden="true">' + t("see") + "</span></button>" : "") +
@@ -680,7 +772,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   }
 
   /* ---------- Crear un momento ---------- */
-  function newDraft() { return { step: 1, q: "", place: "", sug: -1, p: "month", dd: "2026-09-12", m: 9, y: 2026, line: "", emo: [], photo: false, vis: { place: S.prefs.defVis, date: S.prefs.defVis, line: S.prefs.defVis, emo: S.prefs.defVis, photo: S.prefs.defVis }, open: null, pv: "amigos", t0: Date.now(), err: "" }; }
+  function newDraft() { return { step: 1, q: "", place: "", sug: -1, p: "month", dd: "2026-09-12", m: 9, y: 2026, line: "", emo: [], photo: false, vis: { place: S.prefs.defVis, date: S.prefs.defVis, line: S.prefs.defVis, emo: S.prefs.defVis, photo: S.prefs.defVis }, open: null, pv: "amigos", t0: Date.now(), err: "", people: [] }; }
   function fold(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase(); }
   function vCreate() {
     var D = S.draft || (S.draft = newDraft()), n = D.step, body = "";
@@ -715,6 +807,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
           return '<div class="visrow"><div class="hd"><b>' + t("el_" + el) + '</b><button class="btn t" style="min-height:44px;text-decoration:none;color:var(--ink)" data-act="openVis" data-v="' + el + '" aria-expanded="' + open + '">' + visChip(lv) + "</button></div>" +
             (open ? '<div class="lvls" role="radiogroup" aria-label="' + t("el_" + el) + '">' + ["yo", "amigos", "seg", "pub"].map(function (k) { return '<button role="radio" aria-checked="' + (lv === k) + '" data-act="setVis" data-el="' + el + '" data-v="' + k + '">' + VLV[k][1] + t(VLV[k][0]) + "</button>"; }).join("") + "</div>" : "") + "</div>";
         }).join("") + "</div></section>" +
+        '<section class="stack"><h2 class="h2" style="font-size:21px">' + t("pp_title") + '</h2><p class="hint">' + t("pp_optional") + '</p>' + (D.people && D.people.length ? '<div class="card" style="padding:2px 16px">' + D.people.map(personRow).join("") + "</div>" : "") + '<button class="btn s sm" data-act="addPerson" data-v="draft">' + t("ap_title").replace("?", "").replace("¿", "") + "</button></section>" +
         '<section class="stack"><h2 class="h2" style="font-size:21px">' + t("c5_prev") + '</h2><div class="seg" role="radiogroup" aria-label="' + t("c5_prev") + '">' + [["amigos", "pv_amigos"], ["seg", "pv_seg"], ["pub", "pv_pub"]].map(function (x) { return '<button role="radio" aria-checked="' + (D.pv === x[0]) + '" data-act="pv" data-v="' + x[0] + '">' + t(x[1]) + "</button>"; }).join("") + "</div>" + previewAs(D) + "</section>";
     }
     var canNext = n === 1 ? !!D.place : n === 3 ? !!D.line.trim() : true;
@@ -779,25 +872,125 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
     for (var i = 0; i < ci; i++) base += inCh(CHAPTERS[i].id).length * 4;
     var h0 = list[0], diary = S.diary.filter(function (d) { return list.some(function (h) { return h.id === d.h; }); })[0];
     var left = '<div class="page l"><span class="meta">' + t("rv_ch", { n: c.n }) + '</span><h2 class="h1" style="font-size:30px">' + c.t + '</h2>' + bandOf(list) + '<p class="rd dc">' + list.map(function (h) { return esc(h.line); }).join(" ") + '</p><div class="pn"><span>' + c.y + "</span><span>p. " + base + "</span></div></div>";
-    var right = '<div class="page r">' + list.slice(0, 3).map(function (h) { return '<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:12px">' + emoIcon(h.emo[0][0], 40) + '<div><b style="font-family:var(--f-title);font-stretch:var(--t-stretch);font-size:19px">' + esc(h.title) + '</b><div class="meta">' + esc(h.place.split(",")[0]) + ", " + fmtDate(h.d) + "</div></div></div>"; }).join("") +
+    var right = '<div class="page r">' + list.slice(0, 3).map(function (h) { return '<div class="row" style="flex-wrap:nowrap;align-items:flex-start;gap:12px">' + emoIcon(h.emo[0][0], 40) + '<div><b style="font-family:var(--f-title);font-stretch:var(--t-stretch);font-size:19px">' + esc(h.title) + '</b><div class="meta">' + esc(h.place.split(",")[0]) + ", " + fmtDate(h.d) + "</div>" + bookPeople(h) + "</div></div>"; }).join("") +
       (diary ? '<div style="border-top:1px solid var(--soft);padding-top:12px"><span class="meta">' + t("rv_fromdiary") + '</span><p class="rd" style="font-style:italic">' + esc(diary.text.slice(0, 220)) + "…</p></div>" : "") + '<div class="pn"><span>Andrea M.</span><span>p. ' + (base + 1) + "</span></div></div>";
     return head + '<div class="spread" tabindex="0" aria-label="Doble página del capítulo ' + c.n + '">' + left + right + '</div><p class="meta" style="text-align:center">' + t("rv_swipe") + "</p>" +
       '<div class="row" style="flex-wrap:nowrap"><button class="btn s sm" style="flex:1" data-act="bookCh" data-v="' + (CHAPTERS[ci - 1] || c).id + '"' + (ci === 0 ? " disabled" : "") + ">" + t("rv_prevch") + '</button><button class="btn p sm" style="flex:1" data-act="bookCh" data-v="' + (CHAPTERS[ci + 1] || c).id + '"' + (ci === CHAPTERS.length - 1 ? " disabled" : "") + ">" + t("rv_nextch") + '</button></div><button class="btn t" data-act="book" data-v="toc">' + t("rv_totoc") + "</button></main>";
   }
 
+  /* ---------- Personas en un momento ---------- */
+  function rowPeople(h) {
+    var ok = (h.people || []).filter(function (x) { return x.p && x.st === "ok"; });
+    if ((h.people || []).some(function (x) { return x.secret; })) return '<span class="avs" title="' + t("pp_secret") + '">' + lockAv(28) + '</span><span class="sr">' + t("pp_secret") + "</span>";
+    if (!ok.length) return "";
+    return '<span class="avs">' + ok.slice(0, 3).map(function (x) { return avatar(x.p, 28); }).join("") + '</span><span class="sr">Con ' + ok.map(function (x) { return PEOPLE[x.p].n; }).join(", ") + "</span>";
+  }
+  function personRow(x) {
+    if (x.secret) return '<div class="prow">' + lockAv(44) + '<span class="tx"><b>' + t("pp_secret") + "</b><span>" + t("pp_secret_s") + "</span></span></div>";
+    var P = PEOPLE[x.p], ok = x.st === "ok";
+    return '<div class="prow" style="align-items:flex-start">' + avatar(x.p, 44) + '<span class="tx"><b>' + esc(P.n) + "</b><span>" + relLabel(x.rel, x.p) + (x.past ? " · " + t("pp_past") : "") + "</span>" +
+      '<span class="row" style="gap:8px;margin-top:4px"><span class="stc' + (ok ? " ok" : "") + '"><i aria-hidden="true"></i>' + (ok ? t("pp_ok") : t("pp_pend")) + "</span>" + visChip(x.vis) + "</span>" +
+      (ok ? (x.past ? '<span>' + t("pp_past_s") + "</span>" : "") : '<span>' + t("pp_pend_n") + "</span>") + "</span></div>";
+  }
+  function peopleSection(h) {
+    var L = h.people || [];
+    return '<section class="stack" aria-labelledby="pp-' + h.id + '"><h2 class="h2" id="pp-' + h.id + '" style="font-size:21px">' + t("pp_title") + "</h2>" +
+      (L.length ? '<div class="card" style="padding:2px 16px">' + L.map(personRow).join("") + "</div>" : '<p class="hint">' + t("pp_none") + "</p>") +
+      (L.some(function (x) { return x.secret; }) ? "" : '<button class="btn s sm" data-act="addPerson" data-v="' + h.id + '">' + t("pp_add") + "</button>") + "</section>";
+  }
+  function bookPeople(h) {
+    var L = h.people || [];
+    if (L.some(function (x) { return x.secret; })) return '<div class="meta" style="font-style:italic">' + t("pp_secret") + "</div>";
+    var ok = L.filter(function (x) { return x.p && x.st === "ok"; });
+    return ok.length ? '<div class="meta">Con ' + ok.map(function (x) { return esc(PEOPLE[x.p].n) + " (" + relLabel(x.rel, x.p).toLowerCase() + ")"; }).join(", ") + "</div>" : "";
+  }
+
+  /* ---------- Añadir a alguien a un momento ---------- */
+  function searchPeople(q) {
+    var f = fold(q.trim().replace(/^@/, ""));
+    if (f.length < 2) return null;
+    return Object.keys(PEOPLE).filter(function (k) { return !S.blocked[k] && (fold(PEOPLE[k].n).indexOf(f) >= 0 || fold(PEOPLE[k].u).indexOf(f) >= 0); }).slice(0, 6);
+  }
+  function resultsList(q, act, sel) {
+    var r = searchPeople(q);
+    if (r === null) return '<p class="hint">' + t("ap_hint") + "</p>";
+    if (!r.length) return '<div class="empty" style="padding:16px 8px">' + partAv(56) + '<p class="lead" style="font-size:17px">' + esc(t("ap_none", { q: q.trim() })) + "</p></div>";
+    return '<ul class="res" role="listbox" aria-label="Resultados">' + r.map(function (k) { var P = PEOPLE[k], rl = S.rels[k]; return '<li><button role="option" aria-selected="' + (sel === k) + '" data-act="' + act + '" data-v="' + k + '">' + avatar(k, 44) + '<span class="tx"><b>' + esc(P.n) + "</b><small>" + esc(P.u) + " · " + esc(P.c) + (rl ? " · " + relLabel(rl.rel, k) : "") + "</small></span></button></li>"; }).join("") + "</ul>";
+  }
+  function vAddPerson() {
+    var A = S.ap || (S.ap = { ctx: "draft", q: "", sel: null, rel: "amigo", past: false, vis: "amigos" });
+    var backTo = A.ctx === "draft" ? "create" : "hito:" + A.ctx;
+    var html = topBar("", '<button class="ib" data-go="' + backTo + '" aria-label="' + t("back") + '">' + I.back + "</button>") + '<main class="noTabs"><div class="stack"><h1 class="h1">' + t("ap_title") + '</h1><p class="lead">' + t("pp_optional") + "</p></div>" +
+      '<label class="fld" for="pq">' + t("ap_q") + '<input class="inp" id="pq" value="' + esc(A.q) + '" placeholder="' + t("ap_ph") + '" autocomplete="off"></label>' + resultsList(A.q, "apPick", A.sel);
+    if (A.sel) {
+      var P = PEOPLE[A.sel];
+      html += '<div class="card" style="padding:18px;display:flex;flex-direction:column;gap:14px"><div class="row" style="flex-wrap:nowrap">' + avatar(A.sel, 52) + '<div><b style="font-size:19px">' + esc(P.n) + '</b><div class="meta">' + esc(P.u) + "</div></div></div>" +
+        '<label class="fld" for="prel">' + t("ap_rel") + relSelect("prel", A.rel) + "</label>" +
+        (A.rel === "pareja" ? '<label class="ck2" for="ppast"><input type="checkbox" id="ppast"' + (A.past ? " checked" : "") + '><span><b>' + t("ap_pastq") + '</b><br><span class="hint">' + t("ap_past_s") + "</span></span></label>" : "") +
+        '<div class="stack" style="gap:8px"><b style="font-size:16px">' + t("ap_vis") + '</b><div class="lvls" role="radiogroup" aria-label="' + t("ap_vis") + '">' + ["yo", "amigos", "seg", "pub"].map(function (k) { return '<button role="radio" aria-checked="' + (A.vis === k) + '" data-act="apVis" data-v="' + k + '">' + VLV[k][1] + t(VLV[k][0]) + "</button>"; }).join("") + "</div></div>" +
+        metForm("ap", A.met || (A.met = newMet())) +
+        '<p class="note">' + t("pp_pend_n") + '</p><button class="btn p w" data-act="apAdd">' + t("ap_add") + "</button></div>";
+    }
+    html += '<section class="card" style="padding:18px;display:flex;flex-direction:column;gap:10px"><div class="row" style="flex-wrap:nowrap">' + lockAv(44) + "<div><b>" + t("ap_secret") + '</b><div class="hint">' + t("ap_secret_s") + '</div></div></div><button class="btn s sm" data-act="apSecret">' + t("ap_secret_btn") + "</button></section>";
+    return html + "</main>";
+  }
+
+  /* ---------- Personas: buscar, perfil, vínculos ---------- */
+  function vPeople() {
+    var mine = Object.keys(S.rels);
+    return topBar("", backBtn("home")) + '<main class="noTabs"><div class="stack"><h1 class="h1">' + t("pe_title") + '</h1><p class="lead">' + t("pe_text") + "</p></div>" +
+      reqsSection() +
+      '<label class="fld" for="sq">' + t("ap_q") + '<input class="inp" id="sq" value="' + esc(S.pq) + '" placeholder="' + t("ap_ph") + '" autocomplete="off"></label>' + (S.pq ? resultsList(S.pq, "openPerson", null) : "") +
+      '<section class="stack"><h2 class="h2" style="font-size:21px">' + t("pe_mine") + '</h2><div class="card" style="padding:2px 16px">' + mine.map(function (k) { var r = S.rels[k]; return '<button class="prow" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--soft);text-align:left" data-act="openPerson" data-v="' + k + '">' + avatar(k, 44) + '<span class="tx"><b>' + esc(PEOPLE[k].n) + "</b><span>" + relLabel(r.rel, k) + (r.past ? " · " + t("pp_past") : "") + '</span></span><span class="stc' + (r.st === "ok" ? " ok" : "") + '"><i aria-hidden="true"></i>' + (r.st === "ok" ? t("pp_ok") : t("pp_pend")) + "</span></button>"; }).join("") + "</div></section></main>";
+  }
+  function reqsSection() {
+    var L = (S.reqs || []).filter(function (r) { return r.st === "new"; }); if (!L.length) return "";
+    return '<section class="stack"><h2 class="h2" style="font-size:21px">' + t("rq_title") + "</h2>" + L.map(function (r) {
+      var P = PEOPLE[r.from], ed = S.rqEdit && S.rqEdit.id === r.id, M = r.met;
+      return '<article class="card req" aria-label="' + esc(t("rq_wants", { n: P.n, r: relLabel(r.rel, r.from).toLowerCase() })) + '"><div class="row" style="flex-wrap:nowrap">' + avatar(r.from, 52) + '<div><b style="font-size:18px">' + esc(t("rq_wants", { n: P.n, r: relLabel(r.rel, r.from).toLowerCase() })) + '</b><div class="meta">' + esc(P.u) + " · " + esc(P.c) + "</div></div></div>" +
+        (ed ? metForm("rq", S.rqEdit.met) : '<div class="stack" style="gap:6px"><span class="meta">' + esc(t("rq_met", { n: P.n.split(" ")[0] })) + "</span><b>" + esc(metSummary(M)) + "</b>" + (M.how ? "<q>" + esc(M.how) + "</q>" : "") + "</div>") +
+        '<div class="stack" style="gap:8px"><b style="font-size:16px">' + t("rq_vis") + '</b><div class="lvls" role="radiogroup" aria-label="' + t("rq_vis") + '">' + ["yo", "amigos", "seg", "pub"].map(function (k) { return '<button role="radio" aria-checked="' + (S.rqVis === k) + '" data-act="rqVis" data-v="' + k + '">' + VLV[k][1] + t(VLV[k][0]) + "</button>"; }).join("") + "</div></div>" +
+        '<button class="btn p sm w" data-act="rqOk" data-v="' + r.id + '">' + (ed ? t("rq_fixsave") : t("rq_ok")) + '</button><div class="row" style="justify-content:space-between">' + (ed ? '<button class="btn t" data-act="rqFix" data-v="' + r.id + '">' + t("cancel") + "</button>" : '<button class="btn t" data-act="rqFix" data-v="' + r.id + '">' + t("rq_fix") + "</button>") + '<button class="btn t" style="color:var(--ink2)" data-act="rqNo" data-v="' + r.id + '">' + t("rq_no") + "</button></div></article>";
+    }).join("") + "</section>";
+  }
+  function vPerson(k) {
+    var P = PEOPLE[k]; if (!P) return vPeople();
+    var r = S.rels[k], fol = !!S.follows[k], bl = !!S.blocked[k], A = S.pf || (S.pf = { rel: "amigo", past: false, h: "h8" });
+    var html = topBar("", backBtn("people")) + '<main class="noTabs"><div class="stack" style="align-items:center;text-align:center;gap:8px">' + avatar(k, 96) + '<h1 class="h1">' + esc(P.n) + '</h1><span class="meta">' + esc(P.u) + " · " + esc(P.c) + "</span></div>";
+    if (bl) return html + '<p class="note">' + t("pe_blocked") + '</p><button class="btn s w" data-act="block" data-v="' + k + '">' + t("pe_unblock") + "</button></main>";
+    if (r) html += '<div class="card" style="padding:16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px"><span class="stc' + (r.st === "ok" ? " ok" : "") + '"><i aria-hidden="true"></i>' + (r.st === "ok" ? t("pp_ok") : t("pp_pend")) + "</span><span><b>" + t("pe_vinc", { r: relLabel(r.rel, k) }) + "</b>" + (r.past ? '<br><span class="hint">' + t("pp_past_s") + "</span>" : "") + (r.st !== "ok" ? '<br><span class="hint">' + esc(t("pe_pending", { n: P.n })) + "</span>" + (r.met && r.met.y ? '<br><span class="hint">' + esc(metSummary(r.met)) + "</span>" : "") + '<br><button class="btn t" style="padding:0" data-act="simAccept" data-v="' + k + '">' + t("pe_sim") + '</button> <span class="hint">' + t("x_simnote") + "</span>" : "") + "</span></div>";
+    else html += '<section class="card" style="padding:18px;display:flex;flex-direction:column;gap:12px"><label class="fld" for="frel">' + t("pe_rel") + relSelect("frel", A.rel) + "</label>" +
+      (A.rel === "pareja" ? '<label class="ck2" for="fpast"><input type="checkbox" id="fpast"' + (A.past ? " checked" : "") + '><span><b>' + t("ap_pastq") + '</b><br><span class="hint">' + t("ap_past_s") + "</span></span></label>" : "") +
+      metForm("pf", A.met || (A.met = newMet())) +
+      '<button class="btn p w" data-act="sendReq" data-v="' + k + '">' + t("pe_send") + "</button></section>";
+    html += '<div class="stack" style="gap:6px"><button class="btn s w" aria-pressed="' + fol + '" data-act="follow" data-v="' + k + '">' + (fol ? t("pe_following") : t("pe_follow")) + '</button><p class="hint" style="text-align:center">' + esc(t("pe_follow_s", { n: P.n })) + "</p></div>" +
+      '<section class="card" style="padding:18px;display:flex;flex-direction:column;gap:12px"><h2 class="h2" style="font-size:20px">' + t("pe_invite") + '</h2><label class="fld" for="fh"><span class="sr">' + t("pe_invite") + '</span><select class="inp" id="fh">' + sorted().filter(function (h) { return !(h.people || []).some(function (x) { return x.secret; }); }).map(function (h) { return '<option value="' + h.id + '"' + (A.h === h.id ? " selected" : "") + ">" + esc(h.title) + "</option>"; }).join("") + '</select></label><button class="btn s sm" data-act="invite" data-v="' + k + '">' + t("pe_invite_btn") + "</button></section>" +
+      '<button class="btn t" style="color:var(--ink2)" data-act="block" data-v="' + k + '">' + t("pe_block") + "</button></main>";
+    return html;
+  }
+
   /* ---------- Cruces ---------- */
   function vCross() {
-    var head = topBar("", backBtn("home")) + '<main class="noTabs"><div class="stack"><h1 class="h1">' + t("x_title") + '</h1><p class="lead">' + t("x_text") + '</p></div><ol class="how"><li>' + t("x_how1") + "</li><li>" + t("x_how2") + "</li><li>" + t("x_how3") + "</li><li>" + t("x_how4") + "</li></ol>";
+    var head = topBar("", backBtn("home"), '<button class="ib" data-go="people" aria-label="' + t("pe_title") + '">' + I.friends + "</button>") + '<main class="noTabs"><div class="stack"><h1 class="h1">' + t("x_title") + '</h1><p class="lead">' + t("x_text") + '</p></div><ol class="how"><li>' + t("x_how1") + "</li><li>" + t("x_how2") + "</li><li>" + t("x_how3") + "</li><li>" + t("x_how4") + "</li></ol>";
     if (!S.crossOpened) return head + '<div class="stack" aria-busy="true"><p class="meta">' + t("x_loading") + '</p><div class="skel" style="height:170px"></div><div class="skel" style="height:150px"></div></div></main>';
     var list = S.cross.filter(function (x) { return x.st !== "hidden"; });
     if (!list.length || !S.prefs.find) return head + '<div class="empty">' + I.cross + '<h2 class="h2" style="font-size:21px">' + t("x_empty_t") + '</h2><p class="lead" style="font-size:17px">' + t("x_empty") + "</p></div></main>";
     return head + list.map(function (x) {
-      var h = hitoById(x.h), st = x.st === "new" ? ["", "x_new"] : x.st === "wait" ? ["wait", "x_wait"] : ["ok", "x_ok"];
-      return '<article class="card xcard" aria-labelledby="xt-' + x.id + '"><span class="st ' + st[0] + '"><i aria-hidden="true"></i>' + t(st[1]) + '</span><div class="row" style="flex-wrap:nowrap;gap:12px">' + emoIcon(h.emo[0][0], 44) + '<div><b id="xt-' + x.id + '">' + esc(h.title) + '</b><div class="meta">' + esc(h.place.split(",")[0]) + ", " + fmtDate(h.d) + "</div></div></div>" +
-        '<p style="font-family:var(--f-read);font-size:17px;line-height:1.55">' + (x.st === "ok" ? esc(t("x_okt", { t: h.title })) : esc(x.text)) + "</p>" +
+      var h = hitoById(x.h); if (!h) return "";
+      var st = x.st === "new" ? ["", "x_new"] : x.st === "wait" ? ["wait", "x_wait"] : ["ok", "x_ok"], who = "";
+      if (x.group || x.past) {
+        who = '<div class="stack" style="gap:0">' + (x.group ? '<b style="font-size:16px">' + t("x_family") + "</b>" : "") + (h.people || []).filter(function (p) { return p.p; }).map(personRow).join("") + "</div>";
+      } else if (x.st === "ok") {
+        who = '<div class="row" style="flex-wrap:nowrap">' + avatar(x.who, 52) + '<div><b style="font-size:18px">' + esc(PEOPLE[x.who].n) + '</b><div class="meta">' + relLabel(x.rel, x.who) + " · " + esc(PEOPLE[x.who].u) + "</div></div></div>";
+      } else {
+        who = '<div class="row" style="flex-wrap:nowrap">' + partAv(52) + '<div><b style="font-size:18px">' + esc(x.hint) + '</b><div class="meta">' + t("x_reveal") + "</div></div></div>";
+      }
+      return '<article class="card xcard" aria-labelledby="xt-' + x.id + '"><span class="st ' + st[0] + '"><i aria-hidden="true"></i>' + t(st[1]) + "</span>" + who +
+        (x.text && !x.group && !x.past ? '<p style="font-family:var(--f-read);font-size:17px;line-height:1.55">' + esc(x.text) + "</p>" : "") +
+        '<button class="cross-card" style="background:var(--sunk)" data-go="hito:' + h.id + '">' + emoIcon(h.emo[0][0], 40) + '<span class="tx"><b id="xt-' + x.id + '">' + esc(h.title) + "</b><span>" + esc(h.place.split(",")[0]) + ", " + fmtDate(h.d) + '</span></span><span class="meta">' + t("see") + '</span><span class="sr">' + t("x_shared") + "</span></button>" +
         (x.st === "new" ? '<div class="stack" style="gap:8px"><button class="btn p sm w" data-act="xAccept" data-v="' + x.id + '">' + t("x_accept") + '</button><div class="row" style="justify-content:space-between"><button class="btn t" data-act="xLater">' + t("x_later") + '</button><button class="btn t" style="color:var(--ink2)" data-act="xHide" data-v="' + x.id + '">' + t("x_never") + "</button></div></div>"
           : x.st === "wait" ? '<div class="stack" style="gap:4px"><button class="btn s sm w" data-act="xSim" data-v="' + x.id + '">' + t("x_sim") + '</button><span class="hint" style="text-align:center">' + t("x_simnote") + "</span></div>"
-          : '<button class="btn p sm w" data-act="xChat">' + t("x_chat") + "</button>") + "</article>";
+          : (x.past || x.group ? "" : '<button class="btn p sm w" data-act="xChat">' + t("x_chat") + "</button>")) + "</article>";
     }).join("") + "</main>";
   }
 
@@ -827,13 +1020,13 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       if (el && lastFocus === el) { var x = document.getElementById(el); if (x) { x.focus(); var p = x.value.length; try { x.setSelectionRange(p, p); } catch (e) {} } }
       timers.push(setInterval(function () { var s = app.querySelector('.top [aria-hidden="true"].meta'); if (s && S.draft) s.textContent = mmss(Math.round((Date.now() - S.draft.t0) / 1000)); }, 1000));
     }
+    if ((name === "addp" || name === "people") && lastFocus) { var q = document.getElementById(lastFocus); if (q) { q.focus(); var pl = q.value.length; try { q.setSelectionRange(pl, pl); } catch (e) {} } }
     if (name === "relive" && S.rv === "video") {
       var v = document.getElementById("vid"), l = document.getElementById("vload");
       if (v) {
         var done = function () { if (l) l.hidden = true; };
-        v.addEventListener("loadedmetadata", done); v.addEventListener("loadeddata", done); v.addEventListener("canplay", done); v.addEventListener("play", done);
-        if (v.readyState >= 1) done();
-        timers.push(setTimeout(done, 3000));
+        v.addEventListener("loadeddata", done); v.addEventListener("canplay", done);
+        if (v.readyState >= 2) done();
         v.addEventListener("error", function () { if (l) l.innerHTML = "<span>" + t("rv_v_err") + '</span><button class="btn sm" style="background:#F7EDE6;color:#2A1D2B" data-act="vretry">' + t("retry") + "</button>"; });
       }
     }
@@ -841,6 +1034,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   var lastFocus = null;
 
   function toast(msg) {
+    var old = document.querySelectorAll(".toast"); for (var i = 0; i < old.length; i++) old[i].remove();
     var d = document.createElement("div"); d.className = "toast"; d.setAttribute("role", "status"); d.textContent = msg; document.body.appendChild(d);
     setTimeout(function () { d.remove(); }, 2200);
   }
@@ -899,8 +1093,39 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       case "xAccept": S.cross.forEach(function (x) { if (x.id === v) x.st = "wait"; }); persist(); render(true); toast(t("x_accepted")); break;
       case "xHide": S.cross.forEach(function (x) { if (x.id === v) x.st = "hidden"; }); persist(); render(true); toast(t("x_hidden")); break;
       case "xLater": go("home"); break;
-      case "xSim": S.cross.forEach(function (x) { if (x.id === v) x.st = "ok"; }); persist(); render(true); break;
+      case "xSim": S.cross.forEach(function (x) { if (x.id === v) { x.st = "ok"; if (x.who) { var hx = hitoById(x.h); hx.people = (hx.people || []).filter(function (q) { return q.p !== x.who; }).concat([{ p: x.who, rel: x.rel, st: "ok", vis: "amigos" }]); } } }); persist(); render(true); break;
       case "xChat": toast(t("x_chat_t")); break;
+      case "addPerson": S.ap = { ctx: v, q: "", sel: null, rel: "amigo", past: false, met: newMet(), vis: v === "draft" ? (S.draft ? S.draft.vis.line : "amigos") : "amigos" }; go("addp"); break;
+      case "apPick": S.ap.sel = v; S.ap.rel = S.rels[v] ? S.rels[v].rel : "amigo"; S.ap.past = !!(S.rels[v] && S.rels[v].past); render(true); var r0 = document.getElementById("prel"); if (r0) r0.focus(); break;
+      case "apVis": S.ap.vis = v; render(true); refocus(a, v); break;
+      case "apAdd":
+        var A = S.ap, entryP = { p: A.sel, rel: A.rel, st: S.rels[A.sel] && S.rels[A.sel].st === "ok" && A.ctx !== "draft" ? "pend" : "pend", vis: A.past ? "yo" : A.vis, past: A.rel === "pareja" && A.past, met: A.met ? { m: A.met.m, y: A.met.y, stage: A.met.stage, how: A.met.how } : null };
+        if (A.ctx === "draft") { S.draft.people = (S.draft.people || []).filter(function (x) { return x.p !== A.sel; }).concat([entryP]); }
+        else { var hh = hitoById(A.ctx); hh.people = (hh.people || []).filter(function (x) { return x.p !== A.sel; }).concat([entryP]); }
+        var nm = PEOPLE[A.sel].n, back = A.ctx === "draft" ? "create" : "hito:" + A.ctx; S.ap = null; persist(); go(back); toast(t("ap_sent", { n: nm })); break;
+      case "apSecret":
+        var A2 = S.ap, sec = { secret: true };
+        if (A2.ctx === "draft") { S.draft.people = [sec]; S.draft.vis = { place: "yo", date: "yo", line: "yo", emo: "yo", photo: "yo" }; }
+        else { var h2 = hitoById(A2.ctx); h2.people = [sec]; h2.vis = { place: "yo", date: "yo", line: "yo", emo: "yo", photo: "yo" }; }
+        var back2 = A2.ctx === "draft" ? "create" : "hito:" + A2.ctx; S.ap = null; persist(); go(back2); toast(t("ap_secret_done")); break;
+      case "openPerson": S.pf = { rel: "amigo", past: false, h: "h8", met: newMet() }; go("person:" + v); break;
+      case "sendReq": var mm = S.pf.met || newMet(); S.rels[v] = { rel: S.pf.rel, st: "pend", past: S.pf.rel === "pareja" && S.pf.past, met: { m: mm.m, y: mm.y, stage: mm.stage, how: mm.how } }; persist(); render(true); toast(t("pe_sent", { n: PEOPLE[v].n })); break;
+      case "follow": S.follows[v] = !S.follows[v]; persist(); render(true); refocus(a, v); break;
+      case "invite":
+        var hid2 = document.getElementById("fh").value, hi = hitoById(hid2), rl2 = S.rels[v];
+        hi.people = (hi.people || []).filter(function (x) { return x.p !== v; }).concat([{ p: v, rel: rl2 ? rl2.rel : "otro", st: "pend", vis: "amigos", past: !!(rl2 && rl2.past) }]);
+        persist(); toast(t("pe_invited", { n: PEOPLE[v].n, t: hi.title })); break;
+      case "block": S.blocked[v] = !S.blocked[v]; persist(); render(true); break;
+      case "metToggle": var M0 = getMet(v); if (M0) { M0.open = !M0.open; render(true); refocus(a, v); } break;
+      case "metStage": var M1 = getMet(b.getAttribute("data-ctx")); if (M1) { M1.stage = M1.stage === v ? "" : v; render(true); var sb2 = app.querySelector('[data-act="metStage"][data-v="' + v.replace(/"/g, "") + '"]'); if (sb2) sb2.focus(); } break;
+      case "rqVis": S.rqVis = v; persist(); render(true); refocus(a, v); break;
+      case "rqFix": var rq = S.reqs.filter(function (r) { return r.id === v; })[0]; S.rqEdit = S.rqEdit ? null : { id: v, met: { open: true, m: rq.met.m, y: rq.met.y, stage: rq.met.stage, how: rq.met.how } }; render(true); break;
+      case "rqOk":
+        var rr = S.reqs.filter(function (r) { return r.id === v; })[0], Mf = S.rqEdit && S.rqEdit.id === v ? S.rqEdit.met : rr.met;
+        rr.st = "ok"; rr.met = { m: Mf.m, y: Mf.y, stage: Mf.stage, how: Mf.how }; S.rels[rr.from] = { rel: rr.rel, st: "ok" }; S.rqEdit = null;
+        var nid = createMetHito(rr.from, rr.rel, rr.met, S.rqVis); persist(); go("hito:" + nid); toast(t("rq_done")); break;
+      case "rqNo": var rn = S.reqs.filter(function (r) { return r.id === v; })[0]; rn.st = "no"; S.rqEdit = null; persist(); render(true); toast(t("rq_rejected", { n: PEOPLE[rn.from].n })); break;
+      case "simAccept": var rs = S.rels[v]; rs.st = "ok"; var nid2 = null; if (rs.met && rs.met.y) nid2 = createMetHito(v, rs.rel, rs.met, "amigos"); persist(); if (nid2) { go("hito:" + nid2); toast(t("rq_done")); } else render(true); break;
       /* ajustes */
       case "defVis": S.prefs.defVis = v; persist(); render(true); refocus(a, v); break;
       case "plc": S.prefs.place = v; persist(); render(true); refocus(a, v); break;
@@ -910,13 +1135,25 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
   });
   function refocus(a, v) { var el = app.querySelector('[data-act="' + a + '"]' + (v ? '[data-v="' + v + '"]' : "")); if (el) el.focus(); }
   app.addEventListener("input", function (e) {
-    var D = S.draft, id = e.target.id; if (!D) return;
+    var id = e.target.id;
+    if (id === "pq" && S.ap) { S.ap.q = e.target.value; S.ap.sel = null; lastFocus = "pq"; render(true); lastFocus = null; return; }
+    if (id === "sq") { S.pq = e.target.value; lastFocus = "sq"; render(true); lastFocus = null; return; }
+    var mc = /^(ap|pf|rq)(y|how)$/.exec(id);
+    if (mc) { var Mi = getMet(mc[1]); if (Mi) { if (mc[2] === "y") Mi.y = e.target.value.replace(/\D/g, "").slice(0, 4); else { Mi.how = e.target.value; var cc = document.getElementById(mc[1] + "howc"); if (cc) cc.textContent = Mi.how.length + " / 140 · " + t("mt_note"); } } return; }
+    var D = S.draft; if (!D) return;
     if (id === "cq") { D.q = e.target.value; if (D.place && D.place !== D.q) D.place = ""; lastFocus = "cq"; render(true); lastFocus = null; }
     else if (id === "cl") { D.line = e.target.value; D.err = ""; var c = document.getElementById("clc"); if (c) c.textContent = D.line.length + " / 90"; var nb = app.querySelector('[data-act="cnext"]'); if (nb) { if (D.line.trim()) nb.removeAttribute("aria-disabled"); else nb.setAttribute("aria-disabled", "true"); } }
     else if (id === "cy") { var y = parseInt(e.target.value, 10); if (y > 1900 && y < 2100) D.y = y; }
   });
   app.addEventListener("change", function (e) {
-    var D = S.draft, id = e.target.id; if (!D) return;
+    var id = e.target.id;
+    if (id === "prel" && S.ap) { S.ap.rel = e.target.value; if (S.ap.rel === "pareja") { S.ap.past = true; S.ap.vis = "yo"; } render(true); document.getElementById("prel").focus(); return; }
+    if (id === "ppast" && S.ap) { S.ap.past = e.target.checked; if (S.ap.past) S.ap.vis = "yo"; render(true); document.getElementById("ppast").focus(); return; }
+    if (id === "frel" && S.pf) { S.pf.rel = e.target.value; if (S.pf.rel === "pareja") S.pf.past = true; render(true); document.getElementById("frel").focus(); return; }
+    if (id === "fpast" && S.pf) { S.pf.past = e.target.checked; return; }
+    var mm2 = /^(ap|pf|rq)m$/.exec(id); if (mm2) { var Mm = getMet(mm2[1]); if (Mm) Mm.m = e.target.value; return; }
+    if (id === "fh" && S.pf) { S.pf.h = e.target.value; return; }
+    var D = S.draft; if (!D) return;
     if (id === "cdd") D.dd = e.target.value; if (id === "cm") D.m = +e.target.value;
   });
   app.addEventListener("keydown", function (e) {
@@ -928,7 +1165,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
     var D = S.draft, d = draftDate(D), id = "n" + Date.now();
     var ch = d.y <= 2000 ? "c1" : d.y <= 2013 ? "c2" : d.y === 2014 ? "c3" : "c4";
     var emo = D.emo.length ? D.emo : [["alegria", 1]];
-    S.hitos.push({ id: id, ch: ch, title: D.line.trim(), place: D.place, d: d, emo: emo, line: D.line.trim(), photo: D.photo ? "retiro" : null, sample: D.photo, vis: JSON.parse(JSON.stringify(D.vis)) });
+    S.hitos.push({ id: id, ch: ch, title: D.line.trim(), place: D.place, d: d, emo: emo, line: D.line.trim(), photo: D.photo ? "retiro" : null, sample: D.photo, people: D.people || [], vis: JSON.parse(JSON.stringify(D.vis)) });
     var sec = Math.round((Date.now() - D.t0) / 1000);
     S.newId = id; S.draft = null; persist(); track("proto_fin");
     go("hito:" + id);
@@ -938,6 +1175,7 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
 
   /* ================= arranque ================= */
   if (S.route === "create" && !S.draft) S.route = "home";
+  if (S.route === "addp" && !S.ap) S.route = "home";
   if (S.route === "entry:new" && !S.newEntry) S.route = "diary";
   if (window.matchMedia) { try { window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { render(true); }); } catch (e) {} }
   render();
