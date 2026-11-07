@@ -113,7 +113,7 @@ footer{padding:28px 0 40px;color:var(--ink-2);font-size:13px}
    Si se dejan vacías, la encuesta funciona en modo demo (no guarda nada). */
 const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
-const SURVEY_VERSION = "2.0";
+const SURVEY_VERSION = "2.1";
 const STORE_KEY = "bio_encuesta_v2";
 
 /* ---------- Estructura (común a los tres idiomas; códigos = lista blanca de submit_survey) ---------- */
@@ -124,24 +124,24 @@ const Q = {
   s3:{b:"A",type:"select",req:1,o:"countries"},
   s4:{b:"B",type:"multi",req:1,o:["photos", "social", "albums", "journal", "notes", "other", "none"],excl:"none",shuffle:1,fixed:["other", "none"]},
   s5:{b:"B",type:"scale",req:1},
-  s6:{b:"B",type:"multi",req:1,o:["time", "scattered", "writing", "privacy", "never", "other", "nothing"],excl:"nothing",shuffle:1,fixed:["other", "nothing"]},
+  s6:{b:"B",type:"multi",req:1,o:["time", "scattered", "writing", "privacy", "never", "other", "nothing"],excl:"nothing",shuffle:1,fixed:["other", "nothing"],show:a=>a.s5>=3},
   s7:{b:"C",type:"scale",req:1},
   s8:{b:"C",type:"one",req:1,o:["lt5", "5_15", "15_30", "gt30", "none"]},
   s9:{b:"C",type:"scale",req:1},
   s10:{b:"C",type:"one",req:1,o:["no", "yes_unused", "yes_used", "unsure"]},
   s11:{b:"C",type:"scale",req:1},
-  s12:{b:"D",type:"one",req:1,o:["video", "book", "both", "none"]},
+  s12:{b:"D",type:"one",req:1,o:["video", "book", "both", "other", "none"]},
   s13:{b:"D",type:"multi",req:1,o:["partner", "family", "friends", "social", "nobody"],excl:"nobody"},
   s14:{b:"D",type:"one",req:1,o:["revelado", "avion", "dorada", "none"],shuffle:1,fixed:["none"]},
   s15:{b:"E",type:"scale",req:1},
-  s16:{b:"E",type:"one",req:1,o:["save", "feel", "relive", "discover", "nothing"]},
+  s16:{b:"E",type:"one",req:1,o:["save", "feel", "relive", "discover", "nothing"],shuffle:1,fixed:["nothing"]},
   s17:{b:"E",type:"scale",req:1},
   s18:{b:"F",type:"one",req:1,o:["yes", "maybe", "no"]},
   s19:{b:"F",type:"one",req:1,o:["none", "lt20", "20_39", "40_59", "60p"]},
   s20:{b:"F",type:"short",req:0,max:200},
   s21:{b:"F",type:"long",req:0,max:1000}
 };
-/* Pantallas v2.0: una pregunta por pantalla; empieza por la experiencia propia (s4–s6),
+/* Pantallas v2.1 (P6 solo si P5 ≥ 3): una pregunta por pantalla; empieza por la experiencia propia (s4–s6),
    el estilo (s14) va antes de privacidad y personas; las dos abiertas, juntas al final. */
 const SCREENS = ["intro",["s1"],["s2","s3"],["s4"],["s5"],["s6"],["s7"],["s8"],["s9"],["s10"],["s11"],
   ["s12"],["s13"],["s14"],["s15"],["s16"],["s17"],["s18"],["s19"],["s20","s21"],
@@ -249,7 +249,7 @@ const T = {
     "«Me gustaría tener los momentos importantes de mi vida guardados y ordenados en un solo lugar.»"
    ],
    "s6": [
-    "¿Qué te frena hoy para hacerlo?",
+    "¿Qué te impide hoy tener tus momentos importantes ordenados en un solo lugar?",
     {
      "time": "Me falta tiempo",
      "scattered": "Mis recuerdos están dispersos en muchos sitios",
@@ -276,7 +276,7 @@ const T = {
     }
    ],
    "s9": [
-    "«Guardar cómo me hizo sentir cada momento (alegría, orgullo, nostalgia, amor, gratitud…) haría mi historia más mía.»"
+    "«Guardar cómo me hizo sentir cada momento (alegría, tristeza, orgullo, miedo, nostalgia…) haría mi historia más completa.»"
    ],
    "s10": [
     "¿Conoces alguna app que te deje guardar cómo te hizo sentir cada momento de tu vida?",
@@ -288,7 +288,7 @@ const T = {
     }
    ],
    "s11": [
-    "«Me gustaría tener un diario privado y cifrado en la misma app, para escribir con detalle lo que no quiero compartir.»"
+    "«Me gustaría tener en la misma app un diario que solo yo pueda leer.»"
    ],
    "s12": [
     "¿Cómo te gustaría revivir tu historia?",
@@ -296,6 +296,7 @@ const T = {
      "video": "En un vídeo animado",
      "book": "Como un libro",
      "both": "De las dos formas",
+     "other": "De otra forma (por ejemplo, un mapa o una línea de tiempo)",
      "none": "De ninguna de estas formas"
     }
    ],
@@ -335,7 +336,7 @@ const T = {
     "«Me gustaría descubrir qué personas coincidieron conmigo en los momentos de mi historia.»"
    ],
    "s18": [
-    "Bio sería gratis. ¿Pagarías por extras opcionales, como estilos o avatares especiales?",
+    "Bio sería gratis, incluidos los 3 estilos. ¿Pagarías por extras opcionales, como avatares o efectos especiales?",
     {
      "yes": "Sí",
      "maybe": "Tal vez",
@@ -459,10 +460,10 @@ const T = {
     }
    ],
    "s5": [
-    "“I'd like to have the important moments of my life saved and organised in one place.”"
+    "“I'd like to have the important moments of my life saved and organized in one place.”"
    ],
    "s6": [
-    "What's stopping you from doing that today?",
+    "What stops you today from having your important moments organized in one place?",
     {
      "time": "I don't have time",
      "scattered": "My memories are scattered across lots of places",
@@ -489,7 +490,7 @@ const T = {
     }
    ],
    "s9": [
-    "“Keeping how each moment made me feel (joy, pride, nostalgia, love, gratitude…) would make my story more my own.”"
+    "“Keeping how each moment made me feel (joy, sadness, pride, fear, nostalgia…) would make my story more complete.”"
    ],
    "s10": [
     "Do you know any app that lets you keep how each moment of your life made you feel?",
@@ -501,7 +502,7 @@ const T = {
     }
    ],
    "s11": [
-    "“I'd like a private, encrypted journal in the same app, to write in detail about what I don't want to share.”"
+    "“I'd like to have a journal in the same app that only I can read.”"
    ],
    "s12": [
     "How would you like to relive your story?",
@@ -509,7 +510,8 @@ const T = {
      "video": "As an animated video",
      "book": "As a book",
      "both": "Both",
-     "none": "Neither of these"
+     "other": "Some other way (for example, a map or a timeline)",
+     "none": "None of these"
     }
    ],
    "s13": [
@@ -525,9 +527,9 @@ const T = {
    "s14": [
     "Your story can have a style. Which would you choose?",
     {
-     "revelado": "Developed\nLike freshly developed film photos, with the date printed in the corner.",
-     "avion": "By Airmail\nLike letters that travel, with postmarks and stamps from every place.",
-     "dorada": "Golden Hour\nEvery emotion is a sky: your moments take on the colours of what you felt.",
+     "revelado": "Revelado\nLike freshly developed film photos, with the date printed in the corner.",
+     "avion": "Por avión\nLike letters that travel by airmail, with postmarks and stamps from every place.",
+     "dorada": "Hora dorada\nEvery emotion is a sky: your moments take on the colors of what you felt.",
      "none": "None of them appeals to me"
     }
    ],
@@ -548,7 +550,7 @@ const T = {
     "“I'd like to discover which people crossed paths with me in the moments of my story.”"
    ],
    "s18": [
-    "Bio would be free. Would you pay for optional extras, like special styles or avatars?",
+    "Bio would be free, including all 3 styles. Would you pay for optional extras, like avatars or special effects?",
     {
      "yes": "Yes",
      "maybe": "Maybe",
@@ -559,12 +561,12 @@ const T = {
     "What's the most you'd pay for your story printed as a book (hardcover, about 100 pages, with photos)?",
     {
      "none": "I wouldn't buy it",
-     "lt20": "Under $20",
-     "20_39": "$20–39",
-     "40_59": "$40–59",
-     "60p": "$60 or more"
+     "lt20": "Under €20",
+     "20_39": "€20–39",
+     "40_59": "€40–59",
+     "60p": "€60 or more"
     },
-    "If you don't use dollars, think of the equivalent."
+    "If you don't use euros, think of the equivalent."
    ],
    "s20": [
     "Which moment of your life would you like to relive first?",
@@ -675,7 +677,7 @@ const T = {
     "« J’aimerais avoir les moments importants de ma vie gardés et rangés au même endroit. »"
    ],
    "s6": [
-    "Qu’est-ce qui vous en empêche aujourd’hui ?",
+    "Qu’est-ce qui vous empêche aujourd’hui d’avoir vos moments importants rangés au même endroit ?",
     {
      "time": "Je manque de temps",
      "scattered": "Mes souvenirs sont éparpillés un peu partout",
@@ -702,7 +704,7 @@ const T = {
     }
    ],
    "s9": [
-    "« Garder ce que chaque moment m’a fait ressentir (joie, fierté, nostalgie, amour, gratitude…) rendrait mon histoire plus personnelle. »"
+    "« Garder ce que chaque moment m’a fait ressentir (joie, tristesse, fierté, peur, nostalgie…) rendrait mon histoire plus complète. »"
    ],
    "s10": [
     "Connaissez-vous une appli qui permet de garder ce que chaque moment de votre vie vous a fait ressentir ?",
@@ -714,7 +716,7 @@ const T = {
     }
    ],
    "s11": [
-    "« J’aimerais avoir un journal privé et chiffré dans la même appli, pour écrire en détail ce que je ne veux pas partager. »"
+    "« J’aimerais avoir dans la même appli un journal que moi seul·e peux lire. »"
    ],
    "s12": [
     "Comment aimeriez-vous revivre votre histoire ?",
@@ -722,6 +724,7 @@ const T = {
      "video": "En vidéo animée",
      "book": "En livre",
      "both": "Les deux",
+     "other": "Autrement (par exemple, une carte ou une frise chronologique)",
      "none": "Aucune de ces façons"
     }
    ],
@@ -738,9 +741,9 @@ const T = {
    "s14": [
     "Votre histoire peut avoir un style. Lequel choisiriez-vous ?",
     {
-     "revelado": "Développé\nComme des photos argentiques tout juste développées, avec la date imprimée dans le coin.",
-     "avion": "Par avion\nComme des lettres qui voyagent, avec les cachets et les timbres de chaque lieu.",
-     "dorada": "Heure dorée\nChaque émotion est un ciel : vos moments prennent les couleurs de ce que vous avez ressenti.",
+     "revelado": "Revelado\nComme des photos argentiques tout juste développées, avec la date imprimée dans le coin.",
+     "avion": "Por avión\nComme des lettres qui voyagent par avion, avec les cachets et les timbres de chaque lieu.",
+     "dorada": "Hora dorada\nChaque émotion est un ciel : vos moments prennent les couleurs de ce que vous avez ressenti.",
      "none": "Aucun ne me plaît"
     }
    ],
@@ -761,7 +764,7 @@ const T = {
     "« J’aimerais découvrir quelles personnes ont croisé mon chemin dans les moments de mon histoire. »"
    ],
    "s18": [
-    "Bio serait gratuit. Paieriez-vous pour des extras facultatifs, comme des styles ou des avatars spéciaux ?",
+    "Bio serait gratuit, y compris les 3 styles. Paieriez-vous pour des extras facultatifs, comme des avatars ou des effets spéciaux ?",
     {
      "yes": "Oui",
      "maybe": "Peut-être",
@@ -887,7 +890,7 @@ const T = {
     "«M’agradaria tenir els moments importants de la meva vida guardats i ordenats en un sol lloc.»"
    ],
    "s6": [
-    "Què t’impedeix fer-ho avui?",
+    "Què t’impedeix avui tenir els teus moments importants ordenats en un sol lloc?",
     {
      "time": "Em falta temps",
      "scattered": "Els meus records estan escampats per molts llocs",
@@ -914,7 +917,7 @@ const T = {
     }
    ],
    "s9": [
-    "«Guardar com em va fer sentir cada moment (alegria, orgull, nostàlgia, amor, gratitud…) faria la meva història més meva.»"
+    "«Guardar com em va fer sentir cada moment (alegria, tristesa, orgull, por, nostàlgia…) faria la meva història més completa.»"
    ],
    "s10": [
     "Coneixes alguna app que et permeti guardar com et va fer sentir cada moment de la teva vida?",
@@ -926,7 +929,7 @@ const T = {
     }
    ],
    "s11": [
-    "«M’agradaria tenir un diari privat i xifrat a la mateixa app, per escriure amb detall el que no vull compartir.»"
+    "«M’agradaria tenir a la mateixa app un diari que només jo pugui llegir.»"
    ],
    "s12": [
     "Com t’agradaria reviure la teva història?",
@@ -934,6 +937,7 @@ const T = {
      "video": "En un vídeo animat",
      "book": "Com un llibre",
      "both": "De les dues maneres",
+     "other": "D’una altra manera (per exemple, un mapa o una línia de temps)",
      "none": "De cap d’aquestes maneres"
     }
    ],
@@ -950,9 +954,9 @@ const T = {
    "s14": [
     "La teva història pot tenir un estil. Quin triaries?",
     {
-     "revelado": "Revelat\nCom fotos de carret acabades de revelar, amb la data impresa al racó.",
-     "avion": "Per avió\nCom cartes que viatgen, amb matasegells i segells de cada lloc.",
-     "dorada": "Hora daurada\nCada emoció és un cel: els teus moments es tenyeixen dels colors del que vas sentir.",
+     "revelado": "Revelado\nCom fotos de carret acabades de revelar, amb la data impresa al racó.",
+     "avion": "Por avión\nCom cartes que viatgen per avió, amb matasegells i segells de cada lloc.",
+     "dorada": "Hora dorada\nCada emoció és un cel: els teus moments es tenyeixen dels colors del que vas sentir.",
      "none": "Cap no em convenç"
     }
    ],
@@ -973,7 +977,7 @@ const T = {
     "«M’agradaria descobrir quines persones van coincidir amb mi en els moments de la meva història.»"
    ],
    "s18": [
-    "Bio seria gratis. Pagaries per extres opcionals, com estils o avatars especials?",
+    "Bio seria gratis, inclosos els 3 estils. Pagaries per extres opcionals, com avatars o efectes especials?",
     {
      "yes": "Sí",
      "maybe": "Potser",
@@ -1004,7 +1008,7 @@ const T = {
   "foot": "© 2026 Bio · Progetto in fase di validazione",
   "demo": "Modalità demo: le risposte non vengono salvate.",
   "i_t": "Aiutaci a creare Bio · 5 minuti",
-  "i_p": "<strong>Privacy, in breve.</strong> Il questionario è anonimo: non ti chiediamo il nome. Alla fine puoi lasciare la tua email se vuoi l’accesso anticipato; è facoltativo e viene conservata a parte.<ul><li><strong>Titolare:</strong> il promotore del progetto Bio, persona fisica residente in Spagna (recapiti nell’informativa).</li><li><strong>Finalità:</strong> ricerca di mercato: capire l’interesse per Bio e decidere se svilupparlo. Non vendiamo né cediamo i tuoi dati e non li usiamo per pubblicità.</li><li><strong>Base giuridica:</strong> il tuo consenso (art. 6.1.a GDPR), che puoi revocare quando vuoi.</li><li><strong>Dove:</strong> nel nostro database Supabase (UE, Francoforte). Niente cookie né strumenti di terzi.</li><li><strong>Per quanto tempo:</strong> fino a 12 mesi dopo la fine della fase di validazione; se il progetto non prosegue, cancelliamo tutto.</li><li><strong>I tuoi diritti:</strong> accesso, rettifica, cancellazione, opposizione, limitazione e portabilità. Puoi presentare reclamo al Garante per la protezione dei dati personali (garanteprivacy.it) o all’AEPD (Spagna).</li></ul>",
+  "i_p": "<strong>Privacy, in breve.</strong> Il questionario è anonimo: non ti chiediamo il nome. Alla fine puoi lasciare la tua email se vuoi l’accesso anticipato; è facoltativa e viene conservata a parte.<ul><li><strong>Titolare:</strong> il promotore del progetto Bio, persona fisica residente in Spagna (recapiti nell’informativa).</li><li><strong>Finalità:</strong> ricerca di mercato: capire l’interesse per Bio e decidere se svilupparlo. Non vendiamo né cediamo i tuoi dati e non li usiamo per pubblicità.</li><li><strong>Base giuridica:</strong> il tuo consenso (art. 6.1.a GDPR), che puoi revocare quando vuoi.</li><li><strong>Dove:</strong> nel nostro database Supabase (UE, Francoforte). Niente cookie né strumenti di terzi.</li><li><strong>Per quanto tempo:</strong> fino a 12 mesi dopo la fine della fase di validazione; se il progetto non prosegue, cancelliamo tutto.</li><li><strong>I tuoi diritti:</strong> accesso, rettifica, cancellazione, opposizione, limitazione e portabilità. Puoi presentare reclamo al Garante per la protezione dei dati personali (garanteprivacy.it) o all’AEPD (Spagna).</li></ul>",
   "i_link": "Informativa privacy completa",
   "i_c": "Ho almeno 18 anni, ho letto le informazioni sulla privacy e accetto di partecipare.",
   "start": "Inizia",
@@ -1099,7 +1103,7 @@ const T = {
     "«Mi piacerebbe avere i momenti importanti della mia vita conservati e ordinati in un unico posto.»"
    ],
    "s6": [
-    "Che cosa ti frena oggi dal farlo?",
+    "Che cosa ti impedisce oggi di avere i tuoi momenti importanti ordinati in un unico posto?",
     {
      "time": "Mi manca il tempo",
      "scattered": "I miei ricordi sono sparsi in tanti posti",
@@ -1126,7 +1130,7 @@ const T = {
     }
    ],
    "s9": [
-    "«Conservare come mi ha fatto sentire ogni momento (gioia, orgoglio, nostalgia, amore, gratitudine…) renderebbe la mia storia più mia.»"
+    "«Conservare come mi ha fatto sentire ogni momento (gioia, tristezza, orgoglio, paura, nostalgia…) renderebbe la mia storia più completa.»"
    ],
    "s10": [
     "Conosci un’app che ti permetta di conservare come ti ha fatto sentire ogni momento della tua vita?",
@@ -1138,7 +1142,7 @@ const T = {
     }
    ],
    "s11": [
-    "«Mi piacerebbe avere un diario privato e cifrato nella stessa app, per scrivere nei dettagli ciò che non voglio condividere.»"
+    "«Mi piacerebbe avere nella stessa app un diario che solo io posso leggere.»"
    ],
    "s12": [
     "Come ti piacerebbe rivivere la tua storia?",
@@ -1146,6 +1150,7 @@ const T = {
      "video": "In un video animato",
      "book": "Come un libro",
      "both": "In entrambi i modi",
+     "other": "In un altro modo (per esempio, una mappa o una linea del tempo)",
      "none": "In nessuno di questi modi"
     }
    ],
@@ -1162,9 +1167,9 @@ const T = {
    "s14": [
     "La tua storia può avere uno stile. Quale sceglieresti?",
     {
-     "revelado": "Sviluppato\nCome foto di rullino appena sviluppate, con la data stampata nell’angolo.",
-     "avion": "Posta aerea\nCome lettere in viaggio, con timbri postali e francobolli di ogni luogo.",
-     "dorada": "Ora dorata\nOgni emozione è un cielo: i tuoi momenti si colorano di ciò che hai provato.",
+     "revelado": "Revelado\nCome foto di rullino appena sviluppate, con la data stampata nell’angolo.",
+     "avion": "Por avión\nCome lettere in viaggio per posta aerea, con timbri postali e francobolli di ogni luogo.",
+     "dorada": "Hora dorada\nOgni emozione è un cielo: i tuoi momenti si colorano di ciò che hai provato.",
      "none": "Nessuno mi convince"
     }
    ],
@@ -1185,7 +1190,7 @@ const T = {
     "«Mi piacerebbe scoprire quali persone hanno incrociato la mia strada nei momenti della mia storia.»"
    ],
    "s18": [
-    "Bio sarebbe gratuito. Pagheresti per extra facoltativi, come stili o avatar speciali?",
+    "Bio sarebbe gratuito, compresi i 3 stili. Pagheresti per extra facoltativi, come avatar o effetti speciali?",
     {
      "yes": "Sì",
      "maybe": "Forse",
