@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Archivo:wdth,wght@62..125,400..800&family=Atkinson+Hyperlegible:wght@400;700&family=Kalam:wght@400;700&family=Courier+Prime:wght@400;700&display=swap">
 <style>
+[hidden]{display:none!important}
+
 /* Layout: una columna de app móvil (máx. 440px) centrada; en escritorio, sobre un fondo de franjas de atardecer.
    Marca Hora dorada; la «piel» (data-skin) cambia fondos, tarjetas, tipografía de contenido e iconos de emoción. */
 :root{
@@ -1025,8 +1027,9 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       var v = document.getElementById("vid"), l = document.getElementById("vload");
       if (v) {
         var done = function () { if (l) l.hidden = true; };
-        v.addEventListener("loadeddata", done); v.addEventListener("canplay", done);
-        if (v.readyState >= 2) done();
+        v.addEventListener("loadedmetadata", done); v.addEventListener("loadeddata", done); v.addEventListener("canplay", done); v.addEventListener("play", done);
+        if (v.readyState >= 1) done();
+        timers.push(setTimeout(done, 3000));
         v.addEventListener("error", function () { if (l) l.innerHTML = "<span>" + t("rv_v_err") + '</span><button class="btn sm" style="background:#F7EDE6;color:#2A1D2B" data-act="vretry">' + t("retry") + "</button>"; });
       }
     }
