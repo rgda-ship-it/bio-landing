@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Bio — Panel</title>
+<style>
+:root{
+  --bg:#f5f3ef; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d1a16; --ink-2:#615a50; --line:#e4ded3;
+  --accent:#c4552d; --ok:#2f7d4f; --warn:#b7791f; --bad:#b4352b; --s1:#c4552d; --s2:#2f6f9f; --s3:#2f7d4f;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121110; --surface:#1c1a17; --surface-2:#23201c; --ink:#f0ebe2; --ink-2:#a9a092; --line:#34302a;
+    --accent:#e0754b; --ok:#6cc08f; --warn:#e2b04a; --bad:#ef7a6c; --s1:#e0754b; --s2:#6fa8d6; --s3:#6cc08f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121110; --surface:#1c1a17; --surface-2:#23201c; --ink:#f0ebe2; --ink-2:#a9a092; --line:#34302a;
+  --accent:#e0754b; --ok:#6cc08f; --warn:#e2b04a; --bad:#ef7a6c; --s1:#e0754b; --s2:#6fa8d6; --s3:#6cc08f;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Inter,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.logo{font:700 22px/1 Georgia,serif;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.logo small{font:500 13px system-ui,sans-serif;color:var(--ink-2);margin-left:8px;letter-spacing:0}
+.warn{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h2{font-size:15px;font-weight:650;margin:0 0 12px}
+.grid{display:grid;gap:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.kpi b{display:block;font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.kpi span{color:var(--ink-2);font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+th{color:var(--ink-2);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:650;border:1px solid var(--line)}
+.pill.verde,.pill.cumple,.pill.go{color:var(--ok);border-color:var(--ok)}
+.pill.ambar,.pill.pendiente,.pill.n30{color:var(--warn);border-color:var(--warn)}
+.pill.rojo,.pill.no_cumple,.pill.no_go{color:var(--bad);border-color:var(--bad)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+svg text{fill:var(--ink-2);font-size:11px}
+.hbar{display:grid;grid-template-columns:120px 1fr 48px;align-items:center;gap:8px;font-size:13px;margin:6px 0}
+.hbar .t{height:10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.hbar .t i{display:block;height:100%;background:var(--accent)}
+.hbar .n{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+form.login{max-width:420px;margin:8vh auto 0;display:grid;gap:12px}
+label{font-size:13px;color:var(--ink-2);display:grid;gap:6px}
+input[type=password]{font:16px system-ui,sans-serif;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);width:100%}
+input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{font:600 15px system-ui,sans-serif;padding:11px 16px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button[disabled]{opacity:.6;cursor:wait}
+.err{color:var(--bad);min-height:1.3em;margin:0;font-size:14px}
+.muted{color:var(--ink-2);font-size:13px}
+.empty{color:var(--ink-2);font-size:14px;padding:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">bio<span>.</span><small>Panel del PO</small></div>
+    <div><button class="ghost" id="theme" type="button" aria-label="Cambiar tema claro u oscuro">◐</button> <button class="ghost" id="logout" type="button" hidden>Salir</button></div>
+  </header>
+  <p class="warn" role="note"><strong>No compartas esta página ni la clave.</strong> Contiene cifras internas y nombres de colaboradores. La clave solo se guarda en esta pestaña y se borra al cerrarla.</p>
+
+  <form class="login card" id="login" autocomplete="off">
+    <h2>Acceso</h2>
+    <label for="key">Clave de administrador<input type="password" id="key" required maxlength="200" autocomplete="current-password"></label>
+    <p class="err" id="err" role="alert"></p>
+    <button type="submit" id="enter">Entrar</button>
+    <p class="muted">Tras 5 intentos fallidos el acceso se bloquea 15 minutos.</p>
+  </form>
+
+  <main id="dash" hidden>
+    <p class="muted" id="gen"></p>
+    <section class="kpis" id="kpis" aria-label="Totales"></section>
+    <div class="grid">
+      <section class="card" aria-labelledby="h-go"><h2 id="h-go">Criterios Go / No-Go</h2><div class="scroll"><table id="go"></table></div>
+        <p class="muted">Go = H1a, H2a y H4a de la encuesta v2 + invitaciones de la landing (≥ 25 %). Fuente: informe semanal.</p></section>
+      <section class="card" aria-labelledby="h-day"><h2 id="h-day">Evolución diaria (60 días)</h2><div id="chart"></div>
+        <div class="legend"><span><i style="background:var(--s1)"></i>Visitas landing</span><span><i style="background:var(--s2)"></i>Registros</span><span><i style="background:var(--s3)"></i>Encuestas</span></div></section>
+      <section class="card" aria-labelledby="h-col"><h2 id="h-col">Colaboradores</h2><div class="scroll"><table id="cols"></table></div></section>
+      <div class="two">
+        <section class="card" aria-labelledby="h-proto"><h2 id="h-proto">Embudo del prototipo</h2><div id="proto"></div></section>
+        <section class="card" aria-labelledby="h-hip"><h2 id="h-hip">Encuesta v2 · hipótesis</h2><div class="scroll"><table id="hip"></table></div></section>
+      </div>
+      <div class="two">
+        <section class="card" aria-labelledby="h-lang"><h2 id="h-lang">Encuestas por idioma</h2><div id="lang"></div></section>
+        <section class="card" aria-labelledby="h-age"><h2 id="h-age">Encuesta v2 por edad</h2><div id="age"></div></section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const SUPABASE_URL = "https://jxkckdzzlmzgvnvoqrml.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4a2NrZHp6bG16Z3Zudm9xcm1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1MjcxOTAsImV4cCI6MjEwOTEwMzE5MH0.PJYSJgS03pF8FYgexrbDLXk6qfZYAfjfjdt0U2qTsPg";
+const KEY = "bio_admin_key";                          // solo sessionStorage: se borra al cerrar la pestaña
+const ss = { get(){ try { return sessionStorage.getItem(KEY); } catch (e) { return null; } },
+             set(v){ try { sessionStorage.setItem(KEY, v); } catch (e) {} },
+             del(){ try { sessionStorage.removeItem(KEY); } catch (e) {} } };
+const $ = s => document.querySelector(s);
+const el = (tag, attrs, ...kids) => { const e = document.createElement(tag); if (attrs) for (const k in attrs) { if (k === "class") e.className = attrs[k]; else e.setAttribute(k, attrs[k]); }
+  kids.forEach(k => e.append(k == null ? "" : (typeof k === "object" ? k : String(k)))); return e; };
+const nf = n => (n == null || n === "" ? "—" : Number(n).toLocaleString("es-ES"));
+
+/* Tema: respeta el sistema; el botón alterna y se recuerda en esta pestaña */
+try { const t = sessionStorage.getItem("bio_admin_theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+$("#theme").onclick = () => {
+  const dark = document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "light" : "dark";
+  try { sessionStorage.setItem("bio_admin_theme", document.documentElement.dataset.theme); } catch (e) {}
+};
+
+async function overview(key){
+  const r = await fetch(SUPABASE_URL + "/rest/v1/rpc/admin_overview", {
+    method: "POST", headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+    body: JSON.stringify({ p_key: key }) });
+  if (!r.ok) throw new Error("red");
+  return r.json();
+}
+const ERR = { clave_incorrecta: "Clave incorrecta.", bloqueado: "Demasiados intentos fallidos. Espera 15 minutos.",
+              sin_clave: "Aún no hay clave creada en la base de datos (ver migracion-tareas-dashboard.sql).", red: "No se pudo conectar. Inténtalo de nuevo." };
+
+async function enter(key){
+  const btn = $("#enter"); btn.disabled = true; $("#err").textContent = "";
+  try {
+    const d = await overview(key);
+    if (!d || d.error) { ss.del(); $("#err").textContent = ERR[d && d.error] || ERR.red; showLogin(); return; }
+    ss.set(key); render(d);
+  } catch (e) { $("#err").textContent = ERR.red; showLogin(); }
+  finally { btn.disabled = false; }
+}
+function showLogin(){ $("#dash").hidden = true; $("#login").hidden = false; $("#logout").hidden = true; }
+$("#login").addEventListener("submit", e => { e.preventDefault(); const k = $("#key").value; $("#key").value = ""; if (k) enter(k); });
+$("#logout").onclick = () => { ss.del(); location.reload(); };
+
+/* ---------- Render ---------- */
+function table(id, head, rows, numCols){
+  const t = $(id); t.textContent = "";
+  t.append(el("thead", null, el("tr", null, ...head.map((h, i) => el("th", numCols.includes(i) ? { class: "num", scope: "col" } : { scope: "col" }, h)))));
+  const tb = el("tbody");
+  if (!rows.length) tb.append(el("tr", null, el("td", { colspan: head.length, class: "empty" }, "Sin datos todavía.")));
+  rows.forEach(r => tb.append(el("tr", null, ...r.map((c, i) => el("td", numCols.includes(i) ? { class: "num" } : null, c)))));
+  t.append(tb);
+}
+const pill = (estado, txt) => el("span", { class: "pill " + String(estado).replace("<", "n").replace(/[^a-z_0-9]/gi, "") }, txt || estado);
+
+function bars(id, obj, order){
+  const box = $(id); box.textContent = "";
+  const keys = order ? order.filter(k => k in obj).concat(Object.keys(obj).filter(k => !order.includes(k))) : Object.keys(obj).sort((a, b) => obj[b] - obj[a]);
+  if (!keys.length) { box.append(el("p", { class: "empty" }, "Sin datos todavía.")); return; }
+  const max = Math.max(1, ...keys.map(k => +obj[k] || 0));
+  keys.forEach(k => { const v = +obj[k] || 0, t = el("div", { class: "t" }, el("i", { style: "width:" + (100 * v / max) + "%" }));
+    box.append(el("div", { class: "hbar" }, el("span", null, k), t, el("span", { class: "n" }, nf(v)))); });
+}
+
+function chart(rows){
+  const box = $("#chart"); box.textContent = "";
+  const W = 720, H = 220, P = { l: 34, r: 10, t: 10, b: 24 };
+  const max = Math.max(1, ...rows.flatMap(r => [r[1], r[2], r[3]]));
+  const x = i => P.l + (W - P.l - P.r) * (rows.length < 2 ? 0 : i / (rows.length - 1));
+  const y = v => H - P.b - (H - P.t - P.b) * v / max;
+  const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", "100%"); svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "Visitas, registros y encuestas por día en los últimos 60 días");
+  const add = (tag, a) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); svg.append(e); return e; };
+  [0, .5, 1].forEach(f => { const v = Math.round(max * f), yy = y(v);
+    add("line", { x1: P.l, x2: W - P.r, y1: yy, y2: yy, stroke: "var(--line)", "stroke-width": 1 });
+    add("text", { x: P.l - 6, y: yy + 4, "text-anchor": "end" }).textContent = v; });
+  [0, Math.floor((rows.length - 1) / 2), rows.length - 1].forEach(i => { if (rows[i]) add("text", { x: x(i), y: H - 6, "text-anchor": i === 0 ? "start" : i === rows.length - 1 ? "end" : "middle" }).textContent = String(rows[i][0]).slice(5); });
+  [[1, "var(--s1)"], [2, "var(--s2)"], [3, "var(--s3)"]].forEach(([k, c]) =>
+    add("polyline", { points: rows.map((r, i) => x(i) + "," + y(+r[k] || 0)).join(" "), fill: "none", stroke: c, "stroke-width": 2, "stroke-linejoin": "round" }));
+  box.append(svg);
+}
+
+function render(d){
+  $("#login").hidden = true; $("#dash").hidden = false; $("#logout").hidden = false;
+  $("#gen").textContent = "Actualizado: " + new Date(d.generado).toLocaleString("es-ES");
+  const t = d.totales || {}, enc = t.encuestas || {}, inf = d.informe || {};
+  const k = $("#kpis"); k.textContent = "";
+  [["Registros", t.registros], ["Encuestas v2.x", enc["v2.x"] || 0], ["Encuestas v1.x", enc["v1.x"] || 0],
+   ["Colaboradores", t.colaboradores], ["Visitas landing", t.visitas_landing], ["Visitas encuesta", t.visitas_encuesta]]
+    .forEach(([l, v]) => k.append(el("div", { class: "card kpi" }, el("b", null, nf(v)), el("span", null, l))));
+
+  const LBL = { registros: "Registros (≥ 300)", invita_exito_pct: "% que invita con éxito", conversion_pct: "Conversión landing %",
+                respuestas_encuesta: "Respuestas encuesta", latencia_p95_ms: "Latencia p95 (ms)", bloqueos_legales: "Bloqueos legales" };
+  const rows = Object.entries(inf.criterios || {}).map(([key, a]) => [LBL[key] || key, nf(a[0]), a[1], pill(a[2])]);
+  const v2 = inf.encuesta_v2 || {}, hip = v2.hipotesis || {};
+  ["H1a", "H2a", "H4a"].forEach(c => { const h = hip[c]; if (h) rows.push(["Encuesta v2 · " + c + " (crítica)", h[0] == null ? "—" : h[0] + " %", h[1], pill(h[3] === "n<30" ? "n30" : h[3], h[3])]); });
+  rows.push([el("strong", null, "Decisión (Go)"), "", "", pill(v2.go || "pendiente", v2.go || "pendiente")]);
+  table("#go", ["Criterio", "Valor", "Umbral", "Estado"], rows, [1]);
+
+  chart(d.diario || []);
+
+  table("#cols", ["Nombre", "Alta", "Roles", "Tareas", "Visitas", "Clics", "Registros", "Encuestas", "Respondió"],
+    (d.colaboradores || []).map(c => [c.nombre, c.alta, (c.roles || []).join(", ") || "—", c.hechas + " / " + (c.hechas + c.pendientes),
+      nf(c.visitas), nf(c.clics), nf(c.registros), nf(c.encuestas), c.propia ? "Sí" : "No"]), [4, 5, 6, 7]);
+
+  const pr = inf.prototipo || {}, steps = { "Inicio": pr.inicio || 0 };
+  Object.keys(pr.pasos || {}).sort((a, b) => a - b).forEach(s => { steps["Paso " + s] = pr.pasos[s]; });
+  steps["Fin"] = pr.fin || 0;
+  bars("#proto", steps, Object.keys(steps));
+
+  table("#hip", ["Indicador", "%", "Umbral", "Base", "Estado"],
+    Object.entries(hip).map(([c, h]) => [c, h[0] == null ? "—" : h[0], h[1], nf(h[2]), pill(h[3] === "n<30" ? "n30" : h[3], h[3])]), [1, 3]);
+
+  bars("#lang", d.encuesta_idioma || {});
+  bars("#age", d.encuesta_v2_edad || {}, ["lt18", "18_24", "25_29", "30_34", "35_39", "40_44", "45_54", "55p"]);
+}
+
+const saved = ss.get();
+if (saved) enter(saved);
+</script>
+</body>
+</html>

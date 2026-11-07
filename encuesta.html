@@ -1225,6 +1225,8 @@ const DEMO = !SUPABASE_URL || !SUPABASE_ANON_KEY;
 /* Token opaco del colaborador (?t=): se recuerda en este navegador y se envía como p_collab */
 const COLLAB_RE = /^[2-9a-km-np-z]{10}$/;
 { const t = (qs.get("t") || "").trim().toLowerCase(); if (COLLAB_RE.test(t)) { try { localStorage.setItem("bio_collab", t); } catch (e) {} } }
+/* ?self=1 (botón «Responder la encuesta» de la página del colaborador): es su propia respuesta */
+const SELF = qs.get("self") === "1";
 function collab(){ try { const t = localStorage.getItem("bio_collab"); return t && COLLAB_RE.test(t) ? t : null; } catch (e) { return null; } }
 function load(){ try { const s = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); return s && s.v === 1 ? s : null; } catch (e) { return null; } }
 function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify({ v:1, lang, step, consent, answers, order })); } catch (e) {} }
@@ -1427,6 +1429,7 @@ async function submitSurvey(body){
     body: JSON.stringify(body)
   });
   if (!r.ok) {
+    if (body.p_self) { const b = Object.assign({}, body); delete b.p_self; return submitSurvey(b); }      // base sin p_self aún
     if (body.p_collab) { const b = Object.assign({}, body); delete b.p_collab; return submitSurvey(b); }   // base sin p_collab aún
     throw new Error(await r.text());
   }
@@ -1459,7 +1462,8 @@ $("#screen").addEventListener("submit", async ev => {
         p_answers: payload(), p_consent: consent, p_lang: lang, p_utm: UTM || null,
         p_email: email && emailOk ? email : null, p_email_consent: !!(email && emailOk),
         p_version: SURVEY_VERSION, p_hp: $("#website").value || null,
-        ...(collab() ? { p_collab: collab() } : {})
+        ...(collab() ? { p_collab: collab() } : {}),
+        ...(collab() && SELF ? { p_self: true } : {})
       });
       track("encuesta_enviada");
       clearStore(); answers = {}; emailDraft = ""; emailOk = false;

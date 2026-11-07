@@ -12,6 +12,7 @@
 :root{--paper:#f6f1e7;--ink:#1f1a14;--ink-2:#5b5245;--line:#d9cdb5;--accent:#c4552d;--accent-ink:#fff;--ok:#2f7d4f;--card:#fffdf8}
 @media (prefers-color-scheme:dark){:root{--paper:#16130f;--ink:#f1e9da;--ink-2:#b4a892;--line:#3a332a;--accent:#e0754b;--accent-ink:#1b120c;--ok:#6cc08f;--card:#211c16}}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0}
 body{background:var(--paper);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 main{max-width:520px;margin:0 auto;padding:24px 16px 48px;display:grid;gap:22px}
@@ -30,6 +31,21 @@ h1{font:600 clamp(30px,8vw,40px)/1.08 Fraunces,Georgia,serif;letter-spacing:-.02
 .btn:active{transform:scale(.99)}
 .status{min-height:1.4em;color:var(--ok);font-weight:500;margin:0;text-align:center}
 .note{font-size:13px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:16px;margin:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:10px}
+.panel h2{font:600 20px/1.2 Fraunces,Georgia,serif;margin:0}
+.panel p{margin:0;color:var(--ink-2);font-size:15px}
+.tasks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.tasks li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.tasks li:first-child{border-top:0}
+.tasks b{display:block;font-weight:600;font-size:15px}
+.tasks small{display:block;color:var(--ink-2);font-size:13px}
+.chip{flex:none;font:600 12px Inter,system-ui,sans-serif;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.chip.done{background:var(--ok);border-color:var(--ok);color:var(--card)}
+.big{font:600 30px/1 Fraunces,Georgia,serif;color:var(--ink)}
+.stats{display:flex;gap:24px;flex-wrap:wrap}
+.stats span{display:block;font-size:13px;color:var(--ink-2);margin-top:4px}
+.bar{height:10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
 .msg{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--ink-2);margin:0}
 </style>
 </head>
@@ -58,6 +74,10 @@ h1{font:600 clamp(30px,8vw,40px)/1.08 Fraunces,Georgia,serif;letter-spacing:-.02
       <span class="ic" aria-hidden="true">📝</span>
       <span>Compartir la encuesta<small>3 minutos que nos ayudan mucho</small></span>
     </a>
+    <a class="btn" id="proto" target="_blank" rel="noopener">
+      <span class="ic" aria-hidden="true">📱</span>
+      <span>Probar el prototipo<small>Marca un momento y cuéntanos qué tal</small></span>
+    </a>
     <a class="btn" id="video" target="_blank" rel="noopener">
       <span class="ic" aria-hidden="true">🎬</span>
       <span>Ver la animación<small>Así se revive una historia</small></span>
@@ -66,8 +86,30 @@ h1{font:600 clamp(30px,8vw,40px)/1.08 Fraunces,Georgia,serif;letter-spacing:-.02
 
   <p class="status" id="status" role="status" aria-live="polite"></p>
 
+  <section class="panel" id="p-tareas" hidden aria-labelledby="h-tareas">
+    <h2 id="h-tareas">Tus tareas</h2>
+    <ul class="tasks" id="tareas"></ul>
+    <p id="tareas-nota"></p>
+  </section>
+
+  <section class="panel" id="p-impacto" hidden aria-labelledby="h-impacto">
+    <h2 id="h-impacto">Tu impacto</h2>
+    <p id="desde"></p>
+    <div class="stats">
+      <div><b class="big" id="imp-reg">0</b><span>se han apuntado a la lista</span></div>
+      <div><b class="big" id="imp-enc">0</b><span>han respondido la encuesta</span></div>
+    </div>
+    <p id="gracias"></p>
+  </section>
+
+  <section class="panel" id="p-global" hidden aria-labelledby="h-global">
+    <h2 id="h-global">Entre todos</h2>
+    <p id="global-txt"></p>
+    <div class="bar" role="progressbar" aria-labelledby="h-global" aria-valuemin="0" id="global-bar"><i id="global-fill"></i></div>
+  </section>
+
   <p class="msg" id="preview"></p>
-  <p class="note">Esta página no pide ni guarda datos personales. Solo contamos, de forma anónima, cuántas veces se comparte desde cada enlace.</p>
+  <p class="note">Esta página no pide datos personales. Con tu código te mostramos solo cifras de tu enlace (cuántas personas llegan gracias a ti y tus tareas), nunca datos de nadie. Más información en la <a href="privacy.html#atribucion-es" style="color:inherit">política de privacidad</a>.</p>
 </main>
 
 <script>
@@ -108,7 +150,65 @@ if (token && SUPABASE_URL && SUPABASE_ANON_KEY) {
 }
 document.getElementById("wa").href = "https://wa.me/?text=" + encodeURIComponent(msg);
 document.getElementById("survey").href = "https://wa.me/?text=" + encodeURIComponent(surveyMsg);
-document.getElementById("dosurvey").href = survey;
+document.getElementById("dosurvey").href = survey + (token ? "&self=1" : "");   // su propia respuesta (is_self)
+document.getElementById("proto").href = base + "prototipo/?" + params;
+
+/* Tareas, impacto y total global: solo cifras del propio colaborador (RPC collab_dashboard). */
+const TASKS = {
+  compartir:        ["Compartir Bio", "Envía tu enlace por WhatsApp o cópialo"],
+  encuesta_propia:  ["Responder la encuesta", "Tu opinión cuenta como la primera"],
+  pasar_encuesta:   ["Pasar la encuesta", "Que la responda alguien de tu entorno"],
+  probar_prototipo: ["Probar el prototipo", "Marca un momento de principio a fin"],
+  votar_grupo:      ["Votar en el grupo", "Cuando abramos una votación"],
+  aportar_idea:     ["Aportar una idea", "Lo que se te ocurra para mejorar Bio"],
+  tarea_asignada:   ["Hacer la tarea que te propongamos", "Te escribimos cuando haya una"]
+};
+const fmtDate = d => { try { return new Date(d + "T12:00:00").toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" }); } catch (_) { return d; } };
+function renderDashboard(dsh){
+  if (!dsh || dsh.error || !Array.isArray(dsh.tareas)) return;
+  const ul = document.getElementById("tareas"); ul.textContent = "";
+  let manual = false;
+  dsh.tareas.forEach(t => {
+    const [ttl, sub] = TASKS[t.id] || [t.id, ""];
+    if (!t.auto) manual = true;
+    const li = document.createElement("li");
+    const txt = document.createElement("div");
+    const b = document.createElement("b"); b.textContent = ttl;
+    const sm = document.createElement("small"); sm.textContent = sub;
+    txt.append(b, sm);
+    const chip = document.createElement("span");
+    chip.className = "chip" + (t.hecha ? " done" : "");
+    chip.textContent = t.hecha ? "Hecha ✓" : "Pendiente";
+    li.append(txt, chip); ul.append(li);
+  });
+  document.getElementById("tareas-nota").textContent = manual ? "Las tareas que no podemos medir solas las marcamos nosotros cuando nos avisas." : "";
+  document.getElementById("p-tareas").hidden = false;
+
+  const imp = dsh.impacto || {}, reg = +imp.registros || 0, enc = +imp.encuestas || 0;
+  document.getElementById("desde").textContent = dsh.desde ? "Colaboras con Bio desde el " + fmtDate(dsh.desde) + "." : "";
+  document.getElementById("imp-reg").textContent = reg;
+  document.getElementById("imp-enc").textContent = enc;
+  document.getElementById("gracias").textContent = (reg + enc) > 0
+    ? "Gracias de corazón: cada una de esas personas está un paso más cerca de revivir su historia, y es en parte gracias a ti."
+    : "Cada mensaje que envías acerca Bio a alguien que querrá revivir su historia. Gracias por estar aquí desde el principio.";
+  document.getElementById("p-impacto").hidden = false;
+
+  const g = dsh.global || {}, n = Math.max(0, +g.encuestas_v2 || 0), meta = Math.max(1, +g.meta || 300);
+  document.getElementById("global-txt").textContent = "Llevamos " + n + " de " + meta + " encuestas. Cada respuesta nos acerca a decidir cómo será Bio.";
+  const bar = document.getElementById("global-bar");
+  bar.setAttribute("aria-valuemax", meta); bar.setAttribute("aria-valuenow", Math.min(n, meta));
+  document.getElementById("global-fill").style.width = Math.min(100, 100 * n / meta) + "%";
+  document.getElementById("p-global").hidden = false;
+}
+if (token && SUPABASE_URL && SUPABASE_ANON_KEY) {
+  try {
+    fetch(SUPABASE_URL + "/rest/v1/rpc/collab_dashboard", {
+      method: "POST",
+      headers: { "Content-Type":"application/json", apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + SUPABASE_ANON_KEY },
+      body: JSON.stringify({ p_token: token })
+    }).then(r => r.ok ? r.json() : null).then(renderDashboard).catch(() => {});
+  } catch (_) {}
+}
 document.getElementById("video").href = video;
 document.getElementById("preview").textContent = "Mensaje que se envía: «" + msg + "»";
 
