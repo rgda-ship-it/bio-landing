@@ -831,8 +831,9 @@ textarea.inp{padding:14px 16px;min-height:220px;line-height:1.6;resize:vertical;
       var v = document.getElementById("vid"), l = document.getElementById("vload");
       if (v) {
         var done = function () { if (l) l.hidden = true; };
-        v.addEventListener("loadeddata", done); v.addEventListener("canplay", done);
-        if (v.readyState >= 2) done();
+        v.addEventListener("loadedmetadata", done); v.addEventListener("loadeddata", done); v.addEventListener("canplay", done); v.addEventListener("play", done);
+        if (v.readyState >= 1) done();
+        timers.push(setTimeout(done, 3000));
         v.addEventListener("error", function () { if (l) l.innerHTML = "<span>" + t("rv_v_err") + '</span><button class="btn sm" style="background:#F7EDE6;color:#2A1D2B" data-act="vretry">' + t("retry") + "</button>"; });
       }
     }
